@@ -1,6 +1,6 @@
 # Como contribuir com este repositório
 
-Este guia explica passo a passo como você (estudante) deve configurar o ambiente, organizar seu código e fazer entregas ao longo do semestre.
+Este guia explica passo a passo como você pode configurar seu ambiente, organizar seu código e fazer entregas ao longo do semestre.
 
 ---
 
@@ -31,6 +31,7 @@ No terminal, execute:
 git clone https://github.com/SEU-USUARIO/prog2-eco-2026-projetos.git
 cd prog2-eco-2026-projetos
 ```
+Obs: troque /SEU-USUARIO/ pelo seu usuário. Exemplo /wilcilene/
 
 ### 2.3 Configure o repositório original como upstream
 
@@ -47,7 +48,7 @@ git merge upstream/main
 
 ---
 
-## 3. Estrutura das suas pastas
+## 3. Estrutura das pastas
 
 ### Projeto semestral (dupla)
 
@@ -66,10 +67,11 @@ Use o modelo em `templates/README-dupla.md` para criar o README da sua dupla.
 Cada estudante cria uma pasta com seu nome dentro da pasta do exercício:
 
 ```
-exercicios/aula-01-revisao-oo/entregas/
+exercicios/9-revisao-oo/entregas/
   └── seu-nome/
       ├── README.md   ← breve descrição da sua solução
-      └── exercicio.js (ou index.html etc.)
+      └── exercicio1
+        ├── script.js, index.html, etc.
 ```
 
 ---
@@ -88,22 +90,22 @@ exercicios/aula-01-revisao-oo/entregas/
 2. **Crie uma branch** com seu nome e o nome da entrega:
 
    ```bash
-   git checkout -b entrega/seu-nome-aula-01
+   git checkout -b entrega/seu-nome/exercicio1
    ```
 
-3. **Adicione seus arquivos** na pasta correta (veja seção 3).
+3. **Adicione seus arquivos** na pasta correta.
 
 4. **Faça commit** com uma mensagem clara:
 
    ```bash
    git add .
-   git commit -m "exercício: aula-01 revisao-oo - seu-nome"
+   git commit -m "exercício: 9-revisao-oo - seu nome"
    ```
 
 5. **Envie para o seu fork**:
 
    ```bash
-   git push origin entrega/seu-nome-aula-01
+   git push origin entrega/seu-nome
    ```
 
 6. **Abra um Pull Request** no GitHub:
@@ -111,38 +113,3 @@ exercicios/aula-01-revisao-oo/entregas/
    - Clique em **Compare & pull request**.
    - Preencha o título e a descrição conforme o template.
    - Clique em **Create pull request**.
-
----
-
-## 5. Boas práticas de commits
-
-Use mensagens de commit claras e no formato:
-
-```
-tipo: descrição curta
-```
-
-Exemplos de tipos:
-
-| Tipo | Quando usar |
-|------|-------------|
-| `feat` | Nova funcionalidade no projeto |
-| `fix` | Correção de bug |
-| `docs` | Atualização de documentação ou README |
-| `exercicio` | Entrega de exercício de aula |
-| `refactor` | Melhoria de código sem mudar comportamento |
-
-Exemplos completos:
-
-```bash
-git commit -m "feat: implementa tela de login"
-git commit -m "exercicio: aula-03 padroes-factory - maria"
-git commit -m "docs: atualiza README com link do projeto"
-```
-
----
-
-## 6. Dúvidas
-
-- Abra uma [Issue](../../issues) no repositório com a tag `dúvida`.
-- Ou traga a dúvida na próxima aula presencialmente.
