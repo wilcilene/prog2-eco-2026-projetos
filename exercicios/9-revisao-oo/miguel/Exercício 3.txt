@@ -1,0 +1,36 @@
+//Veículo
+class Veiculo {
+    constructor(marca, modelo, ano) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+    } 
+  
+    descricao() { 
+        return `${this.marca} ${this.modelo} (${this.ano})`;
+    }
+}
+//Carro
+class Carro extends Veiculo {
+    constructor(marca, modelo, ano) {
+        super(marca, modelo, ano);
+    }
+
+    descricao() {
+        return `Carro: ${this.marca} ${this.modelo} (${this.ano})`;
+    } 
+}
+//Moto
+class Moto extends Veiculo {
+    constructor(marca, modelo, ano) {
+        super(marca, modelo, ano);
+    }
+
+    descricao() {
+        return `Moto: ${this.marca} ${this.modelo} (${this.ano})`;
+    }
+}
+
+function mostrarDescricao(veiculo) {
+    console.log(veiculo.descricao());
+} 
