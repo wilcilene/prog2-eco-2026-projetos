@@ -24,7 +24,7 @@ Existem três formas de rodar os arquivos. Escolha a que for mais conveniente pa
 
 ---
 
-### ✅ Opção A – GitHub Pages (sem instalar nada, só o navegador)
+### Opção A – GitHub Pages (sem instalar nada, só o navegador)
 
 Como o repositório já está publicado no GitHub Pages, você pode acessar cada exercício diretamente pelo navegador:
 
@@ -39,7 +39,7 @@ Como o repositório já está publicado no GitHub Pages, você pode acessar cada
 
 ---
 
-### ✅ Opção B – Baixar e abrir direto no navegador (sem instalar nada)
+### Opção B – Baixar e abrir direto no navegador (sem instalar nada)
 
 Essa opção funciona para os exercícios 1, 2 e 3. O exercício 4 usa `fetch` e pode não funcionar corretamente desta forma (veja a observação abaixo).
 
@@ -56,7 +56,7 @@ Essa opção funciona para os exercícios 1, 2 e 3. O exercício 4 usa `fetch` e
 
 ---
 
-### ✅ Opção C – VS Code com Live Server (recomendada para quem quer desenvolver)
+### Opção C – VS Code com Live Server (recomendada para quem quer desenvolver)
 
 Essa opção funciona para **todos os exercícios**, incluindo o 4.
 
