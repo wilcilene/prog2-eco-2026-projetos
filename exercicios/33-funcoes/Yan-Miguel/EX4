@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Saudação por Idioma</title>
+</head>
+<body>
+
+<h2>Teste de Função com Retorno (Closure)</h2>
+
+<script>
+// Função principal
+function criarSaudacao(idioma) {
+  return function(nome) {
+    if (idioma === "pt") {
+      console.log("Olá, " + nome + "!");
+    } else if (idioma === "en") {
+      console.log("Hello, " + nome + "!");
+    } else if (idioma === "es") {
+      console.log("Hola, " + nome + "!");
+    } else {
+      console.log("Idioma não suportado");
+    }
+  };
+}
+
+// Criando funções específicas
+const saudarEmPortugues = criarSaudacao("pt");
+const saudarEmIngles = criarSaudacao("en");
+const saudarEmEspanhol = criarSaudacao("es");
+
+// Testes
+saudarEmPortugues("Ana");
+saudarEmIngles("Ana");
+saudarEmEspanhol("Ana");
+</script>
+
+</body>
+</html>
