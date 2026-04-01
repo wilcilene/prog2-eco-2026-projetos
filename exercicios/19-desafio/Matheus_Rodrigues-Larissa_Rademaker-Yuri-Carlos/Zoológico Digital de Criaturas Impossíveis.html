@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Zoológico Fantástico</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+.card { border: 1px solid #ccc; padding: 10px; margin: 10px; width: 220px; display: inline-block; position: relative; }
+.bar-container { background: #eee; width: 100%; height: 20px; }
+.bar { height: 20px; background: red; }
+.log { margin-top: 20px; }
+.sucesso { color: green; }
+.erro { color: red; }
+.tooltip { position: absolute; top: -35px; left: 0; background: black; color: white; padding: 5px; font-size: 12px; border-radius: 5px; }
+</style>
+</head>
+<body>
+
+<h2 id="tituloCritico">Criaturas com fome crítica: 0</h2>
+
+<div id="cards"></div>
+
+<input type="text" id="comida" placeholder="O que servir?">
+<button onclick="alimentarTodasUI()">Alimentar Todas</button>
+<button onclick="alimentarIndividual()">Alimentar Individualmente</button>
+
+<div class="log" id="log"></div>
+
+<script>
+class Criatura {
+    constructor(nome, especie, nivelFome = 5) {
+        this.nome = nome;
+        this.especie = especie;
+        this.nivelFome = nivelFome;
+    }
+
+    alimentar(comida) {
+        if (this.nivelFome === 0) {
+            throw new Error(`${this.nome} já está saciada!`);
+        }
+        this.nivelFome = Math.max(0, this.nivelFome - 3);
+        return `${this.nome} comeu ${comida}`;
+    }
+
+    getNivelFome() {
+        return this.nivelFome;
+    }
+}
+
+class Dragao extends Criatura {
+    alimentar(comida) {
+        if (comida !== "código compilado") {
+            throw new Error("O dragão rejeitou! Apenas código compilado satisfaz sua fome!");
+        }
+        return super.alimentar(comida);
+    }
+}
+
+class Unicornio extends Criatura {
+    alimentar(comida) {
+        if (this.nivelFome === 0) {
+            throw new Error(`${this.nome} já está saciado!`);
+        }
+        if (comida !== "arco-íris") {
+            this.nivelFome = Math.max(0, this.nivelFome - 1);
+        } else {
+            this.nivelFome = Math.max(0, this.nivelFome - 3);
+        }
+        return `${this.nome} comeu ${comida}`;
+    }
+}
+
+class Fenix extends Criatura {
+    alimentar(comida) {
+        if (this.nivelFome === 0) {
+            this.nome = "Fênix";
+            this.especie = "Ave Mística";
+            this.nivelFome = 5;
+            throw new Error("A Fênix renasceu e resetou tudo!");
+        }
+        return super.alimentar(comida);
+    }
+}
+
+function verificarAlimentavel(obj) {
+    return obj && typeof obj.alimentar === "function" && typeof obj.getNivelFome === "function";
+}
+
+const zoologico = {
+    criaturas: [],
+
+    adicionar(criatura) {
+        if (!verificarAlimentavel(criatura)) {
+            throw new Error("Objeto não é alimentável");
+        }
+        this.criaturas.push(criatura);
+    },
+
+    alimentarTodas(comida) {
+        let resultados = [];
+        this.criaturas.forEach(c => {
+            try {
+                let res = c.alimentar(comida);
+                resultados.push({ tipo: 'sucesso', msg: res });
+            } catch (e) {
+                resultados.push({ tipo: 'erro', msg: e.message });
+            }
+        });
+        return resultados;
+    },
+
+    listarFamintas() {
+        return this.criaturas.filter(c => c.getNivelFome() > 7);
+    },
+
+    salvar() {
+        localStorage.setItem('zoo', JSON.stringify(this.criaturas));
+    },
+
+    carregar() {
+        let data = JSON.parse(localStorage.getItem('zoo')) || [];
+        this.criaturas = data.map(c => new Criatura(c.nome, c.especie, c.nivelFome));
+    }
+};
+
+// Instâncias iniciais
+const dragao = new Dragao("Draco", "Dragão", 8);
+const unicornio = new Unicornio("Luna", "Unicórnio", 6);
+const fenix = new Fenix("Fawkes", "Fênix", 0);
+
+zoologico.adicionar(dragao);
+zoologico.adicionar(unicornio);
+zoologico.adicionar(fenix);
+
+function render() {
+    const container = document.getElementById('cards');
+    container.innerHTML = '';
+
+    zoologico.criaturas.forEach((c) => {
+        let card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+            <h3>${c.nome}</h3>
+            <p>${c.especie}</p>
+            <div class="bar-container">
+                <div class="bar" style="width:${c.getNivelFome()*10}%"></div>
+            </div>
+        `;
+
+        card.addEventListener('mouseover', () => {
+            card.innerHTML += `<div class='tooltip'>Criatura mágica única!</div>`;
+        });
+
+        card.addEventListener('mouseout', () => {
+            let tip = card.querySelector('.tooltip');
+            if (tip) tip.remove();
+        });
+
+        container.appendChild(card);
+    });
+
+    atualizarCriticos();
+}
+
+function atualizarCriticos() {
+    let qtd = zoologico.listarFamintas().length;
+    document.querySelector('#tituloCritico').innerText = ` Criaturas com fome crítica: ${qtd}`;
+}
+
+function logar(resultados) {
+    let log = document.getElementById('log');
+    log.innerHTML = '';
+    resultados.forEach(r => {
+        log.innerHTML += `<div class="${r.tipo}">${r.msg}</div>`;
+    });
+}
+
+function alimentarTodasUI() {
+    let comida = document.getElementById('comida').value;
+    let resultados = zoologico.alimentarTodas(comida);
+    logar(resultados);
+    render();
+}
+
+function alimentarIndividual() {
+    let comida = document.getElementById('comida').value;
+    let resultados = [];
+
+    zoologico.criaturas.forEach(c => {
+        try {
+            let res = c.alimentar(comida);
+            resultados.push({ tipo: 'sucesso', msg: res });
+        } catch (e) {
+            resultados.push({ tipo: 'erro', msg: e.message });
+        }
+    });
+
+    logar(resultados);
+    render();
+}
+
+window.onload = () => {
+    render();
+
+    let r1 = zoologico.alimentarTodas("pizza");
+    logar(r1);
+
+    setTimeout(() => {
+        let r2 = zoologico.alimentarTodas("maçã");
+        logar(r2);
+        render();
+    }, 1500);
+
+    setTimeout(() => {
+        let r3 = zoologico.alimentarTodas("qualquer coisa");
+        logar(r3);
+        render();
+    }, 3000);
+};
+
+</script>
+
+</body>
+</html>

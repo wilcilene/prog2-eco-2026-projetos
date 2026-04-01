@@ -1,0 +1,437 @@
+<!-- 
+
+Estudante: Larissa Rademaker Gabriel
+
+⚙️ Parte JavaScript
+
+>Crie a classe Estudante com nome, matricula e um objeto notas no formato { feiticaria: 0, pocoes: 0, transfiguracao: 0 }. >Adicione o método lancarNota(disciplina, valor): valide que valor está entre 0 e 10 (lance Error se não estiver) e que a disciplina existe no objeto notas (lance Error diferente se não existir). 
+>Adicione calcularMedia() que retorna a média das três notas. Crie as subclasses:
+— EstudanteBolsista: getSituacao() retorna "Aprovado" se média ≥ 7.0, "Recuperação" se ≥ 5.0, "Reprovado" se abaixo
+— EstudanteRegular: getSituacao() retorna "Aprovado" se média ≥ 6.0, "Recuperação" se ≥ 4.0, "Reprovado" se abaixo 
+>Simule a interface Avaliavel com verificarAvaliavel(obj) que confere se o objeto tem calcularMedia() e getSituacao().
+>Crie o objeto secretaria com:
+— matricular(estudante): valida com verificarAvaliavel()
+— buscarPorMatricula(matricula): lança Error se não encontrar
+— gerarRanking(): retorna o array de estudantes ordenado por média decrescente usando sort()
+— salvar() e carregar(): persistência com localStorage, reconstruindo instâncias pelo campo tipo
+
+🌐 Parte HTML + DOM
+
+>Crie um formulário com nome, matrícula, tipo (Bolsista/Regular) e os três campos de nota. Ao submeter com preventDefault(), instancie o estudante correto e lance as notas dentro de try/catch. 
+>Exiba o boletim de cada estudante como um card gerado com innerHTML. O card deve mostrar nome, as três notas, média e situação. Use cores para a situação: verde (Aprovado), amarelo (Recuperação), vermelho (Reprovado) via classList.add. 
+>Adicione um botão "🏆 Ver Ranking" que ordena os cards na tela pela média, do maior para o menor, reordenando os elementos no DOM sem recarregar a página. 
+>Valide os campos de nota em tempo real com evento input: se o valor digitado estiver fora de 0–10, exiba uma mensagem de erro vermelha abaixo do campo usando querySelector e textContent.
+
+💡 Dica para reordenar no DOM
+Para reordenar os cards visualmente, selecione o container pai com querySelector, converta os filhos em array com Array.from(), ordene com sort() e reinsira cada elemento com appendChild(). O DOM atualiza automaticamente.
+
+-->
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escola de Magia</title>
+</head>
+
+<style>
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+    body{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.8;
+        color: #2c3e50;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+
+    p{
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1{
+        color: #8e44ad;
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        font-weight: 700;
+        
+    }
+
+    input, select, textarea{
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    h2{
+        color: #8e44ad;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        font-weight: 700;
+    }
+
+    button{
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #8e44ad;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+    
+
+
+
+</style>
+
+<body>
+
+    <header>
+    <h1>🪄 Fórmulário da Escola de Magia 🪄</h1>
+    <p>Digite os dados do estudante e receba seu boletim!</p>
+    </header>
+
+    <form id="formulario">
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required><br><br>
+
+        <label>Matricula:</label><br>
+        <input type="text" name="matricula" required><br><br>
+
+        <label>Tipo:</label><br>
+        <select name="tipo" required>
+            <option value="">Selecione...</option>
+            <option value="Bolsista">Bolsista</option>
+            <option value="Regular">Regular</option>
+        </select><br><br>
+
+        <h2>Notas</h2>
+
+        <label>Feitiçaria:</label><br>
+        <input type="number" name="feiticaria" min="0" max="10" required>
+        <span class="erro-nota" style="color: red; display: none;"></span><br><br>
+
+        <label>Poções:</label><br>
+        <input type="number" name="pocoes" min="0" max="10" required>
+        <span class="erro-nota" style="color: red; display: none;"></span><br><br>
+
+        <label>Transfiguração:</label><br>
+        <input type="number" name="transfiguracao" min="0" max="10" required>
+        <span class="erro-nota" style="color: red; display: none;"></span><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <button id="btnRanking" style="display: none; margin: 20px 0; padding: 10px 20px; font-size: 16px;">🏆 Ver Ranking</button>
+
+    <div id="boletins" style="margin-top: 20px;"></div>
+
+
+    
+</body>
+</html>
+
+<script>
+
+class estudante {
+    constructor(nome, matricula) {
+        if(typeof nome !== 'string' || typeof matricula !== 'string') {
+            throw new Error('Nome e matrícula devem ser strings');
+        }
+
+        this.nome = nome;
+        this.matricula = matricula;
+        this.notas = { feiticaria: 0, pocoes: 0, transfiguracao: 0 };
+    }
+
+    lancarNota(disciplina, valor) {
+        if (valor < 0 || valor > 10) {
+            throw new Error('Valor da nota deve estar entre 0 e 10');
+        }
+        if (!this.notas.hasOwnProperty(disciplina)) {
+            throw new Error('Disciplina não existe');
+        }
+        this.notas[disciplina] = valor;
+    }
+
+    calcularmedia() {
+        const total = this.notas.feiticaria + this.notas.pocoes + this.notas.transfiguracao;
+        return total / 3;
+    }
+}
+
+class EstudanteBolsista extends estudante {
+    getSituacao() {
+        const media = this.calcularmedia();
+        if (media >= 7.0) return "Aprovado";
+        if (media >= 5.0) return "Recuperação";
+        return "Reprovado";
+    }
+}
+
+class EstudanteRegular extends estudante{
+    getSituacao() {
+        const media = this.calcularmedia();
+        if (media >= 6.0) return "Aprovado";
+        if (media >= 4.0) return "Recuperação";
+        return "Reprovado";
+    }
+}
+
+class secretaria {
+    constructor() {
+        this.estudantes = [];
+    }
+
+    verificarAvaliavel(obj) {
+        return typeof obj.calcularmedia === 'function' && typeof obj.getSituacao === 'function';
+    }
+
+    matricular(estudante) {
+        if (!this.verificarAvaliavel(estudante)) {
+            throw new Error('Objeto não é avaliável');
+        }
+        this.estudantes.push(estudante);
+    }
+
+    buscarPorMatricula(matricula) {
+        const estudante = this.estudantes.find(e => e.matricula === matricula);
+        if (!estudante) {
+            throw new Error('Estudante não encontrado');
+        }
+        return estudante;
+    }
+
+    gerarRanking() {
+        return this.estudantes.sort((a, b) => b.calcularmedia() - a.calcularmedia());
+    }
+
+    salvar() {
+        const data = this.estudantes.map(e => ({
+            tipo: e instanceof EstudanteBolsista ? 'Bolsista' : 'Regular',
+            nome: e.nome,
+            matricula: e.matricula,
+            notas: e.notas
+        }));
+        localStorage.setItem('estudantes', JSON.stringify(data));
+    }
+
+    carregar() {
+        const data = JSON.parse(localStorage.getItem('estudantes') || '[]');
+        this.estudantes = data.map(e => {
+            const estudante = e.tipo === 'Bolsista' ? new EstudanteBolsista(e.nome, e.matricula) : new EstudanteRegular(e.nome, e.matricula);
+            estudante.notas = e.notas;
+            return estudante;
+        });
+    }
+}
+
+
+// ========== INICIALIZAÇÃO E DOM ==========
+const sec = new secretaria();
+sec.carregar();
+
+// Adiciona dados de teste apenas se não houver estudantes no localStorage
+if (sec.estudantes.length === 0) {
+    const amelia = new EstudanteBolsista('Amélia Lumen', '2026001');
+    amelia.lancarNota('feiticaria', 9.0);
+    amelia.lancarNota('pocoes', 8.5);
+    amelia.lancarNota('transfiguracao', 9.2);
+
+    const basil = new EstudanteBolsista('Basiliono Veritas', '2026002');
+    basil.lancarNota('feiticaria', 7.8);
+    basil.lancarNota('pocoes', 8.0);
+    basil.lancarNota('transfiguracao', 7.5);
+
+    const celine = new EstudanteBolsista('Celine Aurora', '2026003');
+    celine.lancarNota('feiticaria', 8.7);
+    celine.lancarNota('pocoes', 8.2);
+    celine.lancarNota('transfiguracao', 8.9);
+
+    const dante = new EstudanteRegular('Dante Rune', '2026004');
+    dante.lancarNota('feiticaria', 6.2);
+    dante.lancarNota('pocoes', 7.0);
+    dante.lancarNota('transfiguracao', 5.9);
+
+    const elsa = new EstudanteRegular('Elsa Nimbus', '2026005');
+    elsa.lancarNota('feiticaria', 5.4);
+    elsa.lancarNota('pocoes', 4.8);
+    elsa.lancarNota('transfiguracao', 6.0);
+
+    const felix = new EstudanteRegular('Felix Arbor', '2026006');
+    felix.lancarNota('feiticaria', 6.8);
+    felix.lancarNota('pocoes', 5.5);
+    felix.lancarNota('transfiguracao', 6.3);
+
+    sec.matricular(amelia);
+    sec.matricular(basil);
+    sec.matricular(celine);
+    sec.matricular(dante);
+    sec.matricular(elsa);
+    sec.matricular(felix);
+    sec.salvar();
+}
+
+const form = document.getElementById('formulario');
+const boletinsDiv = document.getElementById('boletins');
+const btnRanking = document.getElementById('btnRanking');
+
+// Função para criar e exibir o card do estudante
+function criarCard(estudante) {
+    const media = estudante.calcularmedia();
+    const situacao = estudante.getSituacao();
+    let cor = '';
+    
+    if (situacao === 'Aprovado') cor = 'green';
+    else if (situacao === 'Recuperação') cor = 'orange';
+    else cor = 'red';
+
+    const card = document.createElement('div');
+    card.className = `card-${estudante.matricula}`;
+    card.innerHTML = `
+        <div style="border: 2px solid ${cor}; padding: 15px; margin: 10px 300px; border-radius: 8px; background-color: rgba(0,0,0,0.1);">
+            <h3>${estudante.nome}</h3>
+            <p> <strong> Matrícula: </strong> ${estudante.matricula}</p>
+            <p> <strong> Feitiçaria: </strong> ${estudante.notas.feiticaria}</p>
+            <p> <strong> Poções: </strong> ${estudante.notas.pocoes}</p>
+            <p> <strong> Transfiguração: </strong> ${estudante.notas.transfiguracao}</p>
+            <p><strong>Média:</strong> ${media.toFixed(2)}</p>
+            <p style="color: ${cor}; font-weight: bold;"><strong>Situação:</strong> ${situacao}</p>
+        </div>
+    `;
+    return card;
+}
+
+
+function atualizarBoletins() {
+    boletinsDiv.innerHTML = '';
+    sec.estudantes.forEach(est => {
+        boletinsDiv.appendChild(criarCard(est));
+    });
+    
+    if (sec.estudantes.length > 0) {
+        btnRanking.style.display = 'inline-block';
+    }
+}
+
+atualizarBoletins();
+
+// ========== SUBMIT DO FORMULÁRIO ==========
+form.addEventListener('submit', (e) => {
+    e.preventDefault(); 
+
+    const nome = form.nome.value.trim();
+    const matricula = form.matricula.value.trim();
+    const tipo = form.tipo.value;
+    const feiticaria = parseFloat(form.feiticaria.value);
+    const pocoes = parseFloat(form.pocoes.value);
+    const transfiguracao = parseFloat(form.transfiguracao.value);
+
+    try {
+        
+        try {
+            sec.buscarPorMatricula(matricula);
+            alert('❌ Matrícula já cadastrada!');
+            return;
+        } catch (e) {
+        }
+
+   
+        let estudante;
+        if (tipo === 'Bolsista') {
+            estudante = new EstudanteBolsista(nome, matricula);
+        } else if (tipo === 'Regular') {
+            estudante = new EstudanteRegular(nome, matricula);
+        } else {
+            throw new Error('Tipo de estudante inválido');
+        }
+
+      
+        try {
+            estudante.lancarNota('feiticaria', feiticaria);
+            estudante.lancarNota('pocoes', pocoes);
+            estudante.lancarNota('transfiguracao', transfiguracao);
+        } catch (erro) {
+            throw new Error(`Erro ao lançar notas: ${erro.message}`);
+        }
+
+        // Matricular na secretaria
+        sec.matricular(estudante);
+        
+        // Salvar no localStorage
+        sec.salvar();
+
+        // Exibir o novo card
+        boletinsDiv.appendChild(criarCard(estudante));
+        
+        // Mostrar botão de ranking se houver mais de 1 estudante
+        if (sec.estudantes.length > 0) {
+            btnRanking.style.display = 'inline-block';
+        }
+
+        // Limpar formulário
+        form.reset();
+        alert('✅ Estudante cadastrado com sucesso!');
+
+    } catch (erro) {
+        alert(`❌ Erro: ${erro.message}`);
+    }
+});
+
+// ========== VALIDAÇÃO EM TEMPO REAL ==========
+const notasInputs = form.querySelectorAll('input[type="number"]');
+notasInputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+        const valor = parseFloat(e.target.value);
+        const erroSpan = e.target.nextElementSibling;
+
+        if (e.target.value !== '') {
+            if (valor < 0 || valor > 10 || isNaN(valor)) {
+                erroSpan.textContent = '❌ Nota deve estar entre 0 e 10';
+                erroSpan.style.display = 'block';
+            } else {
+                erroSpan.textContent = '';
+                erroSpan.style.display = 'none';
+            }
+        } else {
+            erroSpan.textContent = '';
+            erroSpan.style.display = 'none';
+        }
+    });
+});
+
+// ========== BOTÃO RANKING ==========
+btnRanking.addEventListener('click', () => {
+    const ranking = sec.gerarRanking();
+    boletinsDiv.innerHTML = '';
+    ranking.forEach(est => {
+        boletinsDiv.appendChild(criarCard(est));
+    });
+});
+
+
+</script>

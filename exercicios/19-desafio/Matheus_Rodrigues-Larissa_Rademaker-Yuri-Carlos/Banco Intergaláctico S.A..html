@@ -1,0 +1,452 @@
+<!--
+⚙️ Parte JavaScript               
+    >Crie a classe Conta com titular, numero e saldo. No construtor, valide que o saldo inicial não é negativo — se for, lance um Error. Mantenha um array historico de valores para registrar cada transação. >Adicione os métodos depositar(valor) e sacar(valor) na classe Conta. Lance Error para valor zero ou negativo em qualquer operação, e para saldo insuficiente no saque. Cada operação bem-sucedida deve adicionar uma entrada ao historico. 
+                
+    >Crie as subclasses:
+    — ContaCorrente: tem limiteCredito; pode sacar além do saldo até o limite (saldo pode ficar negativo até -limiteCredito)
+    — ContaPoupanca: tem taxaJuros; adicione o método aplicarJuros() que aumenta o saldo pela taxa e registra no histórico
+    — ContaGalactica: herda de ContaCorrente; tem taxaCambio (padrão 3.7); adicione depositarCreditos(creditos) que converte e deposita em reais 
+                
+                
+    >Simule a interface Transacionavel: crie verificarTransacionavel(obj) que confere se o objeto tem depositar, sacar e getExtrato. Implemente getExtrato() em Conta retornando o array historico formatado. 
+    >Crie o objeto banco com:
+    — abrirConta(conta): valida com verificarTransacionavel()
+    — buscarConta(numero): lança Error se não encontrar
+    — transferir(origem, destino, valor): usa buscarConta() nos dois números, faz saque e depósito dentro de um try/catch
+    — salvar() e carregar(): persistência com localStorage 
+                
+🌐 Parte HTML + DOM
+
+    >Crie uma interface com três abas (Contas, Operações, Extrato) alternadas por eventos de clique que mostram/ocultam seções com style.display. 
+    >Na aba Contas: formulário para abrir conta (titular, número, tipo, saldo inicial) com feedback de erro inline via innerHTML. 
+    >Na aba Operações: campos para número da conta e valor, com botões "Depositar", "Sacar" e "Transferir". Resultados exibidos em um painel de log gerado com innerHTML. Linhas de erro em vermelho, sucesso em verde. 
+    >Na aba Extrato: campo para digitar o número da conta e botão "Ver Extrato" que gera uma tabela dinamicamente com innerHTML, mostrando cada transação do histórico. 
+
+⚠️ Atenção
+    
+    Ao carregar contas do localStorage, reconstrua as instâncias corretas com base no campo tipo salvo — os métodos das classes são perdidos na serialização JSON.         
+-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Banco Intergaláctico S.A.</title>
+
+
+        <style>
+            body { font-family: sans-serif; padding: 20px; line-height: 1.5; }
+            form { max-width: 400px; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+            label { display: block; margin-top: 15px; font-weight: bold; }
+            input { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+            button { margin-top: 20px; padding: 10px 20px; background: #006699; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        </style>
+
+        
+    </head>
+    <body>
+        <h1>Banco Intergaláctico S.A.</h1>
+        <button id="btn-contas">Contas</button>
+        <button id="btn-operacoes">Operações</button>
+        <button id="btn-extrato">Extrato</button>
+
+        <div>
+        </div>
+        
+        <script>
+
+            class Conta{
+                constructor(titular, numero, saldo = 0){
+                    
+                    if(saldo < 0 && !(this instanceof ContaCorrente)){
+                        throw new Error("Saldo inicial não pode ser negativo");
+                    }
+                    
+                    this.titular = titular;
+                    this.numero = numero;
+                    this.saldo = saldo;
+                    this.historicoTransacao = [];
+                }
+
+                depositar(valor){
+                    if(valor <= 0){
+                        throw new Error("O valor deve ser maior que zero");
+                    }
+
+                    this.saldo += valor;
+
+                    this.historicoTransacao.push(valor);
+                }
+
+                sacar(valor){
+                    if(valor <= 0){
+                        throw new Error("O valor deve ser maior que zero");
+                    }
+
+                    if(this.saldo < valor){
+                        throw new Error("Saldo insuficiente na conta");
+                    }
+
+                    this.saldo -= valor;
+
+                    this.historicoTransacao.push(valor*-1);
+                }
+
+                getExtrato() {
+                    const extrato = [];
+                    let i = 0;
+
+                    while (i < this.historicoTransacao.length) {
+                        const valor = this.historicoTransacao[i];
+                        const tipo = valor >= 0 ? "Depósito" : "Saque";
+
+                        extrato.push(`${i + 1}. ${tipo}: R$ ${Math.abs(valor).toFixed(2)}`);
+                        i++;
+                    }
+
+                    return extrato;
+                }
+
+            }
+
+            class ContaCorrente extends Conta{
+                constructor(titular, numero, saldo = 0, limiteCredito = 500){
+                    super(titular, numero, saldo);
+                    this.limiteCredito = limiteCredito;
+                }
+
+                sacar(valor){
+                    if(valor <= 0){
+                        throw new Error("O valor deve ser maior que zero");
+                    }
+
+                    if((this.saldo + this.limiteCredito) < valor){
+                        throw new Error("Saldo insuficiente na conta");
+                    }
+
+                    this.saldo -= valor;
+
+                    this.historicoTransacao.push(valor*-1);
+                }
+            }
+
+            class ContaPoupanca extends Conta{
+                constructor(titular, numero, saldo = 0, taxaJuros = 0.01){
+                    super(titular, numero, saldo);
+                    this.taxaJuros = taxaJuros;
+                }
+
+                aplicarJuros(){
+
+                    let valor = this.saldo * this.taxaJuros;
+
+                    this.saldo += valor; 
+
+                    this.historicoTransacao.push(valor);
+                }
+            }
+
+            class ContaGalactica extends ContaCorrente {
+                constructor(titular, numero, saldo = 0, limiteCredito = 1000, taxaCambio = 3.7) {
+                    super(titular, numero, saldo, limiteCredito);
+                    this.taxaCambio = taxaCambio;
+                }
+
+                depositarCreditos(creditos) {
+                    if (creditos <= 0) {
+                        throw new Error("Os créditos devem ser positivos");
+                    }
+
+                    const valorConvertido = creditos * this.taxaCambio;
+
+                    this.saldo += valorConvertido;
+
+                    this.historicoTransacao.push(valorConvertido);
+                }
+            }
+
+            function verificarTransacionavel(obj) {
+                return (
+                    obj &&
+                    typeof obj.depositar === "function" &&
+                    typeof obj.sacar === "function" &&
+                    typeof obj.getExtrato === "function"
+                );
+            }
+
+            const banco = {
+                contas: [],
+
+                abrirConta(conta) {
+                    if (!verificarTransacionavel(conta)) {
+                        throw new Error("Objeto não é transacionável");
+                    }
+
+                    this.contas.push(conta);
+                },
+
+                buscarConta(numero) {
+
+                    const conta = this.contas.find(c => c.numero == numero);
+
+                    if (!conta) {
+                        throw new Error("Conta não encontrada");
+                    }
+
+                    return conta;
+                },
+
+                transferir(numeroOrigem, numeroDestino, valor) {
+                    try {
+                        const origem = this.buscarConta(numeroOrigem);
+                        const destino = this.buscarConta(numeroDestino);
+
+                        origem.sacar(valor);
+                        destino.depositar(valor);
+
+                    } catch (erro) {
+                        throw new Error("Erro na transferência: " + erro.message);
+                    }
+                },
+
+                salvar() {
+                    const dados = this.contas.map(conta => ({
+                        tipo: conta.constructor.name, // MUITO IMPORTANTE
+                        titular: conta.titular,
+                        numero: conta.numero,
+                        saldo: conta.saldo,
+                        historicoTransacao: conta.historicoTransacao,
+                        limiteCredito: conta.limiteCredito,
+                        taxaJuros: conta.taxaJuros,
+                        taxaCambio: conta.taxaCambio
+                    }));
+
+                    localStorage.setItem("banco_contas", JSON.stringify(dados));
+                },
+
+                carregar() {
+                    const dados = JSON.parse(localStorage.getItem("banco_contas")) || [];
+
+                    this.contas = dados.map(d => {
+                        let conta;
+
+                        switch (d.tipo) {
+                            case "ContaCorrente":
+                                conta = new ContaCorrente(d.titular, d.numero, d.saldo, d.limiteCredito);
+                                break;
+
+                            case "ContaPoupanca":
+                                conta = new ContaPoupanca(d.titular, d.numero, d.saldo, d.taxaJuros);
+                                break;
+
+                            case "ContaGalactica":
+                                conta = new ContaGalactica(d.titular, d.numero, d.saldo, d.limiteCredito, d.taxaCambio);
+                                break;
+
+                            default:
+                                conta = new Conta(d.titular, d.numero, d.saldo);
+                        }
+
+                        // recuperar histórico
+                        conta.historicoTransacao = d.historicoTransacao || [];
+
+                        return conta;
+                    });
+                }
+            };
+
+            banco.carregar();
+
+            const botaoContas = document.querySelector("#btn-contas");
+            const botaoOperacoes = document.querySelector("#btn-operacoes");
+            const botaoExtrato = document.querySelector("#btn-extrato");
+            const div = document.querySelector("div")
+
+            botaoContas.addEventListener('click', () => {
+                let html = `<form action="#" method="post">
+
+                                <label for="nome">Nome:</label>
+                                <input type="text" id="nome" required placeholder="Andeson Pereira da Silva">
+
+                                <label for="numero-conta">Número da conta:</label>
+                                <input type="number" id="numero-conta" required placeholder="12345" min="10000" max="99999" step="1">
+
+                                <label for="tipo-conta">Tipo da conta:</label>
+                                <select name="tipo-conta" id="tipo-conta">
+                                    <option value="corrente">Corrente</option>
+                                    <option value="poupanca">Poupança</option>
+                                    <option value="galactica">Galactica</option>
+                                </select>
+
+                                <label for="saldo">Saldo inicial: R$</label>
+                                <input type="number" id="saldo" required placeholder="12,30" step="0.01" min="0">
+
+                                <button type="submit">Enviar</button>
+
+                            </form>`;
+
+                div.innerHTML = html;
+
+                const form = document.querySelector("form");
+
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+
+                    const nome = document.querySelector("#nome").value;
+                    const numero = document.querySelector("#numero-conta").value;
+                    const tipo = document.querySelector("#tipo-conta").value;
+                    const saldo = parseFloat(document.querySelector("#saldo").value);
+
+                    let conta;
+
+                    try {
+                        if (tipo === "corrente") {
+                            conta = new ContaCorrente(nome, numero, saldo);
+                        } else if (tipo === "poupanca") {
+                            conta = new ContaPoupanca(nome, numero, saldo);
+                        } else {
+                            conta = new ContaGalactica(nome, numero, saldo);
+                        }
+
+                        banco.abrirConta(conta);
+                        banco.salvar();
+
+                        alert("Conta criada com sucesso!");
+
+                    } catch (erro) {
+                        alert(erro.message);
+                    }
+                });
+            })
+
+            botaoOperacoes.addEventListener('click', () => {
+                let html = `
+                    <form id="form-operacoes">
+
+                        <label for="numero-operacao">Número da conta:</label>
+                        <input type="number" id="numero-operacao" required placeholder="12345" min="10000" max="99999">
+
+                        <label for="numero-destino">Número da conta destino (transferência):</label>
+                        <input type="number" id="numero-destino" placeholder="12345" min="10000" max="99999">
+
+                        <label for="valor-operacao">Valor: R$</label>
+                        <input type="number" id="valor-operacao" required step="0.01" min="0.01">
+
+                        <button type="button" id="btn-depositar">Depositar</button>
+                        <button type="button" id="btn-sacar">Sacar</button>
+                        <button type="button" id="btn-transferir">Transferir</button>
+
+                    </form>
+
+                    <div id="log-operacoes" style="margin-top:20px;"></div>
+                `;
+
+                div.innerHTML = html;
+
+                const log = document.querySelector("#log-operacoes");
+
+                function adicionarLog(mensagem, tipo) {
+                    const cor = tipo === "erro" ? "red" : "green";
+                    log.innerHTML += `<p style="color:${cor};">${mensagem}</p>`;
+                }
+
+                //  DEPOSITAR
+                document.querySelector("#btn-depositar").addEventListener("click", () => {
+                    const numero = document.querySelector("#numero-operacao").value;
+                    const valor = parseFloat(document.querySelector("#valor-operacao").value);
+
+                    try {
+                        const conta = banco.buscarConta(numero);
+                        conta.depositar(valor);
+                        banco.salvar();
+
+                        adicionarLog(`Depósito de R$ ${valor.toFixed(2)} realizado na conta ${numero}`, "sucesso");
+
+                    } catch (erro) {
+                        adicionarLog(erro.message, "erro");
+                    }
+                });
+
+                //  SACAR
+                document.querySelector("#btn-sacar").addEventListener("click", () => {
+                    const numero = document.querySelector("#numero-operacao").value;
+                    const valor = parseFloat(document.querySelector("#valor-operacao").value);
+
+                    try {
+                        const conta = banco.buscarConta(numero);
+                        conta.sacar(valor);
+                        banco.salvar();
+
+                        adicionarLog(`Saque de R$ ${valor.toFixed(2)} realizado na conta ${numero}`, "sucesso");
+
+                    } catch (erro) {
+                        adicionarLog(erro.message, "erro");
+                    }
+                });
+
+                //  TRANSFERIR
+                document.querySelector("#btn-transferir").addEventListener("click", () => {
+                    const origem = document.querySelector("#numero-operacao").value;
+                    const destino = document.querySelector("#numero-destino").value;
+                    const valor = parseFloat(document.querySelector("#valor-operacao").value);
+
+                    try {
+                        banco.transferir(origem, destino, valor);
+                        banco.salvar();
+
+                        adicionarLog(`Transferência de R$ ${valor.toFixed(2)} de ${origem} para ${destino}`, "sucesso");
+
+                    } catch (erro) {
+                        adicionarLog(erro.message, "erro");
+                    }
+                });
+            });
+
+            botaoExtrato.addEventListener('click', () => {
+
+
+
+                let html = `<form action="#">
+                                <label for="numero-extrato">Número da conta:</label>
+                                <input type="number" id="numero-extrato" required placeholder="12345" min="10000" max="99999" step="1">
+
+                                <button>Ver extrato</button>
+
+                            
+                            </form>
+                            
+                            <ul id="lista-extrato">
+                                
+                            </ul>
+                        `;
+
+                div.innerHTML = html;
+
+                const form = document.querySelector("form");
+                const ulListaEstrato = document.querySelector("#lista-extrato")
+
+                form.addEventListener("submit", (event) => {
+                    event.preventDefault();
+
+                    const numero = document.querySelector("#numero-extrato").value;
+
+                    try {
+                        const conta = banco.buscarConta(numero);
+
+                        let html = "";
+
+                        for (const transacao of conta.getExtrato()) {
+                            html += `<li>${transacao}</li>`;
+                        }
+
+                        ulListaEstrato.innerHTML = html;
+
+                    } catch (erro) {
+                        ulListaEstrato.innerHTML = `<li style="color:red;">${erro.message}</li>`;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
