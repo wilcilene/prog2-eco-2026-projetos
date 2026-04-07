@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>exercicios funções(4) - Programação II</title>
+  </head>
+<body>
+    abra o console
+    <script>
+    function criarSaudacao(idioma){
+    if(idioma=="pt"){
+        return function(nome){
+            return "olá, "+nome;
+        }
+    }
+    if(idioma=="en"){
+        return function(nome){
+            return "hello, "+nome;
+        }
+    }
+    if(idioma=="es"){
+        return function(nome){
+            return "hola, "+nome;
+        }
+    }
+}
+const saudarPT= criarSaudacao("pt");
+const saudarEN= criarSaudacao("en");
+const saudarES= criarSaudacao("es");
+
+console.log(saudarPT("Ana"));
+console.log(saudarEN("Ana"));
+console.log(saudarES("Ana"));
+</script>
+    <!--<script src="4.js"></script> -->
+</body>
