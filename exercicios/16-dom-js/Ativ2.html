@@ -1,0 +1,50 @@
+<!---
+2 – Lista de compras
+Baseando-se na lista de tarefas, crie uma lista de compras que mostre a quantidade de itens abaixo da lista.
+
+Use um <span> para exibir o total de itens.
+Atualize o texto do span sempre que adicionar um item, com textContent.
+-->
+
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+</head>
+<body>
+
+    <div id="titulo2">
+        <h1>Lista de Compras</h1>
+    </div>
+
+    <input type="text" id="item" placeholder="Digite um item">
+    <button id="adicionar">Adicionar</button>
+
+    <ul id="lista"></ul>
+
+    <p>Total de itens: <span id="total">0</span></p>
+</body>
+</html>
+
+<script>
+    const inputItem = document.getElementById("item");
+    const btnAdicionar = document.getElementById("adicionar");
+    const lista = document.getElementById("lista");
+    const totalSpan = document.getElementById("total");
+
+    let totalItens = 0;
+
+    btnAdicionar.addEventListener("click", function() {
+        const itemTexto = inputItem.value.trim();
+        if (itemTexto !== "") {
+            const li = document.createElement("li");
+            li.textContent = itemTexto;
+            lista.appendChild(li);
+            inputItem.value = "";
+            totalItens++;
+            totalSpan.textContent = totalItens;
+        }
+    });
+</script>

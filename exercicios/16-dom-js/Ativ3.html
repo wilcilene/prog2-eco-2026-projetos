@@ -1,0 +1,57 @@
+<!--
+3 – Perguntas e respostas
+Monte uma página com três perguntas de revisão. Ao clicar em um botão “Mostrar resposta”, mostre a resposta usando innerHTML em uma <div> escondida.
+
+Comece com a <div> vazia.
+No clique, use div.innerHTML = "Resposta: ...".
+-->
+
+<!DOCTYPE html>
+<html lang="PT - BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perguntas e Respostas</title>
+</head>
+<body>
+    
+    <h1>Perguntas de Revisão</h1>
+    <p>Selecione a resposta correta.</p>
+
+    <div id="pergunta"> 
+        <h3>O que significa HTML?</h3>
+
+        <button onclick="mostrarResposta('pergunta')">Mostrar Resposta</button>
+    </div>
+
+    <div id="pergunta2">
+        <h3>O que é uma DOM?</h3>
+
+        <button onclick="mostrarResposta('pergunta2')">Mostrar Resposta</button>
+    </div>
+
+    <div id="pergunta3">
+        <h3>Como funciona uma innerHTML?</h3>
+
+        <button onclick="mostrarResposta('pergunta3')">Mostrar Resposta</button>
+    </div>
+
+
+</body>
+</html>
+
+ <script>
+
+        function mostrarResposta(id) {
+            if (id === "pergunta") {
+                const div = document.getElementById(id);
+                div.innerHTML += "<p>Resposta: HTML significa HyperText Markup Language, é a linguagem de marcação usada para criar páginas web.</p>";
+            } else if (id === "pergunta2") {
+                const div = document.getElementById(id);
+                div.innerHTML += "<p>Resposta: DOM significa Document Object Model, é uma representação em árvore dos elementos de uma página web, permitindo a manipulação dinâmica do conteúdo e estrutura.</p>";
+            } else if (id === "pergunta3") {
+                const div = document.getElementById(id);
+                div.innerHTML += "<p>Resposta: innerHTML é uma propriedade de um elemento HTML que permite acessar ou modificar o conteúdo HTML dentro desse elemento. Ao usar innerHTML, você pode inserir ou alterar o conteúdo de um elemento, incluindo texto e tags HTML.</p>";
+            }
+        }
+</script>

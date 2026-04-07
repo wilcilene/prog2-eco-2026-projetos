@@ -1,0 +1,43 @@
+<!--
+1 – Alterando o tema da página
+Crie dois botões: “Tema claro” e “Tema escuro”. Ao clicar em cada um, altere o backgroundColor do body e a cor do texto usando querySelector e eventos.
+
+Use document.querySelector("body") para pegar o body.
+No evento de clique dos botões, altere style.backgroundColor e style.color.
+--->
+
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema</title>
+</head>
+<body>
+
+    <div id="titulo1">
+        <h1>Escolha o tema da página</h1>
+    </div>
+
+    <button id="claro">Tema Claro</button>
+    <button id="escuro">Tema Escuro</button>
+
+    
+</body>
+</html>
+
+<script>
+    const body = document.querySelector("body");
+    const bClaro = document.getElementById("claro");
+    const bEscuro = document.getElementById("escuro");
+
+    bClaro.addEventListener("click", function() {
+        body.style.backgroundColor = "white";
+        body.style.color = "black";
+    });
+
+    bEscuro.addEventListener("click", function() {
+        body.style.backgroundColor = "black";
+        body.style.color = "white";
+    });
+</script>

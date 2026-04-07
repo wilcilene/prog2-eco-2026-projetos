@@ -1,0 +1,60 @@
+//Formulário de Pré-Inscrição
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulário de Pré-Inscrição</title>
+
+</head>
+
+<body>
+
+    <h1>Formulário de Contato</h1>
+
+    <form>
+        <!-- Nome -->
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required><br><br>
+
+        <!-- Email -->
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <!-- Idade -->
+        <label>Idade:</label><br>
+        <input type="number" name="idade" min="18" max="100" required><br><br>
+
+        <!-- Telefone -->
+        <label>Telefone:</label><br>
+        <input type="tel" name="telefone" required><br><br>
+
+        <!-- Assunto -->
+        <label>Assunto:</label><br>
+        <select name="assunto" required>
+            <option value="">Selecione</option>
+            <option value="duvida">Dúvida</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="outro">Outro</option>
+        </select><br><br>
+
+        <!-- Data -->
+        <label>Data de contato:</label><br>
+        <input type="date" name="data"><br><br>
+
+        <!-- Mensagem -->
+        <label>Mensagem:</label><br>
+        <textarea name="mensagem" required></textarea><br><br>
+
+        <!-- Botão -->
+        <button type="submit">Enviar</button>
+
+        </form>
+
+
+
+
+
+</html>

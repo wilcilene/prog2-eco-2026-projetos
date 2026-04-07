@@ -36,7 +36,7 @@ _Um ambiente de desenvolvimento integrado (IDE) é uma aplicação de software q
 | Integração com Git | Excelente | Excelente | Básica (plugins) | Excelente |
 | Extensões disponíveis | Muitas | Algumas | Muitas | Muitas |
 | Performance | Muito boa | Boa | Excelente | Boa |
-| Custo / licença | Gratuito | Pago | Gratuito (uso livre) | Pago / versão Community gratuita |
+| Custo / licença | Gratuito | Pago/ Gratuituo limitado | Pago/ Gratuituo | Pago / 30 dias grátis |
 | **Nota geral (1 a 5)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
 
 **Ferramenta escolhida:** `Visual Studio Code`
@@ -111,7 +111,7 @@ _Ferramentas de teste de API são utilizadas para enviar requisições HTTP e an
 | Visualização da resposta | Excelente | Excelente | Muito boa | Muito boa |
 | Organização de requisições | Excelente | Muito boa | Boa | Boa |
 | Integração com a IDE | Boa | Boa | Excelente | Básica |
-| Custo / licença | Gratuito / versão paga | Gratuito / open source | Gratuito | Gratuito / open source |
+| Custo / licença | Gratuito / versão paga | Gratuito / versão paga | Gratuito / versão paga | Gratuito / versão paga |
 | **Nota geral (1 a 5)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
 
 **Ferramenta escolhida:** `Postman`
