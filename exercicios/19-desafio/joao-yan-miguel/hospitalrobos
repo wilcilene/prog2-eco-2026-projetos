@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital de Robôs</title>
+  <style>
+    body { font-family: Arial; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px; }
+    .alta { background: #ccc; text-decoration: line-through; }
+    .destaque { border: 2px solid blue; }
+    .medico { background: #f8d7da; }
+    .servico { background: #fff3cd; }
+    .industrial { background: #d4edda; }
+  </style>
+</head>
+<body>
+
+<h1>Hospital de Robôs</h1>
+
+<h3>Admitir Robô</h3>
+<form id="form">
+  ID: <input id="id"><br>
+  Modelo: <input id="modelo"><br>
+  Fabricante: <input id="fabricante"><br>
+  Ano: <input id="ano"><br>
+  Tipo:
+  <select id="tipo">
+    <option value="servico">AndroideServico</option>
+    <option value="industrial">RoboIndustrial</option>
+    <option value="medico">RoboMedico</option>
+  </select><br>
+  Articulações (industrial): <input id="art"><br>
+  <button type="submit">Adicionar</button>
+</form>
+
+<h3>Buscar por ID</h3>
+<input id="busca" placeholder="Digite o ID">
+
+<div id="lista"></div>
+
+<script>
+// Classe base
+class Robo {
+  constructor(id, modelo, fabricante, anoFabricacao) {
+    if (modelo.length < 3) throw new Error("Modelo inválido");
+    this.id = id;
+    this.modelo = modelo;
+    this.fabricante = fabricante;
+    this.anoFabricacao = anoFabricacao;
+  }
+
+  diagnosticar() {
+    return "Diagnóstico genérico";
+  }
+}
+
+class AndroideServico extends Robo {
+  diagnosticar() {
+    return this.anoFabricacao < 2140 ? "Superaquecimento" : "OK";
+  }
+  calcularCusto() { return 500; }
+}
+
+class RoboIndustrial extends Robo {
+  constructor(id, modelo, fabricante, anoFabricacao, articulacoesDanificadas) {
+    super(id, modelo, fabricante, anoFabricacao);
+    this.articulacoesDanificadas = articulacoesDanificadas;
+  }
+  calcularCusto() { return 200 * this.articulacoesDanificadas; }
+}
+
+class RoboMedico extends Robo {
+  diagnosticar() { return "Urgência crítica"; }
+  calcularCusto() { return 1200; }
+}
+
+function verificarDiagnosticavel(obj) {
+  return obj.diagnosticar && obj.calcularCusto;
+}
+
+const hospital = {
+  pacientes: [],
+
+  admitir(robo) {
+    if (!verificarDiagnosticavel(robo)) throw new Error("Inválido");
+    this.pacientes.push(robo);
+    salvar();
+  },
+
+  buscarPorId(id) {
+    const r = this.pacientes.find(r => r.id == id);
+    if (!r) throw new Error("Não encontrado");
+    return r;
+  },
+
+  realizarTriagem() {
+    return this.pacientes.map(r => ({
+      robo: r,
+      diagnostico: r.diagnosticar(),
+      custo: r.calcularCusto()
+    }));
+  }
+};
+
+function salvar() {
+  localStorage.setItem("robos", JSON.stringify(hospital.pacientes));
+}
+
+function carregar() {
+  const dados = JSON.parse(localStorage.getItem("robos")) || [];
+  hospital.pacientes = dados;
+}
+
+function render() {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
+
+  hospital.realizarTriagem().forEach(p => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    if (p.robo instanceof RoboMedico) div.classList.add("medico");
+    else if (p.robo instanceof AndroideServico) div.classList.add("servico");
+    else div.classList.add("industrial");
+
+    div.innerHTML = `ID: ${p.robo.id} <br> ${p.diagnostico} <br> Custo: ${p.custo}`;
+
+    div.ondblclick = () => div.classList.toggle("alta");
+
+    lista.appendChild(div);
+  });
+}
+
+// Form
+form.onsubmit = (e) => {
+  e.preventDefault();
+  try {
+    const id = idInput.value;
+    const modelo = modeloInput.value;
+    const fab = fabricanteInput.value;
+    const ano = Number(anoInput.value);
+    const tipo = tipoInput.value;
+
+    let robo;
+
+    if (tipo === "servico") robo = new AndroideServico(id, modelo, fab, ano);
+    else if (tipo === "industrial") robo = new RoboIndustrial(id, modelo, fab, ano, Number(artInput.value));
+    else robo = new RoboMedico(id, modelo, fab, ano);
+
+    hospital.admitir(robo);
+    render();
+  } catch (e) {
+    alert(e.message);
+  }
+};
+
+// Busca
+document.getElementById("busca").addEventListener("input", (e) => {
+  const id = e.target.value;
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach(c => c.classList.remove("destaque"));
+
+  const card = [...cards].find(c => c.innerText.includes("ID: " + id));
+  if (card) {
+    card.classList.add("destaque");
+    card.scrollIntoView();
+  }
+});
+
+// Inputs
+const form = document.getElementById("form");
+const idInput = document.getElementById("id");
+const modeloInput = document.getElementById("modelo");
+const fabricanteInput = document.getElementById("fabricante");
+const anoInput = document.getElementById("ano");
+const tipoInput = document.getElementById("tipo");
+const artInput = document.getElementById("art");
+
+carregar();
+render();
+</script>
+
+</body>
+</html>
