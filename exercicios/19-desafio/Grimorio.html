@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grimório dos Heróis</title>
+    <style>
+        /* Reset mínimo, sem enfeites pesados */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', Tahoma, sans-serif;
+            background: #e9ecef;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #1e2a3a;
+            margin-bottom: 24px;
+            letter-spacing: -0.2px;
+            border-left: 4px solid #2c3e66;
+            padding-left: 16px;
+        }
+
+        
+        .form-cadastro {
+            background: white;
+            padding: 20px 24px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            border: 1px solid #dce4ec;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            background: #ffffff;
+            transition: 0.1s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        
+        .btn {
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.1s ease;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .btn-primario {
+            background: #10b981;
+            color: white;
+        }
+        .btn-primario:hover {
+            background: #059669;
+        }
+
+        
+        .botoes-acao {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .btn-salvar {
+            background: #3b82f6;
+            color: white;
+            flex: 1;
+            text-align: center;
+        }
+        .btn-salvar:hover {
+            background: #2563eb;
+        }
+
+        .btn-carregar {
+            background: #f59e0b;
+            color: white;
+            flex: 1;
+            text-align: center;
+        }
+        .btn-carregar:hover {
+            background: #d97706;
+        }
+
+        .btn-limpar {
+            background: #ef4444;
+            color: white;
+            flex: 1;
+            text-align: center;
+        }
+        .btn-limpar:hover {
+            background: #dc2626;
+        }
+
+        
+        .lista-herois {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 18px 20px;
+            border: 1px solid #e2e8f0;
+            transition: 0.05s linear;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #0f172a;
+            letter-spacing: -0.2px;
+        }
+
+        .card p {
+            margin: 8px 0;
+            font-size: 0.9rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card p strong {
+            font-weight: 600;
+            color: #0f172a;
+            min-width: 55px;
+        }
+
+        
+        .btn-atacar {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 14px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .btn-atacar:hover {
+            background: #ea580c;
+        }
+
+        
+        .resultado-ataque {
+            margin-top: 12px;
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: none;
+            background: #f1f5f9;
+            border-left: 3px solid;
+        }
+
+        .sucesso {
+            background: #e0f2fe;
+            color: #0369a1;
+            border-left-color: #0284c7;
+            display: block;
+        }
+
+        .erro {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-left-color: #dc2626;
+            display: block;
+        }
+
+        
+        .mensagem {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .mensagem-sucesso {
+            background: #10b981;
+        }
+        .mensagem-erro {
+            background: #ef4444;
+        }
+
+        .vazio {
+            background: white;
+            text-align: center;
+            padding: 48px 20px;
+            border-radius: 28px;
+            color: #5b6e8c;
+            font-size: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        
+        hr {
+            margin: 10px 0;
+        }
+        button {
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1> Grimório dos Heróis</h1>
+
+    <!-- Formulário de cadastro -->
+    <div class="form-cadastro">
+        <form id="formHeroi">
+            <div class="form-group">
+                <label>Nome do herói</label>
+                <input type="text" id="nome" placeholder="Ex: Berenice, Mathias, Gino" required>
+            </div>
+            <div class="form-group">
+                <label>Tipo</label>
+                <select id="tipo">
+                    <option value="Mago">Mago</option>
+                    <option value="Guerreiro">Guerreiro</option>
+                    <option value="Arqueiro">Arqueiro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nível (1-20)</label>
+                <input type="number" id="nivel" min="1" max="20" value="3">
+            </div>
+            <button type="submit" class="btn btn-primario">+ Adicionar Herói</button>
+        </form>
+    </div>
+
+    <!-- 3 botões coloridos -->
+    <div class="botoes-acao">
+        <button id="btnSalvar" class="btn btn-salvar"> Salvar Grimório</button>
+        <button id="btnCarregar" class="btn btn-carregar"> Carregar Grimório</button>
+        <button id="btnLimpar" class="btn btn-limpar"> Limpar Tudo</button>
+    </div>
+
+    <!-- Cards vão aparecer aqui -->
+    <div id="listaHerois" class="lista-herois"></div>
+</div>
+
+<script>
+    // ---------- CLASSES SIMPLES ----------
+    class Heroi {
+        constructor(nome, nivel, vida) {
+            if (!nome || nome.trim() === "") throw new Error("Nome não pode ser vazio");
+            this.nome = nome.trim();
+            this.nivel = nivel;
+            this.vida = vida;
+        }
+
+        getStatus() {
+            return `${this.nome} | Nv.${this.nivel} |  ${this.vida}`;
+        }
+
+        atacar() {
+            return "Ataque básico!";
+        }
+    }
+
+    class Mago extends Heroi {
+        constructor(nome, nivel, vida, mana = null) {
+            super(nome, nivel, vida);
+            this.mana = (mana !== null) ? mana : (50 + nivel * 8);
+            this.tipo = "Mago";
+        }
+
+        atacar() {
+            if (this.mana < 12) throw new Error(`${this.nome} sem mana! (${this.mana} MP)`);
+            this.mana -= 12;
+            let dano = this.nivel * 14;
+            return `${this.nome} lançou magia! Dano ${dano} | MP: ${this.mana}`;
+        }
+
+        getStatus() {
+            return `${super.getStatus()} |  MP: ${this.mana}`;
+        }
+    }
+
+    class Guerreiro extends Heroi {
+        constructor(nome, nivel, vida, forca = null) {
+            super(nome, nivel, vida);
+            this.forca = (forca !== null) ? forca : (8 + nivel);
+            this.tipo = "Guerreiro";
+        }
+
+        atacar() {
+            let dano = this.forca * this.nivel;
+            return `${this.nome} golpeia com espada! Dano ${dano}`;
+        }
+
+        getStatus() {
+            return `${super.getStatus()} |  Força: ${this.forca}`;
+        }
+    }
+
+    class Arqueiro extends Heroi {
+        constructor(nome, nivel, vida, flechas = null) {
+            super(nome, nivel, vida);
+            this.flechas = (flechas !== null) ? flechas : (18 + nivel * 2);
+            this.tipo = "Arqueiro";
+        }
+
+        atacar() {
+            if (this.flechas <= 0) throw new Error(`${this.nome} não tem flechas!`);
+            this.flechas--;
+            let dano = this.nivel * 9;
+            return `${this.nome} dispara flecha! Dano ${dano} |  flechas: ${this.flechas}`;
+        }
+
+        getStatus() {
+            return `${super.getStatus()} |  Flechas: ${this.flechas}`;
+        }
+    }
+
+    // verificação simples de combatente
+    function verificarCombatente(objeto) {
+        if (typeof objeto.atacar !== 'function') throw new Error("Herói não sabe atacar!");
+        if (typeof objeto.getStatus !== 'function') throw new Error("Status não disponível");
+        return true;
+    }
+
+    // ---------- GRIMÓRIO (objeto principal) ----------
+    const grimorio = {
+        heroes: [],
+
+        adicionarHeroi(heroi) {
+            try {
+                verificarCombatente(heroi);
+                this.heroes.push(heroi);
+                this.mostrarMensagem(`${heroi.nome} entrou para o grimório!`, "sucesso");
+                this.atualizarTela();
+            } catch (err) {
+                this.mostrarMensagem(err.message, "erro");
+            }
+        },
+
+        salvar() {
+            try {
+                let dados = [];
+                for (let h of this.heroes) {
+                    let base = {
+                        tipo: h.tipo,
+                        nome: h.nome,
+                        nivel: h.nivel,
+                        vida: h.vida
+                    };
+                    if (h.mana !== undefined) base.mana = h.mana;
+                    if (h.forca !== undefined) base.forca = h.forca;
+                    if (h.flechas !== undefined) base.flechas = h.flechas;
+                    dados.push(base);
+                }
+                localStorage.setItem("grimorio_simples", JSON.stringify(dados));
+                this.mostrarMensagem("Grimório salvo!", "sucesso");
+            } catch (e) {
+                this.mostrarMensagem("Erro ao salvar", "erro");
+            }
+        },
+
+        carregar() {
+            try {
+                let raw = localStorage.getItem("grimorio_simples");
+                if (!raw) throw new Error("Nenhum save encontrado");
+                let dados = JSON.parse(raw);
+                this.heroes = [];
+                for (let d of dados) {
+                    let heroi;
+                    if (d.tipo === "Mago") {
+                        heroi = new Mago(d.nome, d.nivel, d.vida, d.mana);
+                    } else if (d.tipo === "Guerreiro") {
+                        heroi = new Guerreiro(d.nome, d.nivel, d.vida, d.forca);
+                    } else if (d.tipo === "Arqueiro") {
+                        heroi = new Arqueiro(d.nome, d.nivel, d.vida, d.flechas);
+                    }
+                    if (heroi) this.heroes.push(heroi);
+                }
+                this.mostrarMensagem(`${this.heroes.length} heróis carregados`, "sucesso");
+                this.atualizarTela();
+            } catch (err) {
+                this.mostrarMensagem(err.message || "Falha ao carregar", "erro");
+            }
+        },
+
+        limpar() {
+            if (confirm("Remover todos os heróis?")) {
+                this.heroes = [];
+                localStorage.removeItem("grimorio_simples");
+                this.atualizarTela();
+                this.mostrarMensagem("Grimório limpo", "sucesso");
+            }
+        },
+
+        atacar(index) {
+            const heroi = this.heroes[index];
+            const resultadoDiv = document.getElementById(`resultado-${index}`);
+            if (!resultadoDiv) return;
+            try {
+                const resultado = heroi.atacar();
+                resultadoDiv.innerHTML = ` ${resultado}`;
+                resultadoDiv.className = "resultado-ataque sucesso";
+                this.atualizarTela();  // atualiza stats (mana/flechas)
+                setTimeout(() => {
+                    const div = document.getElementById(`resultado-${index}`);
+                    if (div) div.className = "resultado-ataque";
+                }, 2800);
+            } catch (err) {
+                resultadoDiv.innerHTML = ` ${err.message}`;
+                resultadoDiv.className = "resultado-ataque erro";
+                setTimeout(() => {
+                    const div = document.getElementById(`resultado-${index}`);
+                    if (div) div.className = "resultado-ataque";
+                }, 2800);
+            }
+        },
+
+        atualizarTela() {
+            const container = document.getElementById("listaHerois");
+            if (!container) return;
+            if (this.heroes.length === 0) {
+                container.innerHTML = `<div class="vazio">✨ Nenhum herói cadastrado ✨<br><span style="font-size:0.85rem;">Adicione Berenice, Mathias ou Gino</span></div>`;
+                return;
+            }
+
+            let html = "";
+            for (let i = 0; i < this.heroes.length; i++) {
+                const h = this.heroes[i];
+                html += `<div class="card">
+                            <h3>${h.nome}</h3>
+                            <p><strong>Nível:</strong> ${h.nivel}</p>
+                            <p><strong>Vida:</strong>  ${h.vida}</p>`;
+                if (h.mana !== undefined) html += `<p><strong>Mana:</strong>  ${h.mana}</p>`;
+                if (h.forca !== undefined) html += `<p><strong>Força:</strong>  ${h.forca}</p>`;
+                if (h.flechas !== undefined) html += `<p><strong>Flechas:</strong>  ${h.flechas}</p>`;
+                html += `<p><strong>Status:</strong> ${h.getStatus()}</p>
+                         <button class="btn-atacar" data-index="${i}"> ATACAR</button>
+                         <div id="resultado-${i}" class="resultado-ataque"></div>
+                         </div>`;
+            }
+            container.innerHTML = html;
+
+            // bind dos botões de ataque
+            const botoes = container.querySelectorAll('.btn-atacar');
+            for (let btn of botoes) {
+                const idx = btn.getAttribute('data-index');
+                if (idx !== null) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.atacar(parseInt(idx));
+                    });
+                }
+            }
+        },
+
+        mostrarMensagem(texto, tipo) {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = `mensagem mensagem-${tipo}`;
+            msgDiv.innerText = texto;
+            document.body.appendChild(msgDiv);
+            setTimeout(() => msgDiv.remove(), 2200);
+        }
+    };
+
+    
+    window.onload = () => {
+        const form = document.getElementById("formHeroi");
+        const btnSalvar = document.getElementById("btnSalvar");
+        const btnCarregar = document.getElementById("btnCarregar");
+        const btnLimpar = document.getElementById("btnLimpar");
+
+        // evento de adicionar herói
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            let nome = document.getElementById("nome").value.trim();
+            let tipo = document.getElementById("tipo").value;
+            let nivel = parseInt(document.getElementById("nivel").value) || 1;
+            if (nome === "") {
+                grimorio.mostrarMensagem("Digite um nome", "erro");
+                return;
+            }
+            let vidaBase = 90 + (nivel * 8);
+            try {
+                let novoHeroi;
+                if (tipo === "Mago") novoHeroi = new Mago(nome, nivel, vidaBase);
+                else if (tipo === "Guerreiro") novoHeroi = new Guerreiro(nome, nivel, vidaBase);
+                else novoHeroi = new Arqueiro(nome, nivel, vidaBase);
+                grimorio.adicionarHeroi(novoHeroi);
+                document.getElementById("nome").value = "";
+                document.getElementById("nivel").value = 3;
+            } catch (err) {
+                grimorio.mostrarMensagem(err.message, "erro");
+            }
+        };
+
+        btnSalvar.onclick = () => grimorio.salvar();
+        btnCarregar.onclick = () => grimorio.carregar();
+        btnLimpar.onclick = () => grimorio.limpar();
+
+        
+        const saveExistente = localStorage.getItem("grimorio_simples");
+        if (saveExistente) {
+            grimorio.carregar();
+        } else {
+            // cria os 3 heróis específicos com classes variadas
+            const heroisFixos = [
+                new Mago("Berenice", 4, 130, 72),
+                new Guerreiro("Mathias", 5, 145, 14),
+                new Arqueiro("Gino", 3, 118, 26)
+            ];
+            
+            heroisFixos.forEach(h => grimorio.heroes.push(h));
+            grimorio.atualizarTela();
+            grimorio.mostrarMensagem("Berenice, Mathias e Gino surgem no grimório!", "sucesso");
+        }
+    };
+</script>
+</body>
+</html>
