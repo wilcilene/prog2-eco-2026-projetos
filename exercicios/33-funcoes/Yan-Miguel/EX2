@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Processar Idade</title>
+</head>
+<body>
+
+<h2>Teste de Callback - Idade</h2>
+
+<script>
+// Função principal
+function processarIdade(idade, callback) {
+  if (idade < 0 || idade > 120) {
+    throw new Error("Idade inválida!");
+  }
+
+  callback(idade);
+}
+
+// Callback 1 → verificar maioridade
+function verificarMaioridade(idade) {
+  if (idade >= 18) {
+    console.log("Maior de idade");
+  } else {
+    console.log("Menor de idade");
+  }
+}
+
+// Callback 2 → calcular ano de nascimento
+function calcularAnoNascimento(idade) {
+  const anoAtual = new Date().getFullYear();
+  const nascimento = anoAtual - idade;
+  console.log("Ano de nascimento aproximado:", nascimento);
+}
+
+// TESTES
+try {
+  processarIdade(20, verificarMaioridade);
+  processarIdade(20, calcularAnoNascimento);
+
+  processarIdade(15, verificarMaioridade);
+  processarIdade(15, calcularAnoNascimento);
+
+  processarIdade(150, verificarMaioridade); // erro
+} catch (erro) {
+  console.log("Erro:", erro.message);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+// Classe Livro
+
+class Livro {
+  constructor(titulo, autor) {
+    this.#validarTexto(titulo, "Título");
+    this.#validarTexto(autor, "Autor");
+
+    this.titulo = titulo.trim();
+    this.autor = autor.trim();
+  }
+
+  #validarTexto(valor, campo) {
+    if (typeof valor !== "string" || valor.trim() === "") {
+      throw new Error(`${campo} deve ser uma string não vazia.`);
+    }
+  }
+}
+
+// Classe UsuarioBiblioteca
+
+class UsuarioBiblioteca {
+  constructor(nome) {
+    if (typeof nome !== "string" || nome.trim() === "") {
+      throw new Error("Nome deve ser uma string não vazia.");
+    }
+
+    this.nome = nome.trim();
+  }
+}
+
+// Classe Biblioteca
+
+class Biblioteca {
+  #emprestimos;
+
+  constructor() {
+    this.#emprestimos = [];
+  }
+
+  emprestarLivro(usuario, livro) {
+    if (!(usuario instanceof UsuarioBiblioteca)) {
+      throw new Error("Usuário inválido.");
+    }
+
+    if (!(livro instanceof Livro)) {
+      throw new Error("Livro inválido.");
+    }
+
+    // Verifica se o mesmo usuário já pegou o mesmo livro
+    const jaEmprestado = this.#emprestimos.some(
+      (e) => e.usuario === usuario && e.livro === livro
+    );
+
+    if (jaEmprestado) {
+      throw new Error("Este livro já está emprestado para este usuário.");
+    }
+
+    this.#emprestimos.push({
+      usuario,
+      livro,
+      data: new Date()
+    });
+  }
+
+  listarEmprestimos() {
+    return this.#emprestimos.map(e => ({
+      usuario: e.usuario.nome,
+      livro: e.livro.titulo,
+      autor: e.livro.autor,
+      data: e.data
+    }));
+  }
+}

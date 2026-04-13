@@ -7,7 +7,7 @@ Use o template em [`/templates/README-dupla.md`](../templates/README-dupla.md) p
 
 | Pasta | Dupla | Projeto |
 |-------|-------|---------|
-| `dupla-01-...` | A definir | A definir |
+| `dupla-01-...` |Yan e Miguel|Gerenciamento de Pista|
 | `dupla-02-...` | A definir | A definir |
 | `dupla-03-...` | A definir | A definir |
 | `dupla-04-...` | A definir | A definir |

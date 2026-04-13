@@ -1,0 +1,62 @@
+//Criar Classe Base
+class Pagamento {
+  constructor(valor) {
+    if (typeof valor !== 'number' || valor <= 0) {
+      throw new Error('Valor deve ser um número positivo');
+    }
+    this.valor = valor; 
+  }
+
+  processar() {
+    throw new Error('Método processar() deve ser implementado   ');
+  }
+}
+
+//Criar Subclasse Específica
+class PagamentoCartao extends Pagamento {
+  constructor(valor, numeroCartao) {
+    super(valor);
+    if (typeof numeroCartao !== 'string' || numeroCartao.length !== 16) {
+      throw new Error('Número do cartão deve ser uma string de 16 caracteres');
+    }
+    this.numeroCartao = numeroCartao;
+  }
+
+  processar() {
+    console.log(`Processando pagamento com cartão: ${this.numeroCartao}`);
+  }
+}
+
+//Criar Subclasse Específica
+class PagamentoBoleto extends Pagamento {
+  constructor(valor, codigoBarras) {
+    super(valor);
+    if (typeof codigoBarras !== 'string' || codigoBarras.length !== 44) {
+      throw new Error('Código de barras deve ser uma string de 44 caracteres');
+    }
+    this.codigoBarras = codigoBarras;
+  }
+
+  processar() {
+    console.log(`Processando pagamento com boleto: ${this.codigoBarras}`);
+  }
+}
+
+//Criar Subclasse Específica
+class PagamentoPix extends Pagamento {
+  constructor(valor, chavePix) {
+    super(valor);
+    if (typeof chavePix !== 'string' || chavePix.length !== 36) {
+      throw new Error('Chave Pix deve ser uma string de 36 caracteres');
+    }
+    this.chavePix = chavePix;
+  }
+
+  processar() {
+    console.log(`Processando pagamento com Pix: ${this.chavePix}`);
+  }
+}
+
+function pagar(pagamento) {
+  console.log(pagamento.processar());
+}
