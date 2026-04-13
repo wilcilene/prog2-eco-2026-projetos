@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Alterar Tema</title>
+</head>
+<body>
+
+  <h1>Alterando o tema da página</h1>
+
+  <button id="claro">Tema claro</button>
+  <button id="escuro">Tema escuro</button>
+
+  <script>
+    // Seleciona o body
+    const body = document.querySelector("body");
+
+    // Seleciona os botões
+    const botaoClaro = document.querySelector("#claro");
+    const botaoEscuro = document.querySelector("#escuro");
+
+    // Evento para tema claro
+    botaoClaro.addEventListener("click", function() {
+      body.style.backgroundColor = "white";
+      body.style.color = "black";
+    });
+
+    // Evento para tema escuro
+    botaoEscuro.addEventListener("click", function() {
+      body.style.backgroundColor = "black";
+      body.style.color = "white";
+    });
+  </script>
+
+</body>
+</html>
