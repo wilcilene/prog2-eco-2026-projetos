@@ -5,7 +5,7 @@
 | Nome | Matrícula | GitHub |
 |------|-----------|--------|
 | Isabel Schifler | 2024003899 | [@isabelschifler](https://github.com/isabelschifler) |
-| Suzana | 2026XXX | [@usuario2](https://github.com/usuario2) |
+| Suzana | 2024002283 | [@SuzanaSilveira](https://github.com/SuzanaSilveira) |
 | Larissa | 2026XXX | [@usuario2](https://github.com/usuario2) |
 | Nathan | 2026XXX | [@usuario2](https://github.com/usuario2) |
 
