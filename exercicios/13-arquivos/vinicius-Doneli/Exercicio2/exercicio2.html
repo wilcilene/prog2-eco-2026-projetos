@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Leitor de CSV</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            background: green;
+            color: white;
+            cursor: pointer;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            background: green;
+            color: white;
+            padding: 8px;
+        }
+        td {
+            padding: 8px;
+        }
+        tr.destaque {
+            background: yellow;
+        }
+        .erro {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        .erro.show {
+            display: block;
+        }
+        #tabela-container {
+            display: none;
+        }
+        #tabela-container.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leitor de CSV</h1>
+    
+    <input type="file" id="arquivo" accept=".csv" />
+    <button onclick="lerCSV()">Carregar</button>
+
+    <div id="erro"></div>
+
+    <div id="tabela-container">
+        <table id="tabela">
+            <thead id="cabecalho"></thead>
+            <tbody id="corpo"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function lerCSV() {
+            const input = document.getElementById("arquivo");
+            const arquivo = input.files[0];
+            const erroDiv = document.getElementById("erro");
+            const tabelaContainer = document.getElementById("tabela-container");
+
+            erroDiv.classList.remove("show");
+            tabelaContainer.classList.remove("show");
+
+            try {
+                if (!arquivo) {
+                    throw new Error("Selecione um arquivo!");
+                }
+
+                if (!arquivo.name.endsWith(".csv")) {
+                    throw new Error("Selecione um arquivo .csv!");
+                }
+
+                if (arquivo.size === 0) {
+                    throw new Error("Arquivo vazio!");
+                }
+
+                const leitor = new FileReader();
+
+                leitor.onload = function(evento) {
+                    try {
+                        const conteudo = evento.target.result;
+
+                        if (!conteudo.trim()) {
+                            throw new Error("Arquivo CSV vazio!");
+                        }
+
+                        const linhas = conteudo.trim().split("\n");
+
+                        if (linhas.length < 2) {
+                            throw new Error("Arquivo deve ter cabeçalho e dados!");
+                        }
+
+                        const cabecalho = linhas[0].split(",").map(col => col.trim());
+                        const dados = [];
+
+                        for (let i = 1; i < linhas.length; i++) {
+                            const colunas = linhas[i].split(",").map(col => col.trim());
+                            
+                            if (colunas.length !== cabecalho.length) {
+                                throw new Error("Número de colunas incorreto!");
+                            }
+
+                            dados.push(colunas);
+                        }
+
+                        let linhaMaxima = -1;
+                        let valorMaximo = -Infinity;
+
+                        for (let col = 0; col < cabecalho.length; col++) {
+                            for (let lin = 0; lin < dados.length; lin++) {
+                                const valor = parseFloat(dados[lin][col]);
+                                if (!isNaN(valor) && valor > valorMaximo) {
+                                    valorMaximo = valor;
+                                    linhaMaxima = lin;
+                                }
+                            }
+                        }
+
+                        const cabecalhoHTML = document.getElementById("cabecalho");
+                        cabecalhoHTML.innerHTML = "";
+                        const linhaHeader = document.createElement("tr");
+                        
+                        for (let col of cabecalho) {
+                            const th = document.createElement("th");
+                            th.textContent = col;
+                            linhaHeader.appendChild(th);
+                        }
+                        
+                        cabecalhoHTML.appendChild(linhaHeader);
+
+                        const corpoHTML = document.getElementById("corpo");
+                        corpoHTML.innerHTML = "";
+
+                        for (let i = 0; i < dados.length; i++) {
+                            const linhaHTML = document.createElement("tr");
+                            
+                            if (i === linhaMaxima) {
+                                linhaHTML.classList.add("destaque");
+                            }
+
+                            for (let j = 0; j < dados[i].length; j++) {
+                                const td = document.createElement("td");
+                                td.textContent = dados[i][j];
+                                linhaHTML.appendChild(td);
+                            }
+
+                            corpoHTML.appendChild(linhaHTML);
+                        }
+
+                        tabelaContainer.classList.add("show");
+
+                    } catch (erro) {
+                        erroDiv.textContent = "Erro: " + erro.message;
+                        erroDiv.classList.add("show");
+                    }
+                };
+
+                leitor.onerror = function() {
+                    erroDiv.textContent = "Erro ao ler arquivo!";
+                    erroDiv.classList.add("show");
+                };
+
+                leitor.readAsText(arquivo);
+
+            } catch (erro) {
+                erroDiv.textContent = erro.message;
+                erroDiv.classList.add("show");
+            }
+        }
+    </script>
+</body>
+</html>
