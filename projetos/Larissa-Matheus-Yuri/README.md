@@ -11,23 +11,19 @@
 
 ## Descrição do projeto
 
-> Nosso projeto tem como intuito criar um jogo divertido a fim de proporcionar entretenimento para os jogadores além de botar em pratica os conhecimentos adquiridos em aula. O jogo se trata em passar com o personagem (Pato) pelo máximo de obstaculos possiveis. Ele consta também com as opções de criar uma conta onde ficará registrada a pontuação em um banco de dados, mostrar Ranking onde exibira a pontuação de todos os jogadores, e "jogar" para iniciar o jogo. 
+> Nosso projeto tem como intuito criar um jogo divertido, inspirado no flappy bird, a fim de proporcionar entretenimento para os jogadores além de botar em pratica os conhecimentos adquiridos em aula. O jogo se trata em passar com o personagem (Pato) pelo máximo de obstaculos possiveis. Ele consta também com as opções de criar uma conta onde ficará registrada a pontuação em um banco de dados, mostrar Ranking onde exibira a pontuação de todos os jogadores, e "jogar" para iniciar o jogo. 
 
-![Casos de Uso](CasosDeUso-FlappyDuck.jpeg)
+![Casos de Uso](Docs_Images\CasosDeUso-FlappyDuck.jpeg)
+![Diagrama de Classes](Docs_Images\Classes-Flappy-Duck.png)
 ---
 
 ## Tecnologias utilizadas
 
-- JavaScript (ES6+)
-- HTML5 / CSS3
-- Node.js
-- Git / GitHub
-- Banco de dados: PostgreSQL
+- JavaScript ES6+ (Para deixar o front-end mais dinamico)
+- HTML5 / CSS3 (Para estruturar e personalizar o front-end)
+- Node.js (Para fazer o back-end)
+- Banco de dados: PostgreSQL (Para armazenar os dados dos usuários)
 - Framework web: Iremos descobrir 👀
-- IDE: Visual Studio Code
-- Teste de API: Postman
-- Qualidade de Código: ESLint
-
 
 ---
 
