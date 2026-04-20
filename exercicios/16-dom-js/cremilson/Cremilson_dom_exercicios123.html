@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exercícios DOM – Interativo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f5f5f3;
+      --color-text-primary: #1a1a18;
+      --color-text-secondary: #5f5e5a;
+      --color-border-tertiary: rgba(0,0,0,0.12);
+      --color-border-secondary: rgba(0,0,0,0.25);
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+      --font-sans: system-ui, -apple-system, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background-primary: #1e1e1c;
+        --color-background-secondary: #2a2a28;
+        --color-text-primary: #e8e6df;
+        --color-text-secondary: #a0a09a;
+        --color-border-tertiary: rgba(255,255,255,0.12);
+        --color-border-secondary: rgba(255,255,255,0.25);
+      }
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      color: var(--color-text-primary);
+    }
+
+    .section {
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      background: var(--color-background-primary);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: var(--border-radius-md);
+      font-weight: 500;
+    }
+    .badge-blue   { background: #E6F1FB; color: #0C447C; }
+    .badge-purple { background: #EEEDFE; color: #3C3489; }
+    .badge-teal   { background: #E1F5EE; color: #085041; }
+
+    .btn {
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 6px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      background: var(--color-background-primary);
+      color: var(--color-text-primary);
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--color-background-secondary); }
+    .btn-light { background: #E6F1FB; color: #0C447C; border-color: #B5D4F4; }
+    .btn-dark  { background: #2C2C2A; color: #D3D1C7; border-color: #444441; }
+
+    .theme-preview {
+      border-radius: var(--border-radius-md);
+      padding: 0.75rem 1rem;
+      font-size: 13px;
+      border: 0.5px solid var(--color-border-tertiary);
+      margin-top: 0.75rem;
+      transition: background 0.3s, color 0.3s;
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+    }
+
+    .shop-input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .shop-input-row input {
+      flex: 1;
+      border: 0.5px solid var(--color-border-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 6px 10px;
+      font-size: 13px;
+      background: var(--color-background-primary);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+
+    .shop-list { list-style: none; margin-top: 0.5rem; }
+    .shop-list li {
+      font-size: 13px;
+      padding: 5px 0;
+      color: var(--color-text-secondary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .shop-counter {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 0.5rem;
+    }
+    .shop-counter span { font-weight: 500; color: var(--color-text-primary); }
+
+    .qa-item { margin-bottom: 0.75rem; }
+    .qa-question {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+    }
+    .qa-answer {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 8px 12px;
+      margin-top: 6px;
+      border-left: 2px solid #9FE1CB;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Exercícios de DOM – Interativo</h1>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="badge badge-blue">1</span>
+        Tema da página
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-light" onclick="setTheme('light')">Tema claro</button>
+        <button class="btn btn-dark" onclick="setTheme('dark')">Tema escuro</button>
+      </div>
+      <div class="theme-preview" id="theme-preview">
+        Texto de exemplo — observe como o fundo e a cor mudam ao clicar nos botões acima.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="badge badge-purple">2</span>
+        Lista de compras
+      </div>
+      <div class="shop-input-row">
+        <input type="text" id="shop-input" placeholder="Digite um item..." onkeydown="if(event.key==='Enter')addItem()" />
+        <button class="btn" onclick="addItem()">Adicionar</button>
+      </div>
+      <ul class="shop-list" id="shop-list"></ul>
+      <p class="shop-counter">Total de itens: <span id="shop-count">0</span></p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="badge badge-teal">3</span>
+        Perguntas e respostas
+      </div>
+
+      <div class="qa-item">
+        <p class="qa-question">O que é o DOM?</p>
+        <button class="btn" onclick="toggleAnswer(this)">Mostrar resposta</button>
+        <div class="qa-answer">O DOM (Document Object Model) é uma representação em árvore dos elementos HTML, que o navegador cria para que o JavaScript possa interagir com a página.</div>
+      </div>
+
+      <div class="qa-item">
+        <p class="qa-question">Qual a diferença entre innerHTML e textContent?</p>
+        <button class="btn" onclick="toggleAnswer(this)">Mostrar resposta</button>
+        <div class="qa-answer">innerHTML interpreta e renderiza HTML dentro da string, enquanto textContent trata tudo como texto puro, sem processar tags.</div>
+      </div>
+
+      <div class="qa-item">
+        <p class="qa-question">Para que serve addEventListener?</p>
+        <button class="btn" onclick="toggleAnswer(this)">Mostrar resposta</button>
+        <div class="qa-answer">addEventListener registra uma função (callback) que será executada quando um evento específico ocorrer em um elemento, como 'click', 'input' ou 'keydown'.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setTheme(mode) {
+      const el = document.getElementById('theme-preview');
+      if (mode === 'dark') {
+        el.style.backgroundColor = '#2C2C2A';
+        el.style.color = '#D3D1C7';
+      } else {
+        el.style.backgroundColor = '#F1EFE8';
+        el.style.color = '#2C2C2A';
+      }
+    }
+
+    function addItem() {
+      const input = document.getElementById('shop-input');
+      const val = input.value.trim();
+      if (!val) return;
+      const li = document.createElement('li');
+      li.textContent = val;
+      document.getElementById('shop-list').appendChild(li);
+      input.value = '';
+      document.getElementById('shop-count').textContent =
+        document.getElementById('shop-list').children.length;
+    }
+
+    function toggleAnswer(btn) {
+      const answer = btn.nextElementSibling;
+      const visible = answer.style.display === 'block';
+      answer.style.display = visible ? 'none' : 'block';
+      btn.textContent = visible ? 'Mostrar resposta' : 'Ocultar resposta';
+    }
+  </script>
+</body>
+</html>
