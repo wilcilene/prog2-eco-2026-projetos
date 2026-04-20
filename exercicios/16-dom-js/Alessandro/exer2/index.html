@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 2 - Lista de Compras</title>
+    <style>
+        .container {
+            margin: 40px auto;
+            max-width: 400px;
+            text-align: center;
+        }
+        ul {
+            text-align: left;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 8px;
+            font-size: 1rem;
+        }
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Compras</h1>
+        <input type="text" id="item" placeholder="Novo item">
+        <button id="adicionar">Adicionar</button>
+        <ul id="lista"></ul>
+        <div>Total de itens: <span id="total">0</span></div>
+    </div>
+    <script>
+        const lista = document.getElementById("lista");
+        const totalSpan = document.getElementById("total");
+        const input = document.getElementById("item");
+        document.getElementById("adicionar").addEventListener("click", function() {
+            const valor = input.value.trim();
+            if (valor) {
+                const li = document.createElement("li");
+                li.textContent = valor;
+                lista.appendChild(li);
+                input.value = "";
+                atualizarTotal();
+            }
+        });
+        function atualizarTotal() {
+            totalSpan.textContent = lista.children.length;
+        }
+    </script>
+</body>
+</html>

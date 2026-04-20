@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 3 - Perguntas e Respostas</title>
+    <style>
+        .container {
+            margin: 40px auto;
+            max-width: 500px;
+            text-align: center;
+        }
+        .pergunta {
+            margin-bottom: 30px;
+        }
+        .resposta {
+            margin-top: 10px;
+            color: #007bff;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 10px;
+            padding: 6px 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Perguntas e Respostas</h1>
+        <div class="pergunta">
+            <div>1. O que é o DOM?</div>
+            <button onclick="mostrarResposta('r1', 'O DOM é a interface de programação para documentos HTML e XML.')">Mostrar resposta</button>
+            <div id="r1" class="resposta"></div>
+        </div>
+        <div class="pergunta">
+            <div>2. Para que serve o método <code>querySelector</code>?</div>
+            <button onclick="mostrarResposta('r2', 'Serve para selecionar o primeiro elemento que corresponde ao seletor CSS informado.')">Mostrar resposta</button>
+            <div id="r2" class="resposta"></div>
+        </div>
+        <div class="pergunta">
+            <div>3. Como alterar o texto de um elemento pelo JavaScript?</div>
+            <button onclick="mostrarResposta('r3', 'Usando a propriedade innerHTML ou textContent do elemento.')">Mostrar resposta</button>
+            <div id="r3" class="resposta"></div>
+        </div>
+    </div>
+    <script>
+        function mostrarResposta(id, texto) {
+            document.getElementById(id).innerHTML = "Resposta: " + texto;
+        }
+    </script>
+</body>
+</html>
