@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 2 – Leitor de Arquivo CSV</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --border: #e0d8cc;
+    --accent: #1a6b3c;
+    --accent2: #d4401a;
+    --text: #1c1a17;
+    --muted: #8a8070;
+    --highlight: #e8f5ef;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', serif;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; }
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-top: 0.5rem;
+  }
+
+  h1 em { color: var(--accent); font-style: italic; }
+
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--surface);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: var(--highlight); }
+
+  .upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+
+  .upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+
+  .upload-zone p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .upload-zone strong { color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--accent); }
+
+  .info-bar {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding: 0.5rem 0;
+  }
+
+  .info-bar span { color: var(--accent); font-weight: 600; }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  thead th {
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  thead th:hover { background: var(--accent); }
+
+  thead th.highlight-col { background: var(--accent); }
+
+  tbody tr:nth-child(even) { background: var(--bg); }
+  tbody tr:hover { background: var(--highlight); }
+
+  tbody td {
+    padding: 0.65rem 1rem;
+    border-top: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  tbody td.max-val {
+    color: var(--accent);
+    font-weight: 600;
+    position: relative;
+  }
+
+  tbody td.max-val::before {
+    content: '★';
+    margin-right: 4px;
+    font-size: 0.7rem;
+  }
+
+  .empty-state {
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+  }
+
+  .error-msg {
+    background: #fff0ee;
+    border: 1px solid #f5c0b8;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    color: var(--accent2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+  }
+
+  .demo-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .demo-btn:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <div class="badge">// exercicio_02.js</div>
+      <h1>Leitor de<br>Arquivo <em>CSV</em></h1>
+    </div>
+  </div>
+
+  <div id="errorMsg" class="error-msg" style="display:none"></div>
+
+  <div class="upload-zone" id="dropZone">
+    <input type="file" id="fileInput" accept=".csv">
+    <span class="upload-icon">📄</span>
+    <p><strong>Clique ou arraste</strong> um arquivo .csv aqui</p>
+    <p style="margin-top:0.3rem">Apenas arquivos <strong>.csv</strong> são aceitos</p>
+  </div>
+
+  <div class="controls">
+    <input type="text" class="search-input" id="searchInput" placeholder="Filtrar registros..." oninput="filtrar()">
+    <button class="demo-btn" onclick="carregarDemo()">Carregar CSV demo</button>
+  </div>
+
+  <div class="info-bar" id="infoBar" style="display:none"></div>
+  <div class="table-wrapper">
+    <div class="empty-state" id="emptyState">Nenhum arquivo carregado ainda.</div>
+    <table id="dataTable" style="display:none">
+      <thead id="tableHead"></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  let allRows = [];
+  let headers = [];
+  let numericCol = -1;
+  let sortCol = -1, sortAsc = true;
+
+  const CSV_DEMO = `nome,disciplina,nota,faltas
+Ana Lima,Programação II,9.5,1
+Bruno Costa,Programação II,7.2,3
+Carla Souza,Programação II,8.8,0
+Diego Melo,Programação II,5.1,7
+Érica Torres,Programação II,10.0,0
+Fernando Rios,Programação II,6.3,4`;
+
+  document.getElementById('fileInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.name.endsWith('.csv')) {
+      mostrarErro('Arquivo inválido. Apenas arquivos .csv são aceitos.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = ev => processarCSV(ev.target.result);
+  });
+
+  const dropZone = document.getElementById('dropZone');
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file && file.name.endsWith('.csv')) {
+      const reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = ev => processarCSV(ev.target.result);
+    } else {
+      mostrarErro('Apenas arquivos .csv são aceitos.');
+    }
+  });
+
+  function carregarDemo() { processarCSV(CSV_DEMO); }
+
+  function processarCSV(texto) {
+    esconderErro();
+    const linhas = texto.split('\n').filter(l => l.trim());
+    if (linhas.length < 2) { mostrarErro('CSV vazio ou fora do formato esperado.'); return; }
+
+    headers = linhas[0].split(',').map(h => h.trim());
+    allRows = linhas.slice(1).map(l => l.split(',').map(c => c.trim()));
+
+    // Detectar coluna numérica (ex: nota, preço)
+    numericCol = -1;
+    headers.forEach((h, i) => {
+      if (/nota|preco|preço|valor|price|score/i.test(h)) numericCol = i;
+    });
+    if (numericCol === -1) {
+      for (let i = 0; i < headers.length; i++) {
+        if (allRows.every(r => !isNaN(parseFloat(r[i])))) { numericCol = i; break; }
+      }
+    }
+
+    renderizar(allRows);
+  }
+
+  function renderizar(rows) {
+    const maxVal = numericCol >= 0
+      ? Math.max(...rows.map(r => parseFloat(r[numericCol]) || 0))
+      : null;
+
+    const thead = document.getElementById('tableHead');
+    thead.innerHTML = '<tr>' + headers.map((h, i) =>
+      `<th onclick="ordenar(${i})" class="${i === numericCol ? 'highlight-col' : ''}">${h}${sortCol === i ? (sortAsc ? ' ↑' : ' ↓') : ''}</th>`
+    ).join('') + '</tr>';
+
+    const tbody = document.getElementById('tableBody');
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="' + headers.length + '" style="text-align:center;padding:2rem;color:var(--muted)">Nenhum resultado encontrado.</td></tr>';
+    } else {
+      tbody.innerHTML = rows.map(row =>
+        '<tr>' + row.map((cell, i) => {
+          const isMax = numericCol === i && parseFloat(cell) === maxVal;
+          return `<td class="${isMax ? 'max-val' : ''}">${cell}</td>`;
+        }).join('') + '</tr>'
+      ).join('');
+    }
+
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('dataTable').style.display = 'table';
+    const info = document.getElementById('infoBar');
+    info.style.display = 'block';
+    info.innerHTML = `<span>${rows.length}</span> de <span>${allRows.length}</span> registros${numericCol >= 0 ? ` — coluna destacada: <span>${headers[numericCol]}</span>` : ''}`;
+  }
+
+  function filtrar() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const filtrados = allRows.filter(r => r.some(c => c.toLowerCase().includes(q)));
+    renderizar(filtrados);
+  }
+
+  function ordenar(col) {
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let rows = allRows.filter(r => r.some(c => c.toLowerCase().includes(q)));
+    rows.sort((a, b) => {
+      const av = a[col], bv = b[col];
+      const n = parseFloat(av), m = parseFloat(bv);
+      if (!isNaN(n) && !isNaN(m)) return sortAsc ? n - m : m - n;
+      return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+    });
+    renderizar(rows);
+  }
+
+  function mostrarErro(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = '⚠ ' + msg;
+    el.style.display = 'block';
+  }
+
+  function esconderErro() { document.getElementById('errorMsg').style.display = 'none'; }
+</script>
+</body>
+</html>

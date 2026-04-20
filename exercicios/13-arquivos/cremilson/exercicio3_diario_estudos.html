@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 3 – Diário de Estudos</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #1e1b2e;
+    --surface: #27233d;
+    --surface2: #322d4a;
+    --border: #3d3759;
+    --accent: #a78bfa;
+    --accent2: #f472b6;
+    --green: #34d399;
+    --text: #ede9fe;
+    --muted: #7c6fa0;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+  }
+
+  .layout { max-width: 960px; margin: 0 auto; }
+
+  header {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.6rem;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .btn-export {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    background: var(--green);
+    color: #0f2318;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+
+  .btn-export:hover { opacity: 0.85; }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 640px) { .main-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .card h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group { margin-bottom: 1rem; }
+
+  label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.35rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+
+  textarea { min-height: 90px; }
+
+  .char-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.2rem;
+  }
+
+  .char-count.warn { color: var(--accent2); }
+
+  .btn-add {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-add:hover { opacity: 0.9; }
+  .btn-add:active { transform: scale(0.98); }
+
+  .error-msg {
+    background: rgba(244, 114, 182, 0.1);
+    border: 1px solid rgba(244, 114, 182, 0.3);
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    color: var(--accent2);
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+    font-family: 'DM Mono', monospace;
+    display: none;
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .view-toggle button {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .view-toggle button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1e1b2e;
+    font-weight: 500;
+  }
+
+  /* LIST VIEW */
+  .entry-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .entry-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.3rem;
+  }
+
+  .entry-disc {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+  }
+
+  .entry-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .entry-resumo {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin-top: 0.3rem;
+    opacity: 0.9;
+  }
+
+  .btn-del {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .btn-del:hover { color: var(--accent2); }
+
+  /* TABLE VIEW */
+  .table-wrap { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  th {
+    background: var(--surface2);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    color: var(--muted);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text);
+    font-size: 0.78rem;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .stats {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .stats span { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="layout">
+  <header>
+    <div>
+      <div class="tag">// exercicio_03.js</div>
+      <h1>Diário de Estudos</h1>
+    </div>
+    <button class="btn-export" onclick="exportarTxt()">↓ Exportar .txt</button>
+  </header>
+
+  <div class="main-grid">
+    <!-- FORM -->
+    <div class="card">
+      <h2>Novo Registro</h2>
+      <div id="formError" class="error-msg"></div>
+
+      <div class="form-group">
+        <label>Data</label>
+        <input type="date" id="data">
+      </div>
+      <div class="form-group">
+        <label>Disciplina</label>
+        <input type="text" id="disciplina" placeholder="ex: Programação II" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label>Resumo do estudo</label>
+        <textarea id="resumo" placeholder="O que você estudou hoje?" maxlength="500" oninput="atualizarContador()"></textarea>
+        <div class="char-count" id="charCount">0 / 500</div>
+      </div>
+      <button class="btn-add" onclick="adicionarRegistro()">+ Adicionar Registro</button>
+    </div>
+
+    <!-- REGISTROS -->
+    <div class="card">
+      <h2>Registros</h2>
+      <div class="stats" id="stats">Nenhum registro ainda.</div>
+      <div class="view-toggle">
+        <button id="btnLista" class="active" onclick="mudarView('lista')">Lista</button>
+        <button id="btnTabela" onclick="mudarView('tabela')">Tabela</button>
+      </div>
+      <div id="viewLista">
+        <div class="entry-list" id="entryList">
+          <div class="empty">Adicione seu primeiro registro ✦</div>
+        </div>
+      </div>
+      <div id="viewTabela" style="display:none">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Disciplina</th>
+                <th>Resumo</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="3" class="empty">Nenhum registro.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Interface RepositorioDiario
+  const RepositorioDiario = {
+    _registros: [],
+
+    adicionar(registro) {
+      if (!registro.data) throw new Error("Data é obrigatória.");
+      if (!registro.disciplina || registro.disciplina.trim().length === 0)
+        throw new Error("Disciplina não pode ser vazia.");
+      if (!registro.resumo || registro.resumo.trim().length < 10)
+        throw new Error("Resumo deve ter pelo menos 10 caracteres.");
+      this._registros.unshift({ ...registro, id: Date.now() });
+      return this._registros;
+    },
+
+    listar() { return this._registros; },
+
+    remover(id) {
+      this._registros = this._registros.filter(r => r.id !== id);
+    }
+  };
+
+  let viewAtual = 'lista';
+
+  // Definir data de hoje
+  document.getElementById('data').value = new Date().toISOString().split('T')[0];
+
+  function atualizarContador() {
+    const len = document.getElementById('resumo').value.length;
+    const el = document.getElementById('charCount');
+    el.textContent = `${len} / 500`;
+    el.className = 'char-count' + (len > 450 ? ' warn' : '');
+  }
+
+  function adicionarRegistro() {
+    const data = document.getElementById('data').value;
+    const disciplina = document.getElementById('disciplina').value.trim();
+    const resumo = document.getElementById('resumo').value.trim();
+    const errEl = document.getElementById('formError');
+
+    try {
+      RepositorioDiario.adicionar({ data, disciplina, resumo });
+      errEl.style.display = 'none';
+      document.getElementById('disciplina').value = '';
+      document.getElementById('resumo').value = '';
+      atualizarContador();
+      renderizar();
+    } catch (e) {
+      errEl.textContent = '⚠ ' + e.message;
+      errEl.style.display = 'block';
+    }
+  }
+
+  function renderizar() {
+    const registros = RepositorioDiario.listar();
+    const stats = document.getElementById('stats');
+    if (registros.length === 0) {
+      stats.innerHTML = 'Nenhum registro ainda.';
+    } else {
+      const discs = [...new Set(registros.map(r => r.disciplina))];
+      stats.innerHTML = `<span>${registros.length}</span> registro(s) — <span>${discs.length}</span> disciplina(s)`;
+    }
+
+    // Lista
+    const list = document.getElementById('entryList');
+    if (registros.length === 0) {
+      list.innerHTML = '<div class="empty">Adicione seu primeiro registro ✦</div>';
+    } else {
+      list.innerHTML = registros.map(r => `
+        <div class="entry-card">
+          <button class="btn-del" onclick="remover(${r.id})" title="Remover">✕</button>
+          <div class="entry-header">
+            <span class="entry-disc">${r.disciplina}</span>
+            <span class="entry-date">${r.data}</span>
+          </div>
+          <div class="entry-resumo">${r.resumo}</div>
+        </div>
+      `).join('');
+    }
+
+    // Tabela
+    const tbody = document.getElementById('tableBody');
+    if (registros.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="empty">Nenhum registro.</td></tr>';
+    } else {
+      tbody.innerHTML = registros.map(r =>
+        `<tr><td>${r.data}</td><td>${r.disciplina}</td><td title="${r.resumo}">${r.resumo}</td></tr>`
+      ).join('');
+    }
+  }
+
+  function remover(id) {
+    RepositorioDiario.remover(id);
+    renderizar();
+  }
+
+  function mudarView(v) {
+    viewAtual = v;
+    document.getElementById('viewLista').style.display = v === 'lista' ? 'block' : 'none';
+    document.getElementById('viewTabela').style.display = v === 'tabela' ? 'block' : 'none';
+    document.getElementById('btnLista').className = v === 'lista' ? 'active' : '';
+    document.getElementById('btnTabela').className = v === 'tabela' ? 'active' : '';
+  }
+
+  function exportarTxt() {
+    const registros = RepositorioDiario.listar();
+    if (registros.length === 0) { alert('Nenhum registro para exportar.'); return; }
+    let txt = '=== DIÁRIO DE ESTUDOS ===\n';
+    txt += `Exportado em: ${new Date().toLocaleString('pt-BR')}\n`;
+    txt += '='.repeat(30) + '\n\n';
+    registros.forEach((r, i) => {
+      txt += `[${i + 1}] Data: ${r.data}\n`;
+      txt += `    Disciplina: ${r.disciplina}\n`;
+      txt += `    Resumo: ${r.resumo}\n\n`;
+    });
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `diario_estudos_${new Date().toISOString().split('T')[0]}.txt`;
+    a.click();
+  }
+</script>
+</body>
+</html>

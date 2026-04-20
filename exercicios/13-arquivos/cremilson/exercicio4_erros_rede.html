@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 4 – Tratamento de Erros de Rede</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap');
+
+  :root {
+    --bg: #f4f0e8;
+    --surface: #fff;
+    --border: #d8d0c0;
+    --accent: #e84424;
+    --accent2: #1a3a5c;
+    --green: #1a7c4f;
+    --text: #1a1612;
+    --muted: #7a6e60;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cabinet Grotesk', sans-serif;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 2rem;
+  }
+
+  h1 span { color: var(--accent); }
+
+  /* API SOURCE SELECTOR */
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .source-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .source-card:hover { border-color: var(--accent2); }
+  .source-card.active { border-color: var(--accent2); background: #edf2f8; }
+
+  .source-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .source-info h3 {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .source-info p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    word-break: break-all;
+  }
+
+  /* CONTROLS */
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .url-input {
+    flex: 1;
+    min-width: 260px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .url-input:focus { border-color: var(--accent2); }
+
+  .btn-fetch {
+    background: var(--accent2);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .btn-fetch:hover { opacity: 0.9; }
+  .btn-fetch:active { transform: scale(0.97); }
+  .btn-fetch:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-error {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.2rem;
+    font-family: 'Cabinet Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-error:hover { opacity: 0.85; }
+
+  /* STATUS */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    min-height: 28px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot.idle { background: var(--muted); }
+  .dot.loading { background: #f59e0b; animation: pulse 0.8s infinite; }
+  .dot.ok { background: var(--green); }
+  .dot.error { background: var(--accent); }
+
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* OUTPUT */
+  .output-panel {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.2rem;
+    background: var(--text);
+    color: var(--bg);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+  }
+
+  .output-header span { color: #aaa; }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid #555;
+    color: #aaa;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn:hover { border-color: var(--accent2); color: #fff; }
+
+  .output-body {
+    padding: 1.5rem;
+    min-height: 200px;
+    max-height: 420px;
+    overflow-y: auto;
+  }
+
+  .placeholder {
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  /* Error display */
+  .error-display {
+    background: #fff5f4;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .error-icon { font-size: 1.8rem; flex-shrink: 0; }
+
+  .error-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+
+  .error-detail {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Data cards */
+  .data-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .data-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    animation: slideIn 0.25s ease both;
+  }
+
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+
+  .data-item:nth-child(2) { animation-delay: 0.05s; }
+  .data-item:nth-child(3) { animation-delay: 0.1s; }
+
+  .item-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    padding-top: 0.1rem;
+    min-width: 20px;
+  }
+
+  .item-content { }
+
+  .item-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .item-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .raw-json {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .key { color: var(--accent2); }
+  .val-str { color: var(--green); }
+  .val-num { color: var(--accent); }
+  .val-bool { color: #9c27b0; }
+
+  /* Code section */
+  .code-section {
+    margin-top: 1.5rem;
+    background: var(--text);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .code-header {
+    padding: 0.6rem 1.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  pre {
+    padding: 1.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: #d4d4d4;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .cm { color: #546e7a; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="tag">// exercicio_04.js — extra</div>
+  <h1>Tratamento de<br><span>Erros de Rede</span></h1>
+
+  <div class="source-grid" id="sourceGrid">
+    <div class="source-card active" data-url="https://jsonplaceholder.typicode.com/users" data-type="users" onclick="selecionarFonte(this)">
+      <div class="source-icon">👤</div>
+      <div class="source-info">
+        <h3>API de Usuários</h3>
+        <p>jsonplaceholder.typicode.com/users</p>
+      </div>
+    </div>
+    <div class="source-card" data-url="https://jsonplaceholder.typicode.com/posts?_limit=5" data-type="posts" onclick="selecionarFonte(this)">
+      <div class="source-icon">📝</div>
+      <div class="source-info">
+        <h3>API de Posts</h3>
+        <p>jsonplaceholder.typicode.com/posts</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" class="url-input" id="urlInput" placeholder="https://..." value="https://jsonplaceholder.typicode.com/users">
+    <button class="btn-fetch" id="btnFetch" onclick="buscarDados()">
+      <span id="fetchIcon">→</span> Buscar
+    </button>
+    <button class="btn-error" onclick="simularErro()">⚡ Simular Erro</button>
+  </div>
+
+  <div class="status-bar">
+    <div class="dot idle" id="dot"></div>
+    <span id="statusText">Aguardando requisição...</span>
+  </div>
+
+  <div class="output-panel">
+    <div class="output-header">
+      RESPONSE
+      <button class="copy-btn" onclick="copiarResposta()">Copiar</button>
+    </div>
+    <div class="output-body" id="outputBody">
+      <div class="placeholder">
+        ↑ Selecione uma fonte ou insira uma URL para buscar dados
+      </div>
+    </div>
+  </div>
+
+  <div class="code-section">
+    <div class="code-header">IMPLEMENTAÇÃO — interfaces_excecoes.js</div>
+    <pre><span class="cm">// Interface para fontes de dados</span>
+<span class="kw">class</span> <span class="fn">APIUsuarios</span> {
+  <span class="kw">constructor</span>() {
+    <span class="kw">this</span>.url = <span class="str">"https://jsonplaceholder.typicode.com/users"</span>;
+  }
+}
+<span class="kw">class</span> <span class="fn">APIPosts</span> {
+  <span class="kw">constructor</span>() {
+    <span class="kw">this</span>.url = <span class="str">"https://jsonplaceholder.typicode.com/posts"</span>;
+  }
+}
+
+<span class="cm">// Função async com try/catch para tratar erros</span>
+<span class="kw">async function</span> <span class="fn">buscarJSON</span>(fonte) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(fonte.url);
+    <span class="kw">if</span> (!res.ok) {
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">`HTTP ${res.status}: ${res.statusText}`</span>);
+    }
+    <span class="kw">const</span> dados = <span class="kw">await</span> res.<span class="fn">json</span>();
+    <span class="fn">exibirDados</span>(dados);
+  } <span class="kw">catch</span> (e) {
+    <span class="fn">exibirErro</span>(<span class="str">`Erro de rede: ${e.message}`</span>);
+  }
+}</pre>
+  </div>
+</div>
+
+<script>
+  let tipoAtual = 'users';
+  let respostaAtual = null;
+
+  function selecionarFonte(card) {
+    document.querySelectorAll('.source-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    document.getElementById('urlInput').value = card.dataset.url;
+    tipoAtual = card.dataset.type;
+  }
+
+  function setStatus(estado, msg) {
+    const dot = document.getElementById('dot');
+    dot.className = 'dot ' + estado;
+    document.getElementById('statusText').textContent = msg;
+  }
+
+  async function buscarDados() {
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) return;
+
+    const btn = document.getElementById('btnFetch');
+    btn.disabled = true;
+    document.getElementById('fetchIcon').textContent = '⟳';
+    setStatus('loading', 'Buscando dados...');
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      const dados = await res.json();
+      respostaAtual = dados;
+      setStatus('ok', `200 OK — ${Array.isArray(dados) ? dados.length + ' registros' : '1 objeto'} recebido(s)`);
+      exibirDados(dados, tipoAtual);
+    } catch (e) {
+      respostaAtual = null;
+      setStatus('error', 'Erro na requisição');
+      exibirErro(e.message, url);
+    } finally {
+      btn.disabled = false;
+      document.getElementById('fetchIcon').textContent = '→';
+    }
+  }
+
+  function simularErro() {
+    document.getElementById('urlInput').value = 'https://url-invalida-exemplo-erro.xyz/api';
+    tipoAtual = 'raw';
+    buscarDados();
+  }
+
+  function exibirDados(dados, tipo) {
+    const body = document.getElementById('outputBody');
+    const arr = Array.isArray(dados) ? dados.slice(0, 8) : [dados];
+
+    if (tipo === 'users') {
+      body.innerHTML = '<div class="data-grid">' + arr.map((u, i) => `
+        <div class="data-item" style="animation-delay:${i*0.04}s">
+          <span class="item-num">#${u.id || i+1}</span>
+          <div class="item-content">
+            <div class="item-title">${u.name || u.username || 'Usuário'}</div>
+            <div class="item-meta">${u.email || ''} ${u.phone ? '· '+u.phone : ''}</div>
+            ${u.company ? `<div class="item-meta">🏢 ${u.company.name}</div>` : ''}
+          </div>
+        </div>
+      `).join('') + '</div>';
+    } else if (tipo === 'posts') {
+      body.innerHTML = '<div class="data-grid">' + arr.map((p, i) => `
+        <div class="data-item" style="animation-delay:${i*0.04}s">
+          <span class="item-num">#${p.id || i+1}</span>
+          <div class="item-content">
+            <div class="item-title">${(p.title || '').substring(0, 60)}${p.title && p.title.length > 60 ? '…' : ''}</div>
+            <div class="item-meta">userId: ${p.userId || '—'}</div>
+          </div>
+        </div>
+      `).join('') + '</div>';
+    } else {
+      body.innerHTML = `<pre class="raw-json">${formatJSON(dados)}</pre>`;
+    }
+  }
+
+  function formatJSON(obj, indent = 0) {
+    const pad = '  '.repeat(indent);
+    if (Array.isArray(obj)) {
+      if (obj.length === 0) return '[]';
+      const items = obj.slice(0, 5).map(v => pad + '  ' + formatJSON(v, indent + 1));
+      return '[\n' + items.join(',\n') + (obj.length > 5 ? `,\n${pad}  ... +${obj.length - 5} mais` : '') + '\n' + pad + ']';
+    }
+    if (obj !== null && typeof obj === 'object') {
+      const keys = Object.keys(obj).slice(0, 8);
+      const items = keys.map(k => `${pad}  <span class="key">"${k}"</span>: ${formatJSON(obj[k], indent + 1)}`);
+      return '{\n' + items.join(',\n') + '\n' + pad + '}';
+    }
+    if (typeof obj === 'string') return `<span class="val-str">"${obj.substring(0, 80)}"</span>`;
+    if (typeof obj === 'number') return `<span class="val-num">${obj}</span>`;
+    if (typeof obj === 'boolean') return `<span class="val-bool">${obj}</span>`;
+    return String(obj);
+  }
+
+  function exibirErro(msg, url = '') {
+    const body = document.getElementById('outputBody');
+    body.innerHTML = `
+      <div class="error-display">
+        <div class="error-icon">⚠</div>
+        <div>
+          <div class="error-title">Erro de Rede</div>
+          <div class="error-detail">
+            Mensagem: ${msg}<br>
+            ${url ? 'URL: ' + url + '<br>' : ''}
+            <br>
+            Possíveis causas:<br>
+            → URL inválida ou inacessível<br>
+            → Servidor fora do ar<br>
+            → Bloqueio por CORS<br>
+            → Sem conexão à internet
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function copiarResposta() {
+    if (!respostaAtual) return;
+    navigator.clipboard.writeText(JSON.stringify(respostaAtual, null, 2))
+      .then(() => alert('JSON copiado para a área de transferência!'));
+  }
+</script>
+</body>
+</html>

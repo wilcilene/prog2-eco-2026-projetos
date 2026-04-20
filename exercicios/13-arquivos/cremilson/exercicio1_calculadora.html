@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 1 – Calculadora com Interface de Operação</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+
+  :root {
+    --bg: #0e0e12;
+    --surface: #18181f;
+    --border: #2a2a38;
+    --accent: #c8f23c;
+    --accent2: #ff5e57;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  h1 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  input[type="number"]:focus, select:focus {
+    border-color: var(--accent);
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b80' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  button {
+    width: 100%;
+    background: var(--accent);
+    color: #0e0e12;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  button:hover { opacity: 0.9; }
+  button:active { transform: scale(0.98); }
+
+  .result-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    color: var(--accent);
+    transition: all 0.3s;
+  }
+
+  .result-box.error { color: var(--accent2); font-size: 0.95rem; }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.3rem 0;
+  }
+
+  .code-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .code-block h3 {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text);
+    white-space: pre-wrap;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .num { color: var(--accent); }
+  .cm { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>// exercicio_01.js</h1>
+  <h2>Calculadora com<br>Interface de Operação</h2>
+
+  <div class="card">
+    <div>
+      <label>Valor A</label>
+      <input type="number" id="numA" placeholder="0" value="10">
+    </div>
+    <div>
+      <label>Valor B</label>
+      <input type="number" id="numB" placeholder="0" value="2">
+    </div>
+    <div>
+      <label>Operação</label>
+      <select id="operacao">
+        <option value="soma">Soma</option>
+        <option value="subtracao">Subtração</option>
+        <option value="multiplicacao">Multiplicação</option>
+        <option value="potencia">Potência</option>
+        <option value="divisao_segura">Divisão Segura</option>
+      </select>
+    </div>
+    <div class="divider"></div>
+    <button onclick="calcular()">Calcular →</button>
+    <div>
+      <label>Resultado</label>
+      <div class="result-box" id="resultado">—</div>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <h3>Código — interfaces_excecoes.js</h3>
+    <pre><span class="cm">// Interface Operacao</span>
+<span class="kw">class</span> <span class="fn">Soma</span> {
+  <span class="fn">calcular</span>(a, b) { <span class="kw">return</span> a + b; }
+}
+<span class="kw">class</span> <span class="fn">Subtracao</span> {
+  <span class="fn">calcular</span>(a, b) { <span class="kw">return</span> a - b; }
+}
+<span class="kw">class</span> <span class="fn">Multiplicacao</span> {
+  <span class="fn">calcular</span>(a, b) { <span class="kw">return</span> a * b; }
+}
+<span class="kw">class</span> <span class="fn">Potencia</span> {
+  <span class="fn">calcular</span>(a, b) { <span class="kw">return</span> a ** b; }
+}
+<span class="kw">class</span> <span class="fn">DivisaoSegura</span> {
+  <span class="fn">calcular</span>(a, b) {
+    <span class="kw">if</span> (b === <span class="num">0</span>) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">"Divisão por zero!"</span>);
+    <span class="kw">return</span> a / b;
+  }
+}
+
+<span class="kw">function</span> <span class="fn">executarOperacao</span>(a, b, operacao) {
+  <span class="kw">try</span> {
+    <span class="kw">return</span> operacao.<span class="fn">calcular</span>(a, b);
+  } <span class="kw">catch</span> (e) {
+    <span class="kw">return</span> <span class="str">`Erro: ${e.message}`</span>;
+  }
+}</pre>
+  </div>
+</div>
+
+<script>
+  const operacoes = {
+    soma: { calcular: (a, b) => a + b },
+    subtracao: { calcular: (a, b) => a - b },
+    multiplicacao: { calcular: (a, b) => a * b },
+    potencia: { calcular: (a, b) => Math.pow(a, b) },
+    divisao_segura: {
+      calcular: (a, b) => {
+        if (b === 0) throw new Error("Divisão por zero não é permitida!");
+        return a / b;
+      }
+    }
+  };
+
+  function executarOperacao(a, b, operacao) {
+    return operacao.calcular(a, b);
+  }
+
+  function calcular() {
+    const a = parseFloat(document.getElementById('numA').value);
+    const b = parseFloat(document.getElementById('numB').value);
+    const op = document.getElementById('operacao').value;
+    const res = document.getElementById('resultado');
+
+    try {
+      if (isNaN(a) || isNaN(b)) throw new Error("Valores inválidos! Insira números.");
+      const resultado = executarOperacao(a, b, operacoes[op]);
+      res.textContent = resultado;
+      res.className = 'result-box';
+    } catch (e) {
+      res.textContent = '⚠ ' + e.message;
+      res.className = 'result-box error';
+    }
+  }
+</script>
+</body>
+</html>
