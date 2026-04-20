@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercício 3 – Diário de Estudos</title>
+  <style>
+    body { font-family: sans-serif; max-width: 640px; margin: 2rem auto; }
+    label { display: block; margin-top: 0.8rem; font-weight: bold; }
+    input, textarea, select { width: 100%; padding: 0.4rem; font-size: 1rem; margin-top: 0.2rem; }
+    textarea { height: 80px; resize: vertical; }
+    button { margin-top: 0.8rem; padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    #erro { color: red; margin-top: 0.5rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1.2rem; }
+    th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; text-align: left; }
+    th { background-color: #006699; color: #fff; }
+    .filtro-area { margin-top: 1.2rem; display: flex; gap: 0.5rem; align-items: center; }
+  </style>
+</head>
+<body>
+
+<h2>Diário de Estudos</h2>
+
+<label>Data
+  <input type="date" id="data" />
+</label>
+
+<label>Disciplina
+  <input type="text" id="disciplina" placeholder="Ex: Programação II" />
+</label>
+
+<label>Resumo (mínimo 10 caracteres)
+  <textarea id="resumo" placeholder="O que você estudou hoje?"></textarea>
+</label>
+
+<button id="btnAdicionar">Adicionar registro</button>
+<button id="btnExportar">Exportar diário (.txt)</button>
+
+<div id="erro"></div>
+
+<div class="filtro-area">
+  <strong>Filtrar por disciplina:</strong>
+  <input type="text" id="filtro" placeholder="Ex: Programação II" style="width:auto; flex:1" />
+  <button id="btnFiltrar">Filtrar</button>
+  <button id="btnLimparFiltro">Mostrar todos</button>
+</div>
+
+<div id="tabela"></div>
+
+<script>
+  // --- INTERFACE RepositorioDiario ---
+  // Classe base que define o contrato: adicionar() e listar()
+  class RepositorioDiario {
+    adicionar(registro) {
+      throw new Error('adicionar(registro) deve ser implementado');
+    }
+    listar() {
+      throw new Error('listar() deve ser implementado');
+    }
+  }
+
+  // Implementação em memória: guarda os registros num array interno
+  class RepositorioMemoria extends RepositorioDiario {
+    constructor() {
+      super();
+      // O array é privado conceitualmente: só acessamos por métodos
+      this._registros = [];
+    }
+
+    adicionar(registro) {
+      this._registros.push(registro);
+    }
+
+    // listar() aceita um filtro opcional por disciplina
+    listar(filtroDisciplina = '') {
+      if (!filtroDisciplina) {
+        return this._registros; // retorna todos se sem filtro
+      }
+      // filter() retorna apenas os elementos que passam na condição
+      // toLowerCase() transforma tudo em minúsculo para comparar sem diferenciar caixa
+      return this._registros.filter(r =>
+        r.disciplina.toLowerCase().includes(filtroDisciplina.toLowerCase())
+      );
+    }
+  }
+
+  // Valida os dados antes de adicionar ao repositório.
+  // Lança Error se algo estiver errado.
+  function validarRegistro(data, disciplina, resumo) {
+    if (!data) throw new Error('A data é obrigatória.');
+    if (!disciplina.trim()) throw new Error('A disciplina não pode ser vazia.');
+    // trim() remove espaços das bordas antes de contar o tamanho
+    if (resumo.trim().length < 10) throw new Error('O resumo precisa ter pelo menos 10 caracteres.');
+  }
+
+  // Gera e dispara o download de um arquivo .txt com todos os registros
+  function exportarComoArquivo(registros) {
+    if (registros.length === 0) {
+      throw new Error('Não há registros para exportar.');
+    }
+
+    // join() une os elementos do array com o separador informado
+    const conteudo = registros.map(r =>
+      `[${r.data}] ${r.disciplina}\n${r.resumo}\n`
+    ).join('\n---\n');
+
+    // Blob cria um "arquivo virtual" em memória com o conteúdo e o tipo MIME
+    const blob = new Blob([conteudo], { type: 'text/plain' });
+
+    // URL.createObjectURL gera um link temporário para o blob
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'diario-estudos.txt';
+    link.click(); // simula um clique para iniciar o download
+
+    // revokeObjectURL libera a memória do link temporário
+    URL.revokeObjectURL(url);
+  }
+
+  // --- CÓDIGO DA PÁGINA ---
+  const repo = new RepositorioMemoria();
+
+  const inputData = document.getElementById('data');
+  const inputDisciplina = document.getElementById('disciplina');
+  const inputResumo = document.getElementById('resumo');
+  const divErro = document.getElementById('erro');
+  const divTabela = document.getElementById('tabela');
+
+  // Renderiza a tabela com os registros recebidos
+  function renderizarTabela(registros) {
+    if (registros.length === 0) {
+      divTabela.innerHTML = '<p><em>Nenhum registro encontrado.</em></p>';
+      return;
+    }
+
+    // template literal (crase) permite montar HTML de forma legível
+    let html = '<table><thead><tr><th>Data</th><th>Disciplina</th><th>Resumo</th></tr></thead><tbody>';
+    registros.forEach(r => {
+      html += `<tr><td>${r.data}</td><td>${r.disciplina}</td><td>${r.resumo}</td></tr>`;
+    });
+    html += '</tbody></table>';
+    divTabela.innerHTML = html;
+  }
+
+  document.getElementById('btnAdicionar').addEventListener('click', () => {
+    divErro.textContent = '';
+    try {
+      const data = inputData.value;
+      const disciplina = inputDisciplina.value;
+      const resumo = inputResumo.value;
+
+      validarRegistro(data, disciplina, resumo);
+      repo.adicionar({ data, disciplina, resumo });
+
+      // Limpa o formulário após adicionar com sucesso
+      inputData.value = '';
+      inputDisciplina.value = '';
+      inputResumo.value = '';
+
+      renderizarTabela(repo.listar());
+    } catch (erro) {
+      divErro.textContent = erro.message;
+    }
+  });
+
+  document.getElementById('btnExportar').addEventListener('click', () => {
+    divErro.textContent = '';
+    try {
+      exportarComoArquivo(repo.listar());
+    } catch (erro) {
+      divErro.textContent = erro.message;
+    }
+  });
+
+  // DESAFIO: filtro por disciplina
+  document.getElementById('btnFiltrar').addEventListener('click', () => {
+    const filtro = document.getElementById('filtro').value;
+    renderizarTabela(repo.listar(filtro));
+  });
+
+  document.getElementById('btnLimparFiltro').addEventListener('click', () => {
+    document.getElementById('filtro').value = '';
+    renderizarTabela(repo.listar());
+  });
+</script>
+
+</body>
+</html>

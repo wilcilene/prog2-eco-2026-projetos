@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercício 2 – Leitor de CSV</title>
+  <style>
+    body { font-family: sans-serif; max-width: 720px; margin: 2rem auto; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.4rem 0.7rem; text-align: left; }
+    th { background-color: #006699; color: #fff; }
+    .destaque { font-weight: bold; background-color: #fff3cd; }
+    #erro { color: red; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<h2>Leitor de arquivo CSV</h2>
+
+<p>Escolha um arquivo <code>.csv</code> com cabeçalho na primeira linha.<br>
+<em>Exemplo de conteúdo: nome,nota &mdash; Ana,9.5 &mdash; João,7.2</em></p>
+
+<!-- accept filtra os tipos exibidos no seletor de arquivo do sistema operacional -->
+<input type="file" id="arquivoCSV" accept=".csv" />
+
+<div id="erro"></div>
+<div id="saida"></div>
+
+<script>
+  const inputArquivo = document.getElementById('arquivoCSV');
+  const divSaida = document.getElementById('saida');
+  const divErro = document.getElementById('erro');
+
+  // addEventListener escuta o evento 'change': dispara quando o usuário escolhe um arquivo
+  inputArquivo.addEventListener('change', () => {
+    divErro.textContent = '';
+    divSaida.innerHTML = '';
+
+    const arquivo = inputArquivo.files[0]; // files[0] = primeiro arquivo selecionado
+    if (!arquivo) return;
+
+    const leitor = new FileReader(); // API nativa do navegador para ler arquivos
+
+    // onload é chamado quando a leitura termina com sucesso
+    leitor.onload = () => {
+      try {
+        const tabela = parsearCSV(leitor.result); // leitor.result contém o texto do arquivo
+        divSaida.appendChild(construirTabela(tabela));
+      } catch (erro) {
+        divErro.textContent = 'Erro ao processar o arquivo: ' + erro.message;
+      }
+    };
+
+    // onerror é chamado se houver falha na leitura (ex: arquivo corrompido)
+    leitor.onerror = () => {
+      divErro.textContent = 'Não foi possível ler o arquivo.';
+    };
+
+    leitor.readAsText(arquivo, 'utf-8'); // inicia a leitura como texto
+  });
+
+  // Converte o texto do CSV em um array de objetos.
+  // Cada objeto tem as chaves do cabeçalho e os valores da linha.
+  function parsearCSV(texto) {
+    // trim() remove espaços/quebras de linha no início e fim
+    // split('\n') divide o texto em um array de linhas
+    const linhas = texto.trim().split('\n');
+
+    if (linhas.length < 2) {
+      throw new Error('O arquivo precisa ter pelo menos uma linha de cabeçalho e uma linha de dados.');
+    }
+
+    // A primeira linha é o cabeçalho
+    const cabecalho = linhas[0].split(',').map(c => c.trim());
+
+    // map() transforma cada linha (a partir da segunda) em um objeto
+    const linhasDados = linhas.slice(1).map(linha => {
+      const colunas = linha.split(',').map(v => v.trim());
+
+      if (colunas.length !== cabecalho.length) {
+        throw new Error(`Linha com número de colunas incorreto: "${linha}"`);
+      }
+
+      // Cria um objeto { chave: valor } para cada linha
+      const obj = {};
+      cabecalho.forEach((chave, i) => {
+        obj[chave] = colunas[i];
+      });
+      return obj;
+    });
+
+    return { cabecalho, linhas: linhasDados };
+  }
+
+  // Monta o elemento <table> com os dados do CSV.
+  // DESAFIO: destaca a linha com o maior valor numérico da última coluna.
+  function construirTabela(dados) {
+    const { cabecalho, linhas } = dados;
+    const ultimaColuna = cabecalho[cabecalho.length - 1]; // coluna que usaremos para destacar
+
+    // Encontra o maior valor numérico da última coluna
+    // parseFloat converte string para número decimal
+    // Math.max(...array) retorna o maior valor do array
+    const valoresNumericos = linhas.map(l => parseFloat(l[ultimaColuna]));
+    const maiorValor = Math.max(...valoresNumericos);
+
+    const table = document.createElement('table');
+
+    // Cria o cabeçalho da tabela
+    const thead = document.createElement('thead');
+    const trHead = document.createElement('tr');
+    cabecalho.forEach(col => {
+      const th = document.createElement('th');
+      th.textContent = col;
+      trHead.appendChild(th);
+    });
+    thead.appendChild(trHead);
+    table.appendChild(thead);
+
+    // Cria o corpo da tabela
+    const tbody = document.createElement('tbody');
+    linhas.forEach(linha => {
+      const tr = document.createElement('tr');
+
+      // DESAFIO: se o valor da última coluna for o maior, destaca a linha
+      if (parseFloat(linha[ultimaColuna]) === maiorValor) {
+        tr.classList.add('destaque'); // classList.add adiciona uma classe CSS ao elemento
+      }
+
+      cabecalho.forEach(chave => {
+        const td = document.createElement('td');
+        td.textContent = linha[chave];
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    return table;
+  }
+</script>
+
+</body>
+</html>

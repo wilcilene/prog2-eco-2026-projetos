@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercício 4 – Erros de Rede com fetch</title>
+  <style>
+    body { font-family: sans-serif; max-width: 640px; margin: 2rem auto; }
+    button { padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; margin: 0.3rem; }
+    #saida { margin-top: 1rem; background: #f4f4f4; padding: 1rem; border-radius: 6px; white-space: pre-wrap; min-height: 60px; }
+    #erro { color: red; margin-top: 0.5rem; }
+    #loading { color: #888; }
+  </style>
+</head>
+<body>
+
+<h2>Exercício 4 – Tratamento de erros de rede</h2>
+
+<p>Escolha uma fonte de dados para buscar via <code>fetch</code>:</p>
+
+<button id="btnUsuarios">Buscar Usuários</button>
+<button id="btnPosts">Buscar Posts</button>
+<button id="btnErro">Simular URL com erro</button>
+
+<div id="loading"></div>
+<div id="erro"></div>
+<pre id="saida"></pre>
+
+<script>
+  // --- INTERFACE FonteDados ---
+  // Classe base que define o contrato: buscar() deve retornar uma Promise
+  class FonteDados {
+    buscar() {
+      // Toda subclasse precisa sobrescrever este método
+      throw new Error('buscar() deve ser implementado pela subclasse');
+    }
+  }
+
+  // Implementação 1: busca usuários de uma API pública de testes
+  class FonteUsuarios extends FonteDados {
+    buscar() {
+      // fetch() faz uma requisição HTTP e retorna uma Promise
+      return fetch('https://jsonplaceholder.typicode.com/users?_limit=5');
+    }
+  }
+
+  // Implementação 2: busca posts da mesma API, mas endpoint diferente
+  class FontePosts extends FonteDados {
+    buscar() {
+      return fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+    }
+  }
+
+  // Implementação 3: URL inválida, usada para demonstrar erro de rede
+  class FonteComErro extends FonteDados {
+    buscar() {
+      return fetch('https://url-que-nao-existe-prog2.xyz/dados');
+    }
+  }
+
+  // Função genérica que usa a "interface" FonteDados
+  // async/await transforma código assíncrono em um estilo mais legível
+  async function carregarDados(fonte) {
+    const divLoading = document.getElementById('loading');
+    const divErro = document.getElementById('erro');
+    const divSaida = document.getElementById('saida');
+
+    divErro.textContent = '';
+    divSaida.textContent = '';
+    divLoading.textContent = 'Carregando...';
+
+    try {
+      // await pausa a função até a Promise resolver (sem bloquear a página)
+      const resposta = await fonte.buscar();
+
+      // response.ok é true quando o status HTTP é entre 200 e 299
+      if (!resposta.ok) {
+        throw new Error(`Erro HTTP: status ${resposta.status}`);
+      }
+
+      // .json() converte o corpo da resposta de texto JSON para objeto JS
+      const dados = await resposta.json();
+
+      // JSON.stringify com indentáção (null, 2) deixa o JSON legível na tela
+      divSaida.textContent = JSON.stringify(dados, null, 2);
+    } catch (erro) {
+      // TypeError ocorre quando não consegue nem conectar (DNS, rede)
+      // Error com mensagem HTTP vem do nosso throw acima
+      divErro.textContent = 'Falha ao buscar dados: ' + erro.message;
+    } finally {
+      // finally sempre executa, mesmo se der erro
+      divLoading.textContent = '';
+    }
+  }
+
+  // --- Conecta os botões a cada implementação da "interface" ---
+  document.getElementById('btnUsuarios').addEventListener('click', () => {
+    carregarDados(new FonteUsuarios());
+  });
+
+  document.getElementById('btnPosts').addEventListener('click', () => {
+    carregarDados(new FontePosts());
+  });
+
+  document.getElementById('btnErro').addEventListener('click', () => {
+    carregarDados(new FonteComErro());
+  });
+</script>
+
+</body>
+</html>
