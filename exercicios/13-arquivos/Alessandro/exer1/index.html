@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercício 1 – Calculadora com Interface de Operação</title>
+  <style>
+    body { font-family: sans-serif; max-width: 480px; margin: 2rem auto; }
+    label { display: block; margin-top: 0.8rem; font-weight: bold; }
+    input, select { width: 100%; padding: 0.4rem; margin-top: 0.2rem; font-size: 1rem; }
+    button { margin-top: 1rem; padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    #resultado { margin-top: 1rem; font-size: 1.2rem; color: #006699; font-weight: bold; }
+    #erro { color: red; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<h2>Calculadora – Interface de Operação</h2>
+
+<label>Valor A
+  <input type="number" id="valorA" placeholder="Ex: 10" />
+</label>
+
+<label>Valor B
+  <input type="number" id="valorB" placeholder="Ex: 5" />
+</label>
+
+<label>Operação
+  <select id="operacao">
+    <option value="soma">Soma</option>
+    <option value="subtracao">Subtração</option>
+    <option value="multiplicacao">Multiplicação</option>
+    <option value="potencia">Potência (A ^ B)</option>
+    <option value="divisao">Divisão segura</option>
+  </select>
+</label>
+
+<button id="btnCalcular">Calcular</button>
+
+<div id="resultado"></div>
+<div id="erro"></div>
+
+<script>
+  // --- INTERFACE DE OPERAÇÃO ---
+  // Em JS não existe a palavra "interface" como em Java.
+  // Criamos uma classe base que lança erro se o método não for sobrescrito.
+  // Isso funciona como um contrato: toda operação PRECISA ter calcular(a, b).
+  class Operacao {
+    calcular(a, b) {
+      throw new Error('calcular(a, b) deve ser implementado pela subclasse');
+    }
+  }
+
+  // Cada classe abaixo "implementa" a interface sobrescrevendo calcular().
+
+  class Soma extends Operacao {
+    calcular(a, b) {
+      return a + b;
+    }
+  }
+
+  class Subtracao extends Operacao {
+    calcular(a, b) {
+      return a - b;
+    }
+  }
+
+  class Multiplicacao extends Operacao {
+    calcular(a, b) {
+      return a * b;
+    }
+  }
+
+  // DESAFIO: Potência usa o operador ** (equivalente a Math.pow)
+  class Potencia extends Operacao {
+    calcular(a, b) {
+      return a ** b; // ** é o operador de exponenciação do JS moderno
+    }
+  }
+
+  // DESAFIO: Divisão segura – lança exceção se b for zero
+  class DivisaoSegura extends Operacao {
+    calcular(a, b) {
+      if (b === 0) {
+        throw new Error('Divisão por zero não é permitida');
+      }
+      return a / b;
+    }
+  }
+
+  // Mapa que associa o valor do <select> à instância da operação correta.
+  // Assim a função executarOperacao não precisa de if/else para cada tipo.
+  const operacoes = {
+    soma: new Soma(),
+    subtracao: new Subtracao(),
+    multiplicacao: new Multiplicacao(),
+    potencia: new Potencia(),
+    divisao: new DivisaoSegura()
+  };
+
+  // Função que usa a "interface": recebe dois números e qualquer Operacao.
+  function executarOperacao(a, b, operacao) {
+    return operacao.calcular(a, b);
+  }
+
+  // --- CÓDIGO DA PÁGINA ---
+  document.getElementById('btnCalcular').addEventListener('click', () => {
+    const divResultado = document.getElementById('resultado');
+    const divErro = document.getElementById('erro');
+    divResultado.textContent = '';
+    divErro.textContent = '';
+
+    // Lê e converte os valores dos inputs para número
+    const a = Number(document.getElementById('valorA').value);
+    const b = Number(document.getElementById('valorB').value);
+    const chave = document.getElementById('operacao').value;
+
+    // isNaN verifica se o valor não é um número válido
+    if (isNaN(a) || isNaN(b) || document.getElementById('valorA').value === '' || document.getElementById('valorB').value === '') {
+      divErro.textContent = 'Preencha os dois campos com números válidos.';
+      return; // interrompe a execução aqui (saída antecipada)
+    }
+
+    try {
+      const operacao = operacoes[chave];
+      const resultado = executarOperacao(a, b, operacao);
+      divResultado.textContent = 'Resultado: ' + resultado;
+    } catch (erro) {
+      // catch captura qualquer exceção lançada dentro do try
+      divErro.textContent = 'Erro: ' + erro.message;
+    }
+  });
+</script>
+
+</body>
+</html>
