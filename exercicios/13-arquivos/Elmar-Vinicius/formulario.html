@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Contato</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #6c63ff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #574fd6;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>Contato</h2>
+
+        <form>
+
+            <label>Nome:</label>
+            <input type="text" required minlength="3" maxlength="50">
+
+            <label>Email:</label>
+            <input type="email" required>
+
+            <label>Idade:</label>
+            <input type="number" min="18" max="100" required>
+
+            <label>Telefone:</label>
+            <input type="tel" pattern="[0-9]{10,11}" required placeholder="Somente números">
+
+            <label>Data:</label>
+            <input type="date" required>
+
+            <label>Assunto:</label>
+            <select required>
+                <option value="">Selecione</option>
+                <option>Dúvida</option>
+                <option>Suporte</option>
+                <option>Feedback</option>
+            </select>
+
+            <label>Mensagem:</label>
+            <textarea rows="4" maxlength="300" required></textarea>
+
+            <div class="checkbox">
+                <input type="checkbox" required>
+                <span>Aceito os termos</span>
+            </div>
+
+            <button type="submit">Enviar</button>
+
+        </form>
+    </div>
+
+</body>
+</html>
