@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Exercício 2 - Callback e validação</title>
+	<script>
+		function processarIdade(idade, callback) {
+			if (typeof idade !== 'number' || isNaN(idade)) {
+				throw new Error('Idade deve ser um número.');
+			}
+			if (idade < 0 || idade > 120) {
+				throw new Error('Idade inválida. Deve estar entre 0 e 120.');
+			}
+			callback(idade);
+		}
+
+		function exibirMaioridade(idade) {
+			if (idade >= 18) {
+				console.log('Maior de idade');
+			} else {
+				console.log('Menor de idade');
+			}
+		}
+
+		function calcularAnoNascimento(idade) {
+			const anoAtual = new Date().getFullYear();
+			const anoNascimento = anoAtual - idade;
+			console.log('Ano de nascimento aproximado: ' + anoNascimento);
+		}
+
+		try {
+			processarIdade(20, exibirMaioridade); // "Maior de idade"
+			processarIdade(15, exibirMaioridade); // "Menor de idade"
+			processarIdade(22, calcularAnoNascimento); // ano de nascimento
+			processarIdade(-5, exibirMaioridade); // erro
+		} catch (e) {
+			console.log('Erro:', e.message);
+		}
+	</script>
+</head>
+<body>
+</body>
+</html>

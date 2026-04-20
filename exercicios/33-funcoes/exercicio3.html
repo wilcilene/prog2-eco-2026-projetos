@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Exercício 3 - Map, Filter, Reduce</title>
+	<script>
+		const produtos = [
+			{ nome: "Mouse",    preco: 80,  estoque: 5  },
+			{ nome: "Teclado",  preco: 150, estoque: 0  },
+			{ nome: "Monitor",  preco: 900, estoque: 2  },
+			{ nome: "Headset",  preco: 200, estoque: 8  },
+			{ nome: "Webcam",   preco: 120, estoque: 0  },
+		];
+
+		const disponiveis = produtos.filter(p => p.estoque > 0);
+		console.log('Produtos disponíveis:', disponiveis);
+
+		const comDesconto = produtos.map(p => ({
+			nome: p.nome,
+			preco: +(p.preco * 0.9).toFixed(2)
+		}));
+		console.log('Produtos com desconto:', comDesconto);
+
+		const totalEstoque = produtos.reduce((soma, p) => soma + p.preco * p.estoque, 0);
+		console.log('Valor total do estoque:', totalEstoque);
+
+		const totalDisponiveis = produtos
+			.filter(p => p.estoque > 0)
+			.reduce((soma, p) => soma + p.preco * p.estoque, 0);
+		console.log('Valor total dos produtos disponíveis:', totalDisponiveis);
+	</script>
+</head>
+<body>
+</body>
+</html>

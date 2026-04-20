@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Exercício 4 - Função que retorna função closure</title>
+	<script>
+		function criarSaudacao(idioma) {
+			return function(nome) {
+				switch (idioma) {
+					case 'pt':
+						console.log(`Olá, ${nome}!`);
+						break;
+					case 'en':
+						console.log(`Hello, ${nome}!`);
+						break;
+					case 'es':
+						console.log(`¡Hola, ${nome}!`);
+						break;
+					default:
+						console.log(`Saudação não disponível para o idioma: ${idioma}`);
+				}
+			};
+		}
+
+		const saudarEmPortugues = criarSaudacao("pt");
+		const saudarEmIngles    = criarSaudacao("en");
+		const saudarEmEspanhol  = criarSaudacao("es");
+
+		saudarEmPortugues("Elmar");  
+		saudarEmIngles("Elmar");     
+		saudarEmEspanhol("Elmar");  
+		criarSaudacao("fr")("Vinicius"); 
+	</script>
+</head>
+<body>
+</body>
+</html>
