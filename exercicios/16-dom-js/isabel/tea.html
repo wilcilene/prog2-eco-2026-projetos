@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Tema</title>
+</head>
+
+<body>
+
+<h2>Alterar Tema</h2>
+
+// criando os botoes 
+<button id="claro">Tema claro</button>
+<button id="escuro">Tema escuro</button>
+
+<script>
+const body = document.querySelector("body");
+
+
+// colocando o tema no claro
+document.getElementById("claro").addEventListener("click", () => {
+    body.style.backgroundColor = "white";
+    body.style.color = "black";
+});
+
+//colocando tema no escuro
+document.getElementById("escuro").addEventListener("click", () => {
+    body.style.backgroundColor = "black";
+    body.style.color = "white";
+});
+</script>
+
+</body>
+</html>
+
+
+//
+Pegar o <body>
+Fazer os clique nos botões
+Mudar as cores da página escuro e claro     
