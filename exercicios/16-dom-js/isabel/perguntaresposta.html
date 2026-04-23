@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Perguntas</title>
+</head>
+
+<body>
+
+<h2>Perguntas e Respostas</h2>
+
+<p>1. Para que serve o querySelector?</p>
+<button onclick="mostrar1()">Mostrar resposta</button>
+<div id="resp1"></div>   /// ela começa vazia 
+
+<p>2. O que são eventos no JavaScript?</p>
+<button onclick="mostrar2()">Mostrar resposta</button>
+<div id="resp2"></div>
+
+<p>3. Para que serve o innerHTML?</p>
+<button onclick="mostrar3()">Mostrar resposta</button>
+<div id="resp3"></div>
+
+
+// utiliza o INNERHTML para mostrar a resposta, e repete o restante
+<script>
+function mostrar1() {
+    document.getElementById("resp1").innerHTML = 
+    "Resposta: O querySelector serve para selecionar elementos do HTML usando seletores como classes, ids ou tags.";
+}
+
+function mostrar2() {
+    document.getElementById("resp2").innerHTML = 
+    "Resposta: Eventos são ações que acontecem na página, como cliques, e permitem executar códigos quando acontecem.";
+}
+
+function mostrar3() {
+    document.getElementById("resp3").innerHTML = 
+    "Resposta: O innerHTML serve para inserir ou alterar conteúdo HTML dentro de um elemento.";
+}
+</script>
+
+</body>
+</html>
+
+
+// a função mostrar seria :
+//function mostrar1() {
+//    document.getElementById("resp1").innerHTML =
+//    "Resposta: O querySelector serve para selecionar elementos do HTML.";
+//} 

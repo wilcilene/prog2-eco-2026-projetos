@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Compras</title>
+</head>
+
+<body>
+
+<h2>Lista de Compras</h2>
+
+<input type="text" id="item" placeholder="Digite um item">
+<button id="adicionar">Adicionar</button>
+
+<ul id="lista"></ul>
+
+<p>Total de itens: <span id="total">0</span></p>
+
+
+// meus elementos
+<script>
+const input = document.getElementById("item");
+const lista = document.getElementById("lista");
+const total = document.getElementById("total");
+
+let contador = 0;  // quantos itens foram adicionados
+
+
+// criando o evento do clique, quando clicar acontece tal...
+document.getElementById("adicionar").addEventListener("click", () => {
+    if (input.value !== "") {
+
+        const li = document.createElement("li");
+        li.textContent = input.value;
+
+        lista.appendChild(li);  //coloca dentro da lista
+
+        contador++;
+        total.textContent = contador;  // atualiza o contador 
+
+        input.value = "";  // não tem como adicionar um item vazio
+    }
+});
+</script>
+
+</body>
+</html>
