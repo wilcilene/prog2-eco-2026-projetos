@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 1 - Funções e Parâmetros padrão</title>
+</head>
+<body>
+    <script>
+        function apresentar(nome, curso, semestre = 1) {
+            return `${nome} – ${curso} – ${semestre}º semestre`;
+        }
+
+        const apresentarArrow = (nome, curso, semestre = 1) => `${nome} – ${curso} – ${semestre}º semestre`;
+
+        console.log(apresentar("Ana", "Eng. Computação", 3));     
+        console.log(apresentar("João", "Eng. Computação"));        
+        console.log(apresentarArrow("Ana", "Eng. Computação", 3)); 
+        console.log(apresentarArrow("João", "Eng. Computação"));   
+    </script>
+</body>
+</html>

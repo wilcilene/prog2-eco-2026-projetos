@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Diário de Estudos</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+        input, textarea, select, button {
+            padding: 8px;
+            margin: 5px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: green;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background: darkgreen;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            background: green;
+            color: white;
+            padding: 8px;
+        }
+        td {
+            padding: 8px;
+        }
+        .erro {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        .erro.show {
+            display: block;
+        }
+        .sucesso {
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+        .sucesso.show {
+            display: block;
+        }
+        #registros-container {
+            display: none;
+            margin-top: 20px;
+        }
+        #registros-container.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diário de Estudos</h1>
+
+    <div class="form-group">
+        <label>Data:</label><br>
+        <input type="date" id="data" />
+    </div>
+
+    <div class="form-group">
+        <label>Disciplina:</label><br>
+        <input type="text" id="disciplina" placeholder="Ex: Programação II" />
+    </div>
+
+    <div class="form-group">
+        <label>Resumo:</label><br>
+        <textarea id="resumo" placeholder="Descreva o que estudou..."></textarea>
+    </div>
+
+    <button onclick="adicionarRegistro()">Adicionar Registro</button>
+    <button onclick="exportarDiario()">Exportar Diário</button>
+
+    <div id="erro" class="erro"></div>
+    <div id="sucesso" class="sucesso"></div>
+
+    <div class="form-group" style="margin-top: 20px;">
+        <label>Filtrar por disciplina:</label><br>
+        <select id="filtro" onchange="filtrarRegistros()">
+            <option value="">Todos</option>
+            <option value="Programação II">Programação II</option>
+        </select>
+    </div>
+
+    <div id="registros-container">
+        <h2>Registros</h2>
+        <table id="tabela-registros">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Disciplina</th>
+                    <th>Resumo</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-registros"></tbody>
+        </table>
+    </div>
+
+    <script>
+        class RepositorioDiario {
+            constructor() {
+                this.registros = [];
+            }
+
+            adicionar(registro) {
+                if (!registro.data) {
+                    throw new Error("Data é obrigatória!");
+                }
+                if (!registro.disciplina || registro.disciplina.trim() === "") {
+                    throw new Error("Disciplina não pode estar vazia!");
+                }
+                if (!registro.resumo || registro.resumo.trim().length < 10) {
+                    throw new Error("Resumo deve ter no mínimo 10 caracteres!");
+                }
+
+                this.registros.push(registro);
+            }
+
+            listar() {
+                return this.registros;
+            }
+
+            listarPorDisciplina(disciplina) {
+                if (!disciplina) {
+                    return this.registros;
+                }
+                return this.registros.filter(r => r.disciplina === disciplina);
+            }
+        }
+
+        const repositorio = new RepositorioDiario();
+
+        function adicionarRegistro() {
+            const data = document.getElementById("data").value;
+            const disciplina = document.getElementById("disciplina").value;
+            const resumo = document.getElementById("resumo").value;
+
+            const erroDiv = document.getElementById("erro");
+            const sucessoDiv = document.getElementById("sucesso");
+
+            erroDiv.classList.remove("show");
+            sucessoDiv.classList.remove("show");
+
+            try {
+                repositorio.adicionar({
+                    data: data,
+                    disciplina: disciplina,
+                    resumo: resumo
+                });
+
+                document.getElementById("data").value = "";
+                document.getElementById("disciplina").value = "";
+                document.getElementById("resumo").value = "";
+                document.getElementById("filtro").value = "";
+
+                sucessoDiv.textContent = "Registro adicionado com sucesso!";
+                sucessoDiv.classList.add("show");
+
+                exibirRegistros();
+
+            } catch (erro) {
+                erroDiv.textContent = erro.message;
+                erroDiv.classList.add("show");
+            }
+        }
+
+        function exibirRegistros() {
+            const registros = repositorio.listar();
+            const container = document.getElementById("registros-container");
+            const corpo = document.getElementById("corpo-registros");
+
+            corpo.innerHTML = "";
+
+            if (registros.length === 0) {
+                container.classList.remove("show");
+                return;
+            }
+
+            for (let registro of registros) {
+                const tr = document.createElement("tr");
+
+                const tdData = document.createElement("td");
+                tdData.textContent = registro.data;
+                tr.appendChild(tdData);
+
+                const tdDisciplina = document.createElement("td");
+                tdDisciplina.textContent = registro.disciplina;
+                tr.appendChild(tdDisciplina);
+
+                const tdResumo = document.createElement("td");
+                tdResumo.textContent = registro.resumo;
+                tr.appendChild(tdResumo);
+
+                corpo.appendChild(tr);
+            }
+
+            container.classList.add("show");
+        }
+
+        function filtrarRegistros() {
+            const filtro = document.getElementById("filtro").value;
+            const registros = repositorio.listarPorDisciplina(filtro);
+            const container = document.getElementById("registros-container");
+            const corpo = document.getElementById("corpo-registros");
+
+            corpo.innerHTML = "";
+
+            if (registros.length === 0) {
+                container.classList.remove("show");
+                return;
+            }
+
+            for (let registro of registros) {
+                const tr = document.createElement("tr");
+
+                const tdData = document.createElement("td");
+                tdData.textContent = registro.data;
+                tr.appendChild(tdData);
+
+                const tdDisciplina = document.createElement("td");
+                tdDisciplina.textContent = registro.disciplina;
+                tr.appendChild(tdDisciplina);
+
+                const tdResumo = document.createElement("td");
+                tdResumo.textContent = registro.resumo;
+                tr.appendChild(tdResumo);
+
+                corpo.appendChild(tr);
+            }
+
+            container.classList.add("show");
+        }
+
+        function exportarDiario() {
+            const registros = repositorio.listar();
+
+            if (registros.length === 0) {
+                alert("Nenhum registro para exportar!");
+                return;
+            }
+
+            let conteudo = "DIÁRIO DE ESTUDOS\n";
+            conteudo += "=".repeat(50) + "\n\n";
+
+            for (let registro of registros) {
+                conteudo += "Data: " + registro.data + "\n";
+                conteudo += "Disciplina: " + registro.disciplina + "\n";
+                conteudo += "Resumo: " + registro.resumo + "\n";
+                conteudo += "-".repeat(50) + "\n\n";
+            }
+
+            const blob = new Blob([conteudo], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "diario_estudos.txt";
+            a.click();
+
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

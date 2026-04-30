@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch com Interface de Dados</title>
+</head>
+<body>
+  <h1>Exemplo com Fetch</h1>
+
+  <button id="btnUsers">Carregar Usuários</button>
+  <button id="btnPosts">Carregar Posts</button>
+
+  <div id="output"></div>
+
+  <script>
+
+    class DataSource {
+        constructor(baseURL) {
+            this.baseURL = baseURL;
+        }
+
+
+    async fetchData() {
+        try {
+            const response = await fetch(this.baseURL);
+
+      
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
+         }
+
+            const data = await response.json();
+            return data;
+
+        } catch (error) {
+      
+            throw new Error("Falha ao buscar dados. Verifique sua conexão ou tente novamente.");
+        }   
+    }
+}
+
+    class UsersAPI extends DataSource {
+        constructor() {
+            super("https://jsonplaceholder.typicode.com/users");
+        }
+    }
+
+
+    class PostsAPI extends DataSource {
+        constructor() {
+            super("https://jsonplaceholder.typicode.com/posts");
+        }
+    }
+
+    function renderData(data) {
+        const output = document.getElementById("output");
+
+        output.innerHTML = `
+        <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+    }
+
+    function renderError(message) {
+        const output = document.getElementById("output");
+
+        output.innerHTML = `
+            <p style="color: red; font-weight: bold;">
+                ${message}
+            </p>
+         `;
+}
+
+    async function loadData(apiInstance) {
+        try {
+            const data = await apiInstance.fetchData();
+            renderData(data);
+        } catch (error) {
+            renderError(error.message);
+         }
+    }
+
+    document.getElementById("btnUsers").addEventListener("click", () => {
+        const api = new UsersAPI();
+        loadData(api);
+    });
+
+    document.getElementById("btnPosts").addEventListener("click", () => {
+        const api = new PostsAPI();
+        loadData(api);
+    });
+  </script>
+</body>
+</html>

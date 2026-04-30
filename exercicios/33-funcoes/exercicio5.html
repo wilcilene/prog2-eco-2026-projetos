@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Exercício 5 - Pipeline de dados</title>
+	<script>
+		const estudantes = [
+			{ nome: "Elmar",    nota: 8, turma: "ECO" },
+			{ nome: "Vinicius",  nota: 7, turma: "ECO" },
+			{ nome: "Nelson",  nota: 5.9, turma: "ECA" },
+			{ nome: "Guilherme",  nota: 5, turma: "ECO" },
+			{ nome: "Paulo",   nota: 9, turma: "ECA" },
+			{ nome: "Marcelo",  nota: 6, turma: "ECO" },
+			{ nome: "Neymar",   nota: 8, turma: "ECO" },
+		];
+
+		const aprovadosECO = estudantes
+			.filter(e => e.turma === "ECO")
+			.filter(e => e.nota >= 6)
+			.map(e => e.nome)
+			.reduce((str, nome, i, arr) => {
+				if (i === 0) return "Aprovados da turma ECO: " + nome;
+				return str + ", " + nome;
+			}, "");
+
+		console.log(aprovadosECO);
+	</script>
+</head>
+<body>
+</body>
+</html>
