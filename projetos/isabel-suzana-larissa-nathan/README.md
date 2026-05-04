@@ -73,8 +73,8 @@ src/
 |---------|-----------|------|--------|
 | E1 | Definição do projeto | 06/04/2026 | ✅  |
 | E2 | Modelagem | 10/04/2026 | ✅ |
-| E3 | Backend + BD | 13/04/2026 | 🔄 |
-| E4 | Interface integrada | — | ⏳ |
+| E3 | Backend + BD | 13/04/2026 |  🔄 |
+| E4 | Interface integrada | 04/05/2026 | 🔄 |
 | E5 | Projeto final | — | ⏳ |
 
 > ⏳ Pendente | ✅ Concluído | 🔄 Em andamento
