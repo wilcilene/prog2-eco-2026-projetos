@@ -15,6 +15,17 @@
 
 O sistema é uma plataforma web voltada para a adoção de animais, na qual administradores podem cadastrar, editar e gerenciar os animais disponíveis, mantendo informações como identificação, características e status. Usuários interessados podem criar uma conta, informando dados básicos e localização, além de definir preferências para refinar a busca por animais compatíveis. A plataforma permite a visualização dos animais cadastrados, acesso aos detalhes e a realização de contato com os responsáveis por meio de mensagens, centralizando a comunicação.
 
+## Funcionalidades do Sistema
+
+- Cadastro de administradores e usuários adotantes  
+- Cadastro, edição e remoção de animais para adoção  
+- Upload de imagens dos animais  
+- Busca de animais por preferências  
+- Visualização de detalhes dos animais  
+- Contato com responsáveis via WhatsApp  
+- Preenchimento automático de endereço via CEP  
+- Gerenciamento de anúncios ativos
+
 ## Modelagem do Sistema
 
 Para representar o funcionamento do projeto Amigo Fiel, foram desenvolvidos diagramas UML que auxiliam na compreensão das funcionalidades e da estrutura do sistema. O diagrama de casos de uso apresenta as principais interações entre os atores e a plataforma. Nele, o ator Administrador possui responsabilidades como cadastrar conta, cadastrar animais, visualizar os animais cadastrados e editar ou excluir anúncios. Já o ator Usuário (adotante) pode realizar cadastro na plataforma, definir preferências de busca, navegar entre os animais disponíveis e visualizar detalhes dos animais, além de entrar em contato com o responsável pelo anúncio. Essas funcionalidades representam o fluxo principal do sistema e demonstram como ocorre o processo de adoção dentro da plataforma.
