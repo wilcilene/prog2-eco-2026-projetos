@@ -31,6 +31,12 @@ Já o diagrama de classes evidencia a estrutura interna do sistema, apresentando
 
 As tecnologias escolhidas para o desenvolvimento do Amigo Fiel foram selecionadas por oferecerem praticidade, boa documentação e ampla utilização no desenvolvimento web. O JavaScript (ES6+) foi utilizado para implementar a lógica do sistema tanto no frontend quanto no backend. O HTML5 e CSS3 foram escolhidos para estruturar e estilizar as páginas da aplicação. O Node.js permite executar o backend de forma eficiente e gerenciar as requisições do sistema. O PostgreSQL, juntamente com comandos SQL, foi definido para armazenar e gerenciar os dados de usuários, animais e contatos de forma segura e organizada. Já o Tailwind CSS foi escolhido para agilizar o desenvolvimento da interface, permitindo criar páginas responsivas e modernas com maior produtividade.
 
+## Integração com APIs Externas
+
+Além da API REST responsável pela comunicação entre o frontend, backend e banco de dados, o projeto Amigo Fiel contará com a integração de APIs externas para ampliar suas funcionalidades. A API do Cloudinary será utilizada para armazenar e gerenciar as imagens dos animais cadastrados para adoção, permitindo que administradores realizem o upload de fotos de forma prática e organizada. Já a API do ViaCEP será implementada para automatizar o preenchimento de endereço durante o cadastro dos usuários, tornando o processo mais rápido e reduzindo possíveis erros de preenchimento.
+
+Além disso, o sistema contará com integração ao WhatsApp por meio de links diretos para facilitar a comunicação entre os interessados na adoção e os responsáveis pelos animais. Essa funcionalidade permitirá um contato mais ágil e acessível, contribuindo para tornar a plataforma mais eficiente, prática e adequada ao objetivo de incentivar a adoção responsável de animais.
+
 ---
 
 ## Como executar o projeto
