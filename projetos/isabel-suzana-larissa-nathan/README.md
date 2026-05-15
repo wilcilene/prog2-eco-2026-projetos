@@ -33,9 +33,9 @@ As tecnologias escolhidas para o desenvolvimento do Amigo Fiel foram selecionada
 
 ## Integração com APIs Externas
 
-Além da API REST responsável pela comunicação entre o frontend, backend e banco de dados, o projeto Amigo Fiel contará com a integração de APIs externas para ampliar suas funcionalidades. A API do Cloudinary será utilizada para armazenar e gerenciar as imagens dos animais cadastrados para adoção, permitindo que administradores realizem o upload de fotos de forma prática e organizada. Já a API do ViaCEP será implementada para automatizar o preenchimento de endereço durante o cadastro dos usuários, tornando o processo mais rápido e reduzindo possíveis erros de preenchimento.
+O projeto Amigo Fiel utiliza uma API própria desenvolvida com Node.js e Express.js para realizar a comunicação entre o frontend, backend e banco de dados PostgreSQL. Por meio dessa API, são realizadas requisições HTTP utilizando métodos como GET, POST, PUT e DELETE, permitindo funcionalidades como cadastro de usuários, login, gerenciamento de animais disponíveis para adoção, atualização de informações e registro de contatos. Os dados trafegam no formato JSON, seguindo o modelo estudado em sala sobre desenvolvimento e consumo de APIs.
 
-Além disso, o sistema contará com integração ao WhatsApp por meio de links diretos para facilitar a comunicação entre os interessados na adoção e os responsáveis pelos animais. Essa funcionalidade permitirá um contato mais ágil e acessível, contribuindo para tornar a plataforma mais eficiente, prática e adequada ao objetivo de incentivar a adoção responsável de animais.
+Além da API interna, o sistema também realiza o consumo de APIs externas para ampliar suas funcionalidades. A API do ViaCEP será utilizada para preencher automaticamente os dados de endereço a partir do CEP informado pelo usuário. A API do Cloudinary será responsável pelo armazenamento das imagens dos animais cadastrados na plataforma. Além disso, será utilizada integração com o WhatsApp por meio de links diretos para facilitar a comunicação entre adotantes e responsáveis pelos animais. Dessa forma, o sistema aplica na prática os conceitos de integração, consumo de APIs e troca de dados entre diferentes serviços, tornando a plataforma mais completa e funcional.
 
 ---
 
