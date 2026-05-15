@@ -21,11 +21,11 @@ Para representar o funcionamento do projeto Amigo Fiel, foram desenvolvidos diag
 
 Já o diagrama de classes representa a estrutura interna do sistema e os relacionamentos entre suas entidades principais: Administrador, Usuário, Animal e Contato. A classe Administrador é responsável pelo gerenciamento dos anúncios de adoção, enquanto a classe Usuário permite definir preferências e buscar animais compatíveis. A classe Animal armazena informações como nome, espécie, idade, porte, descrição, status e também poderá armazenar a URL da imagem enviada por meio da integração com a API do Cloudinary. Por fim, a classe Contato gerencia a comunicação entre usuários interessados e responsáveis pelos animais. Essa modelagem contribui para uma melhor organização da aplicação e facilita futuras expansões e manutenções do sistema.
 
-Diagrama de Casos de Uso
+## Diagrama de Casos de Uso
 
 ![Diagrama de Casos de Uso](./Diagrama%20Caso%20de%20Uso.png)
 
-Diagrama de Classes
+## Diagrama de Classes
 
 ![Diagrama de Classes](./diagramadeclasse.png)
 
