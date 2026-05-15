@@ -15,9 +15,19 @@
 
 O sistema é uma plataforma web voltada para a adoção de animais, na qual administradores podem cadastrar, editar e gerenciar os animais disponíveis, mantendo informações como identificação, características e status. Usuários interessados podem criar uma conta, informando dados básicos e localização, além de definir preferências para refinar a busca por animais compatíveis. A plataforma permite a visualização dos animais cadastrados, acesso aos detalhes e a realização de contato com os responsáveis por meio de mensagens, centralizando a comunicação.
 
-Conforme representado no diagrama de casos de uso, o sistema contempla as principais interações entre os atores e a plataforma, incluindo funcionalidades como cadastro de conta por administradores e usuários, definição de preferências, navegação e busca de animais disponíveis, além da visualização de detalhes e possibilidade de contato com o responsável pelo animal. Essas ações evidenciam o fluxo de utilização do sistema, destacando como os usuários interagem com as funcionalidades para atingir o objetivo de adoção.
+## Modelagem do Sistema
 
-Já o diagrama de classes evidencia a estrutura interna do sistema, apresentando entidades como Administrador, Usuário, Animal e Contato, juntamente com seus respectivos atributos e métodos. Além disso, demonstra os relacionamentos entre essas classes, como a associação entre usuários e animais por meio do contato, e as responsabilidades de cada entidade dentro do sistema. Dessa forma, o modelo estrutural contribui para a organização e implementação da aplicação, tornando o processo de adoção mais acessível, eficiente e seguro, além de auxiliar na redução do abandono e no incentivo à adoção responsável.
+Para representar o funcionamento do projeto Amigo Fiel, foram desenvolvidos diagramas UML que auxiliam na compreensão das funcionalidades e da estrutura do sistema. O diagrama de casos de uso apresenta as principais interações entre os atores e a plataforma. Nele, o ator Administrador possui responsabilidades como cadastrar conta, cadastrar animais, visualizar os animais cadastrados e editar ou excluir anúncios. Já o ator Usuário (adotante) pode realizar cadastro na plataforma, definir preferências de busca, navegar entre os animais disponíveis e visualizar detalhes dos animais, além de entrar em contato com o responsável pelo anúncio. Essas funcionalidades representam o fluxo principal do sistema e demonstram como ocorre o processo de adoção dentro da plataforma.
+
+Já o diagrama de classes representa a estrutura interna do sistema e os relacionamentos entre suas entidades principais: Administrador, Usuário, Animal e Contato. A classe Administrador é responsável pelo gerenciamento dos anúncios de adoção, enquanto a classe Usuário permite definir preferências e buscar animais compatíveis. A classe Animal armazena informações como nome, espécie, idade, porte, descrição, status e também poderá armazenar a URL da imagem enviada por meio da integração com a API do Cloudinary. Por fim, a classe Contato gerencia a comunicação entre usuários interessados e responsáveis pelos animais. Essa modelagem contribui para uma melhor organização da aplicação e facilita futuras expansões e manutenções do sistema.
+
+Diagrama de Casos de Uso
+
+![Diagrama de Casos de Uso](./Diagrama%20Caso%20de%20Uso.png)
+
+Diagrama de Classes
+
+![Diagrama de Classes](./diagramadeclasse.png)
 
 ---
 
