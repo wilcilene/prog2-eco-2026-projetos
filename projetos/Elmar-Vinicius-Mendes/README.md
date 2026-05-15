@@ -1,13 +1,12 @@
 # [Zerion] – Trio
 
 ## Integrantes
-|-------------------------------------------------------------------------------------------------------|
 |           Nome              | Matrícula  |                        GitHub                              |
 |-----------------------------|------------|------------------------------------------------------------|
 | Elmar Grossl Júnior         | 2021015288 | [@Elmargrjr](https://github.com/Elmargrjr)                 |
 | João Victor de Souza Mendes | 2024000734 | [@JoaoVictorSMendes](https://github.com/JoaoVictorSMendes) |
 | Vinicius dos Santos Doneli  | 2022002382 | [@Donelli0](https://github.com/Donelli0)                   |
-|-------------------------------------------------------------------------------------------------------|
+
 
 ## Descrição do projeto
 
