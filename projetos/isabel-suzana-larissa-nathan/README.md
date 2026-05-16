@@ -93,13 +93,19 @@ npm start
 ## Estrutura de pastas
 
 ```
-backend/
-├── src/           (código-fonte principal)
-├── node_modules/  (dependências)
-├── .env           (variáveis de ambiente)
-├── README.md      (documentação)
-├── package.json   (configuração do projeto)
-└── package-lock.json (lock de dependências)
+backend/src
+├── database/
+│   ├── connection.js    
+│   └── database.js      
+├── models/
+│   ├── Animal.js        ✅ (model do animal)
+│   └── Usuarios.js      ✅ (model do usuário)
+├── server.js            
+├── .env                 
+├── .gitignore
+├── README.md
+├── package-lock.json
+└── package.json
 ```
 
 ```
