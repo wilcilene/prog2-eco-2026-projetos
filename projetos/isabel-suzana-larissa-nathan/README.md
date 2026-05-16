@@ -92,6 +92,14 @@ npm start
 
 ## Estrutura de pastas
 
+backend/
+├── src/           (código-fonte principal)
+├── node_modules/  (dependências)
+├── .env           (variáveis de ambiente)
+├── README.md      (documentação)
+├── package.json   (configuração do projeto)
+└── package-lock.json (lock de dependências)
+
 ```
 src/
   ├── index.html        ← ponto de entrada
