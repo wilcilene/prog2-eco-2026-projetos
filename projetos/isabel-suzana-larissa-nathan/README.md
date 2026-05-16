@@ -92,6 +92,7 @@ npm start
 
 ## Estrutura de pastas
 
+```
 backend/
 ├── src/           (código-fonte principal)
 ├── node_modules/  (dependências)
@@ -99,6 +100,7 @@ backend/
 ├── README.md      (documentação)
 ├── package.json   (configuração do projeto)
 └── package-lock.json (lock de dependências)
+```
 
 ```
 src/
