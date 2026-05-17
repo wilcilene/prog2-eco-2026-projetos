@@ -93,32 +93,34 @@ npm start
 ## Estrutura de pastas
 
 ```
-backend/src
-├── database/
-│   ├── connection.js    
-│   └── database.js      
-├── models/
-│   ├── Animal.js        ✅ (model do animal)
-│   └── Usuarios.js      ✅ (model do usuário)
-├── server.js            
-├── .env                 
-├── .gitignore
-├── README.md
-├── package-lock.json
-└── package.json
+projeto-progII/
+│
+├── backend/
+│   ├── package.json            ← configura dependências e scripts do Node.js
+│   ├── package-lock.json       ← controle de versões das dependências
+│   ├── .env                    ← variáveis de ambiente
+│   │
+│   └── src/
+│       ├── server.js           ← ponto de entrada da aplicação
+│       │
+│       ├── controladores/      ← lógica das requisições
+│       │   ├── animalController.js
+│       │   └── usuarioController.js
+│       │
+│       ├── rotas/              ← definição das rotas da API
+│       │   ├── Animal.js
+│       │   └── Usuario.js
+│       │
+│       ├── database/           ← configuração e armazenamento do banco
+│       │   ├── database.js
+│       │   └── amigofiel.db
+│       │
+│       └── models/             ← modelos/entidades do sistema (se forem adicionados futuramente)
+│
+└── .gitignore                  ← arquivos ignorados pelo Git
 ```
 
-```
-src/
-  ├── index.html        ← ponto de entrada
-  ├── css/
-  ├── js/
-  │   ├── model/          ← classes de domínio
-  │   ├── service/        ← regras de negócio
-  │   ├── controller/     ← controladores
-  │   └── repository/     ← acesso ao banco
-  └── db/               ← scripts SQL
-```
+
 
 ---
 
