@@ -76,7 +76,7 @@ Além da API interna, o sistema também realiza o consumo de APIs externas para 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/wilcilene/prog2-eco-2026-projetos.git
+git clone https://github.com/SuzanaSilveira/projeto-progII.git
 
 # Acesse a pasta do projeto
 cd projetos/dupla-XX-nome1-nome2
