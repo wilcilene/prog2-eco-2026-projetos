@@ -1,26 +1,45 @@
-const API = 'http://localhost:3000';
-
-async function carregarPilotos(){
-  const res = await fetch(`${API}/pilotos`);
-  const pilotos = await res.json();
-  const lista = document.getElementById('listaPilotos');
-  lista.innerHTML = '';
-  pilotos.forEach(p => {
-    const li = document.createElement('li');
-    li.textContent = p.nome;
-    lista.appendChild(li);
-  });
+function abrirLogin(){
+    document
+        .getElementById("login")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
 }
 
-async function cadastrarPiloto(){
-  const nome = document.getElementById('nomePiloto').value;
-  await fetch(`${API}/pilotos`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nome })
-  });
-  document.getElementById('nomePiloto').value = '';
-  carregarPilotos();
-}
+function login(){
 
-carregarPilotos();
+    const tipo =
+        document.getElementById("tipo").value;
+
+    if(tipo === "admin"){
+        alert("Dashboard Admin");
+    }
+
+    if(tipo === "piloto"){
+        alert("Dashboard Piloto");
+    }
+
+    if(tipo === "cliente"){
+        alert("Dashboard Cliente");
+    }
+}
+function login(){
+
+    const tipo =
+        document.getElementById("tipo").value;
+
+    if(tipo === "admin"){
+        window.location.href =
+            "admin.html";
+    }
+
+    if(tipo === "piloto"){
+        window.location.href =
+            "piloto.html";
+    }
+
+    if(tipo === "cliente"){
+        window.location.href =
+            "cliente.html";
+    }
+}

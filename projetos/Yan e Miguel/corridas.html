@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Corridas - RaceHub</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">🏁 RaceHub</div>
+
+<nav>
+<a href="index.html">Home</a>
+</nav>
+
+</header>
+
+<div class="hero">
+
+<h1>Gerenciamento de Corridas</h1>
+
+<div class="corrida-container">
+
+    <h2>Nova Corrida</h2>
+
+    <input
+        id="nomeCorrida"
+        placeholder="Nome da Corrida">
+
+    <input
+        id="pilotos"
+        type="number"
+        placeholder="Número de Pilotos">
+
+    <button
+        class="btn-principal"
+        onclick="criarCorrida()">
+
+        Criar Corrida
+
+    </button>
+
+</div>
+
+<div id="listaCorridas"></div>
+
+</body>
+</html>
+<script>
+
+let corridas = [];
+
+function criarCorrida(){
+
+    const nome =
+        document.getElementById("nomeCorrida").value;
+
+    const pilotos =
+        document.getElementById("pilotos").value;
+
+    if(nome === "" || pilotos === ""){
+        alert("Preencha todos os campos");
+        return;
+    }
+
+    corridas.push({
+        nome,
+        pilotos
+    });
+
+    atualizarCorridas();
+
+    document.getElementById("nomeCorrida").value = "";
+    document.getElementById("pilotos").value = "";
+}
+
+function atualizarCorridas(){
+
+    let html = "";
+
+    corridas.forEach(c => {
+
+        html += `
+
+        <div class="corrida-card">
+
+            <h2>${c.nome}</h2>
+
+            <p>
+                👥 ${c.pilotos} pilotos
+            </p>
+
+            <span class="status">
+                Agendada
+            </span>
+
+        </div>
+
+        `;
+    });
+
+    document
+        .getElementById("listaCorridas")
+        .innerHTML = html;
+}
+<div id="listaCorridas"></div>
+</script>
