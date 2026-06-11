@@ -6,7 +6,7 @@
 }
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:'Montserrat', sans-serif;
     background:var(--preto);
     color:var(--branco);
 
@@ -527,4 +527,208 @@ input[type="date"]{
     margin-left:270px;
 
     padding:40px;
+}
+.btn-home{
+
+    background:#E10600;
+
+    color:white;
+
+    border:none;
+
+    padding:18px 35px;
+
+    border-radius:50px;
+
+    font-size:20px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn-home:hover{
+
+    transform:translateY(-3px);
+
+    background:#c40500;
+
+    box-shadow:
+        0 0 20px rgba(225,6,0,.4);
+}
+.logo{
+
+    display:flex;
+    flex-direction:column;
+
+    color:#E10600;
+
+    font-size:42px;
+
+    font-weight:800;
+}
+
+.sublogo{
+
+    font-size:14px;
+
+    color:#FFD100;
+
+    letter-spacing:2px;
+}
+.dash-card{
+
+    cursor:pointer;
+}
+.corrida-card{
+
+    width:800px;
+
+    max-width:95%;
+
+    margin:20px auto;
+
+    background:#1a1a1a;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    border-left:5px solid #E10600;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.4);
+}
+
+.corrida-card h2{
+
+    margin:0 0 10px 0;
+
+    color:#FFD100;
+}
+
+.corrida-card p{
+
+    margin:0;
+
+    color:white;
+}
+.piloto-form{
+
+    width:700px;
+
+    max-width:95%;
+
+    margin:30px auto;
+
+    display:flex;
+
+    gap:15px;
+}
+
+.piloto-form input{
+
+    flex:1;
+
+    background:#252525;
+
+    color:white;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:18px;
+
+    font-size:18px;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+.piloto-form input:focus{
+
+    box-shadow:
+        0 0 15px rgba(225,6,0,.4);
+}
+
+.btn-piloto{
+
+    background:#E10600;
+
+    color:white;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:18px 30px;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    white-space:nowrap;
+}
+
+.btn-piloto:hover{
+
+    background:#c40500;
+
+    transform:translateY(-2px);
+}
+.piloto-card{
+
+    width:700px;
+
+    max-width:95%;
+
+    margin:15px auto;
+
+    background:#1a1a1a;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    border-left:5px solid #FFD100;
+
+    transition:.3s;
+}
+
+.piloto-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 20px rgba(255,209,0,.2);
+}
+
+.piloto-nome{
+
+    font-size:22px;
+
+    font-weight:600;
+
+    color:white;
+}
+
+.piloto-id{
+
+    color:#FFD100;
+
+    font-size:18px;
 }

@@ -1,56 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>Tempos de Volta - RaceHub</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <header>
 
-<div class="logo">🏁 RaceHub</div>
+    <div class="logo">
+        🏁 RaceHub
+    </div>
 
-<nav>
-<a href="index.html">Home</a>
-</nav>
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="admin.html">
+            Dashboard
+        </a>
+
+    </nav>
 
 </header>
 
-<div class="ranking-container">
+<div class="hero">
 
-    <h2>🏆 Ranking Geral</h2>
+    <h1>Ranking de Tempos</h1>
 
-    <table class="ranking">
+    <div class="corrida-container">
 
-        <tr>
-            <th>#</th>
-            <th>Piloto</th>
-            <th>Melhor Tempo</th>
-        </tr>
+        <input
+            id="nomePiloto"
+            placeholder="Nome do Piloto">
 
-        <tr>
-            <td>🥇</td>
-            <td>Miguel</td>
-            <td>1:23.991</td>
-        </tr>
+        <input
+            id="tempoVolta"
+            placeholder="Ex: 1:24.321">
 
-        <tr>
-            <td>🥈</td>
-            <td>Yan</td>
-            <td>1:24.342</td>
-        </tr>
+        <button
+            class="btn-principal"
+            onclick="registrarTempo()">
 
-        <tr>
-            <td>🥉</td>
-            <td>Lucas</td>
-            <td>1:25.012</td>
-        </tr>
+            Registrar Tempo
 
-    </table>
+        </button>
+
+    </div>
+
+    <div id="ranking"></div>
 
 </div>
 
+<script src="database.js"></script>
+
+<script>
+
+function registrarTempo(){
+
+    const piloto =
+        document.getElementById("nomePiloto").value;
+
+    const tempo =
+        document.getElementById("tempoVolta").value;
+
+    if(piloto === "" || tempo === ""){
+
+        alert("Preencha todos os campos");
+
+        return;
+    }
+
+    const partes =
+        tempo.split(":");
+
+    const minutos =
+        Number(partes[0]);
+
+    const segundos =
+        Number(partes[1]);
+
+    const tempoTotal =
+        minutos * 60 + segundos;
+
+    const tempos =
+        obterTempos();
+
+    tempos.push({
+
+        piloto,
+        tempo,
+        tempoTotal
+
+    });
+
+    salvarTempos(tempos);
+
+    document.getElementById("nomePiloto").value = "";
+    document.getElementById("tempoVolta").value = "";
+
+    carregarRanking();
+}
+
+function carregarRanking(){
+
+    const tempos =
+        obterTempos();
+
+    tempos.sort(
+        (a,b) =>
+        a.tempoTotal - b.tempoTotal
+    );
+
+    let html = `
+
+    <div class="ranking-container">
+
+        <h2>
+            🏆 Ranking Geral
+        </h2>
+
+    `;
+
+    tempos.forEach((t,index) => {
+
+        let medalha = "";
+
+        if(index === 0){
+
+            medalha = "🥇";
+        }
+
+        else if(index === 1){
+
+            medalha = "🥈";
+        }
+
+        else if(index === 2){
+
+            medalha = "🥉";
+        }
+
+        html += `
+
+        <table class="ranking">
+
+            <tr>
+
+                <td>
+
+                    ${medalha}
+                    ${t.piloto}
+
+                </td>
+
+                <td>
+
+                    ${t.tempo}
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        `;
+    });
+
+    html += "</div>";
+
+    document.getElementById("ranking")
+        .innerHTML = html;
+}
+
+carregarRanking();
+
+</script>
+
 </body>
+
 </html>

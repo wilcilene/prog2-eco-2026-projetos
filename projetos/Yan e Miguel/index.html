@@ -5,15 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Race Hub</title>
 
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
+    <link rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
 <body>
 
 <header>
-    <div class="logo">🏁 RaceHub
+    <div class="logo">
 
-Track Management System</div>
+    🏁 RaceHub
+
+    <span class="sublogo">
+        Track Management System
+    </span>
+
+</div>
 
     <nav>
         <a href="#sobre">Sobre</a>
@@ -24,7 +39,9 @@ Track Management System</div>
 </header>
 
 <section class="hero">
-    <h2>Velocidade, Segurança e Performance</h2>
+    <h1>
+    Velocidade, Segurança e Performance
+</h1>
 
     <p>
         Gerencie corridas, acompanhe tempos de volta e reserve horários
@@ -32,7 +49,7 @@ Track Management System</div>
     </p>
 
     <button
-    class="btn-principal"
+    class="btn-home"
     onclick="abrirLogin()">
 
     🏁 Acessar o RaceHub
@@ -114,21 +131,7 @@ Track Management System</div>
             id="senha"
             placeholder="Digite sua senha">
 
-        <select id="tipo">
-
-            <option value="admin">
-                Administrador
-            </option>
-
-            <option value="piloto">
-                Piloto
-            </option>
-
-            <option value="cliente">
-                Cliente
-            </option>
-
-        </select>
+        
 
         <button
             class="btn-login"
@@ -136,11 +139,19 @@ Track Management System</div>
 
             Entrar
         </button>
+        <button
+class="btn-login"
+onclick="window.location.href='cadastro.html'">
+
+Criar Conta
+
+</button>
 
     </div>
 
 </section>
 
+<script src="database.js"></script>
 <script src="script.js"></script>
 
 </body>

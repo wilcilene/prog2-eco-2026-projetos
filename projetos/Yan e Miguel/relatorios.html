@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Relatórios</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+🏁 RaceHub
+</div>
+
+<nav>
+
+<a href="admin.html">
+Dashboard
+</a>
+
+</nav>
+
+</header>
+
+<div class="hero">
+
+<h1>Relatórios Gerais</h1>
+
+<div class="dashboard-cards">
+
+<div class="dash-card">
+
+<h2>👥</h2>
+
+<h3 id="pilotos"></h3>
+
+<p>Pilotos</p>
+
+</div>
+
+<div class="dash-card">
+
+<h2>📅</h2>
+
+<h3 id="reservas"></h3>
+
+<p>Reservas</p>
+
+</div>
+
+<div class="dash-card">
+
+<h2>🏁</h2>
+
+<h3 id="corridas"></h3>
+
+<p>Corridas</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="database.js"></script>
+
+<script>
+
+document.getElementById("pilotos")
+.innerText =
+obterPilotos().length;
+
+document.getElementById("reservas")
+.innerText =
+obterReservas().length;
+
+document.getElementById("corridas")
+.innerText =
+obterCorridas().length;
+
+</script>
+
+</body>
+
+</html>

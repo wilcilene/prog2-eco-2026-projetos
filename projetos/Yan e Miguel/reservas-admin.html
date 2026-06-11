@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Reservas - RaceHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+🏁 RaceHub
+</div>
+
+<nav>
+
+<a href="admin.html">
+Dashboard
+</a>
+
+</nav>
+
+</header>
+
+<div class="hero">
+
+<h1>Reservas da Pista</h1>
+
+<div id="listaReservas"></div>
+
+</div>
+
+<script src="database.js"></script>
+
+<script>
+
+const reservas =
+    obterReservas();
+
+let html = "";
+
+reservas.forEach(r => {
+
+    html += `
+
+    <div class="corrida-card">
+
+        <h2>📅 ${r.data}</h2>
+
+        <p>Horário: ${r.horario}</p>
+
+    </div>
+
+    `;
+});
+
+document
+.getElementById("listaReservas")
+.innerHTML = html;
+
+</script>
+
+</body>
+
+</html>

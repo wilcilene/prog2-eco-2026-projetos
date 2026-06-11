@@ -1,4 +1,5 @@
 function abrirLogin(){
+
     document
         .getElementById("login")
         .scrollIntoView({
@@ -8,37 +9,48 @@ function abrirLogin(){
 
 function login(){
 
-    const tipo =
-        document.getElementById("tipo").value;
+    const email =
+        document.getElementById("email").value;
 
-    if(tipo === "admin"){
-        alert("Dashboard Admin");
+    const senha =
+        document.getElementById("senha").value;
+
+    const usuarios =
+        obterUsuarios();
+
+    const usuario =
+        usuarios.find(u =>
+
+            u.email === email &&
+            u.senha === senha
+        );
+
+    if(!usuario){
+
+        alert("Usuário ou senha inválidos");
+
+        return;
     }
 
-    if(tipo === "piloto"){
-        alert("Dashboard Piloto");
-    }
+    localStorage.setItem(
+        "usuarioLogado",
+        JSON.stringify(usuario)
+    );
 
-    if(tipo === "cliente"){
-        alert("Dashboard Cliente");
-    }
-}
-function login(){
+    if(usuario.tipo === "admin"){
 
-    const tipo =
-        document.getElementById("tipo").value;
-
-    if(tipo === "admin"){
         window.location.href =
             "admin.html";
     }
 
-    if(tipo === "piloto"){
+    else if(usuario.tipo === "piloto"){
+
         window.location.href =
             "piloto.html";
     }
 
-    if(tipo === "cliente"){
+    else{
+
         window.location.href =
             "cliente.html";
     }

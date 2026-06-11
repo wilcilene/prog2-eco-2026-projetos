@@ -1,20 +1,38 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Agenda - RaceHub</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda - RaceHub</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <header>
 
-<div class="logo">🏁 RaceHub</div>
+    <div class="logo">
+        🏁 RaceHub
+    </div>
 
-<nav>
-<a href="index.html">Home</a>
-</nav>
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="cliente.html">
+            Dashboard
+        </a>
+
+    </nav>
 
 </header>
 
@@ -53,35 +71,15 @@
 
         <h3 id="resultadoAgenda"></h3>
 
+        <div id="listaReservas"></div>
+
     </div>
 
 </div>
 
-</body>
-</html>
+<script src="database.js"></script>
+
 <script>
-
-function reservarData(){
-
-    const data =
-        document.getElementById("dataReserva").value;
-
-    if(data === ""){
-        alert("Selecione uma data");
-        return;
-    }
-
-    document
-        .getElementById("resultadoAgenda")
-        .innerHTML =
-            `✅ Reserva realizada para ${data}`;
-
-}
-
-</script>
-<script>
-
-let reservas = [];
 
 function reservarData(){
 
@@ -91,23 +89,64 @@ function reservarData(){
     const horario =
         document.getElementById("horario").value;
 
-    const reserva =
-        `${data} ${horario}`;
+    if(data === ""){
 
-    if(reservas.includes(reserva)){
-
-        alert("Horário indisponível");
+        alert("Selecione uma data");
 
         return;
     }
 
-    reservas.push(reserva);
+    const reservas = obterReservas();
 
-    document
-        .getElementById("resultadoAgenda")
+    reservas.push({
+
+        data: data,
+
+        horario: horario
+
+    });
+
+    salvarReservas(reservas);
+
+    document.getElementById("resultadoAgenda")
         .innerHTML =
 
-        `✅ Reserva confirmada<br>${data} às ${horario}`;
+        `✅ Reserva realizada para ${data} às ${horario}`;
+
+    carregarReservas();
 }
 
+function carregarReservas(){
+
+    const reservas = obterReservas();
+
+    let html = "";
+
+    reservas.forEach(r => {
+
+        html += `
+
+        <div class="corrida-card">
+
+            <h3>📅 ${r.data}</h3>
+
+            <p>Horário: ${r.horario}</p>
+
+        </div>
+
+        `;
+    });
+
+    document
+        .getElementById("listaReservas")
+        .innerHTML = html;
+}
+
+carregarReservas();
+
 </script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Pilotos - RaceHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+🏁 RaceHub
+
+</div>
+
+<nav>
+
+<a href="admin.html">
+
+Dashboard
+
+</a>
+
+</nav>
+
+</header>
+
+<div class="hero">
+
+<h1>Gerenciamento de Pilotos</h1>
+
+<div class="piloto-form">
+
+    <input
+        type="text"
+        id="nomePiloto"
+        placeholder="Nome do Piloto">
+
+    <input
+        type="email"
+        id="emailPiloto"
+        placeholder="Email">
+
+    <input
+        type="password"
+        id="senhaPiloto"
+        placeholder="Senha Inicial">
+
+    <button
+        class="btn-piloto"
+        onclick="cadastrarPiloto()">
+
+        ➕ Cadastrar
+
+    </button>
+
+</div>
+
+<div id="listaPilotos"></div>
+
+</div>
+
+<script src="database.js"></script>
+
+<script>
+
+function cadastrarPiloto(){
+
+    const nome =
+        document.getElementById("nomePiloto").value;
+
+    const email =
+        document.getElementById("emailPiloto").value;
+
+    const senha =
+        document.getElementById("senhaPiloto").value;
+
+    if(
+        nome === "" ||
+        email === "" ||
+        senha === ""
+    ){
+        alert("Preencha todos os campos");
+        return;
+    }
+
+    const usuarios =
+        obterUsuarios();
+
+    if(
+        usuarios.some(
+            u => u.email === email
+        )
+    ){
+        alert("Email já cadastrado");
+        return;
+    }
+
+    usuarios.push({
+
+        id: Date.now(),
+
+        nome,
+        email,
+        senha,
+
+        tipo: "piloto",
+
+        protegido: false
+
+    });
+
+    salvarUsuarios(usuarios);
+
+    atualizarPilotos();
+
+    document.getElementById("nomePiloto").value = "";
+    document.getElementById("emailPiloto").value = "";
+    document.getElementById("senhaPiloto").value = "";
+}
+
+function excluirPiloto(id){
+
+    let usuarios =
+        obterUsuarios();
+
+    usuarios =
+        usuarios.filter(
+            u => u.id !== id
+        );
+
+    salvarUsuarios(usuarios);
+
+    atualizarPilotos();
+}
+
+function atualizarPilotos(){
+
+    const usuarios =
+        obterUsuarios();
+
+    const pilotos =
+        usuarios.filter(
+            u => u.tipo === "piloto"
+        );
+
+    let html = "";
+
+    pilotos.forEach((p,index) => {
+
+        html += `
+
+        <div class="piloto-card">
+
+            <div>
+
+                <div class="piloto-nome">
+
+                    ${p.nome}
+
+                </div>
+
+                <div class="piloto-id">
+
+                    ${p.email}
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn-piloto"
+                onclick="excluirPiloto(${p.id})">
+
+                Excluir
+
+            </button>
+
+        </div>
+
+        `;
+    });
+
+    document
+        .getElementById("listaPilotos")
+        .innerHTML = html;
+}
+
+atualizarPilotos();
+
+</script>
+
+</body>
+
+</html>

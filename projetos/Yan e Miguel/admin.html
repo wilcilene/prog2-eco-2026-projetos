@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Admin - RaceHub</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <title>Admin - RaceHub</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
 <div class="sidebar">
@@ -12,10 +18,16 @@
     <h2>🏁 RaceHub</h2>
 
     <a href="admin.html">Dashboard</a>
-    <a href="usuarios.html">Usuários</a>
+
+    <a href="pilotos.html">Pilotos</a>
+
     <a href="reservas-admin.html">Reservas</a>
+
     <a href="corridas.html">Corridas</a>
+
     <a href="tempos.html">Tempos</a>
+
+    <a href="relatorios.html">Relatórios</a>
 
 </div>
 
@@ -25,33 +37,99 @@
 
     <div class="dashboard-cards">
 
-        <div class="dash-card">
+        <div
+            class="dash-card"
+            onclick="window.location.href='pilotos.html'">
+
             <h2>👥</h2>
-            <h3>154</h3>
-            <p>Pilotos</p>
+
+            <h3 id="totalPilotos">0</h3>
+
+            <p>Pilotos Cadastrados</p>
+
         </div>
 
-        <div class="dash-card">
+        <div
+            class="dash-card"
+            onclick="window.location.href='reservas-admin.html'">
+
             <h2>📅</h2>
-            <h3>23</h3>
-            <p>Reservas Hoje</p>
+
+            <h3 id="totalReservas">0</h3>
+
+            <p>Reservas</p>
+
         </div>
 
-        <div class="dash-card">
+        <div
+            class="dash-card"
+            onclick="window.location.href='corridas.html'">
+
             <h2>🏁</h2>
-            <h3>8</h3>
+
+            <h3 id="totalCorridas">0</h3>
+
             <p>Corridas</p>
+
         </div>
 
-        <div class="dash-card">
-            <h2>⚡</h2>
-            <h3>1:22.832</h3>
-            <p>Melhor Volta</p>
-        </div>
+        <div
+    class="dash-card"
+    onclick="window.location.href='tempos.html'">
+
+    <h2>⚡</h2>
+
+    <h3 id="melhorVolta">-</h3>
+
+    <p id="pilotoMelhorVolta">
+        Nenhum tempo registrado
+    </p>
+
+</div>
 
     </div>
 
 </div>
 
+<script src="database.js"></script>
+
+<script>
+
+document.getElementById("totalPilotos")
+.innerText = obterPilotos().length;
+
+document.getElementById("totalReservas")
+.innerText = obterReservas().length;
+
+document.getElementById("totalCorridas")
+.innerText = obterCorridas().length;
+
+const tempos = obterTempos();
+
+if(tempos.length > 0){
+
+    tempos.sort(
+        (a,b) =>
+        a.tempoTotal - b.tempoTotal
+    );
+
+    document.getElementById("melhorVolta")
+    .innerText = tempos[0].tempo;
+
+    document.getElementById("pilotoMelhorVolta")
+    .innerText = tempos[0].piloto;
+
+}else{
+
+    document.getElementById("melhorVolta")
+    .innerText = "-";
+
+    document.getElementById("pilotoMelhorVolta")
+    .innerText = "Nenhum tempo registrado";
+}
+
+</script>
+
 </body>
+
 </html>

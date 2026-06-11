@@ -1,0 +1,103 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Cadastro - RaceHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="hero">
+
+    <div class="login-container">
+
+        <h2>Criar Conta</h2>
+
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome Completo">
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email">
+
+        <input
+            type="password"
+            id="senha"
+            placeholder="Senha">
+
+        <button
+            class="btn-login"
+            onclick="cadastrarCliente()">
+
+            Criar Conta
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="database.js"></script>
+
+<script>
+
+function cadastrarCliente(){
+
+    const nome =
+        document.getElementById("nome").value;
+
+    const email =
+        document.getElementById("email").value;
+
+    const senha =
+        document.getElementById("senha").value;
+
+    const usuarios =
+        obterUsuarios();
+
+    if(
+        usuarios.some(
+            u => u.email === email
+        )
+    ){
+        alert("Email já cadastrado");
+        return;
+    }
+
+    usuarios.push({
+
+        id: Date.now(),
+
+        nome,
+        email,
+        senha,
+
+        tipo: "cliente",
+
+        protegido: false
+
+    });
+
+    salvarUsuarios(usuarios);
+
+    alert("Conta criada com sucesso");
+
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+
+</html>
+```

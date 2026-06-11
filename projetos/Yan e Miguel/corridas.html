@@ -22,26 +22,32 @@
 
 <h1>Gerenciamento de Corridas</h1>
 
-<div class="corrida-container">
+<div class="hero">
 
-    <h2>Nova Corrida</h2>
+    <h1>Gerenciamento de Corridas</h1>
 
-    <input
-        id="nomeCorrida"
-        placeholder="Nome da Corrida">
+    <div class="corrida-container">
 
-    <input
-        id="pilotos"
-        type="number"
-        placeholder="Número de Pilotos">
+        <input
+            id="nomeCorrida"
+            placeholder="Nome da Corrida">
 
-    <button
-        class="btn-principal"
-        onclick="criarCorrida()">
+        <input
+            id="pilotos"
+            type="number"
+            placeholder="Quantidade de Pilotos">
 
-        Criar Corrida
+        <button
+            class="btn-principal"
+            onclick="criarCorrida()">
 
-    </button>
+            Criar Corrida
+
+        </button>
+
+    </div>
+
+    <div id="listaCorridas"></div>
 
 </div>
 
@@ -49,9 +55,9 @@
 
 </body>
 </html>
-<script>
+<script src="database.js"></script>
 
-let corridas = [];
+<script>
 
 function criarCorrida(){
 
@@ -62,14 +68,22 @@ function criarCorrida(){
         document.getElementById("pilotos").value;
 
     if(nome === "" || pilotos === ""){
+
         alert("Preencha todos os campos");
+
         return;
     }
 
+    const corridas = obterCorridas();
+
     corridas.push({
+
         nome,
         pilotos
+
     });
+
+    salvarCorridas(corridas);
 
     atualizarCorridas();
 
@@ -78,6 +92,8 @@ function criarCorrida(){
 }
 
 function atualizarCorridas(){
+
+    const corridas = obterCorridas();
 
     let html = "";
 
@@ -89,12 +105,12 @@ function atualizarCorridas(){
 
             <h2>${c.nome}</h2>
 
-            <p>
-                👥 ${c.pilotos} pilotos
-            </p>
+            <p>👥 ${c.pilotos} pilotos</p>
 
             <span class="status">
+
                 Agendada
+
             </span>
 
         </div>
@@ -102,9 +118,10 @@ function atualizarCorridas(){
         `;
     });
 
-    document
-        .getElementById("listaCorridas")
+    document.getElementById("listaCorridas")
         .innerHTML = html;
 }
-<div id="listaCorridas"></div>
+
+atualizarCorridas();
+
 </script>

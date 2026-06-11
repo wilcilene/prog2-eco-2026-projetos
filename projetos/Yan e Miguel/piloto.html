@@ -1,39 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Piloto - RaceHub</title>
+
+<title>Pilotos</title>
+
 <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<div class="sidebar">
+<header>
 
-    <h2>🏁 RaceHub</h2>
+<div class="logo">
+🏁 RaceHub
+</div>
 
-    <a href="piloto.html">
-        Dashboard
-    </a>
+</header>
 
-    <a href="minhas-corridas.html">
-        Minhas Corridas
-    </a>
+<div class="hero">
 
-    <a href="minhas-reservas.html">
-        Minhas Reservas
-    </a>
+<h1>Pilotos Cadastrados</h1>
 
-    <a href="tempos.html">
-        Tempos
-    </a>
+<div class="corrida-container">
+
+<input
+id="nomePiloto"
+placeholder="Nome do Piloto">
+
+<button
+class="btn-principal"
+onclick="cadastrarPiloto()">
+
+Cadastrar
+
+</button>
 
 </div>
 
-<div class="main">
-
-    <h1>Área do Piloto</h1>
+<div id="listaPilotos"></div>
 
 </div>
+
+<script src="database.js"></script>
+
+<script>
+
+function cadastrarPiloto(){
+
+    const nome =
+        document.getElementById("nomePiloto").value;
+
+    if(nome === "") return;
+
+    const pilotos =
+        obterPilotos();
+
+    pilotos.push({
+        nome
+    });
+
+    salvarPilotos(pilotos);
+
+    atualizarPilotos();
+}
+
+function atualizarPilotos(){
+
+    const pilotos =
+        obterPilotos();
+
+    let html = "";
+
+    pilotos.forEach(p => {
+
+        html += `
+
+        <div class="corrida-card">
+
+            <h2>${p.nome}</h2>
+
+        </div>
+
+        `;
+    });
+
+    document
+        .getElementById("listaPilotos")
+        .innerHTML = html;
+}
+
+atualizarPilotos();
+
+</script>
 
 </body>
+
 </html>
