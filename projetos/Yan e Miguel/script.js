@@ -1,57 +1,25 @@
-function abrirLogin(){
-
-    document
-        .getElementById("login")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
+function abrirLogin() {
+  document.getElementById("login").scrollIntoView({ behavior: "smooth" });
 }
 
-function login(){
+async function login() {
+  const email = document.getElementById("email").value;
 
-    const email =
-        document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
 
-    const senha =
-        document.getElementById("senha").value;
+  try {
+    const usuario = await autenticarUsuario(email, senha);
 
-    const usuarios =
-        obterUsuarios();
+    localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
-    const usuario =
-        usuarios.find(u =>
-
-            u.email === email &&
-            u.senha === senha
-        );
-
-    if(!usuario){
-
-        alert("Usuário ou senha inválidos");
-
-        return;
+    if (usuario.tipo === "admin") {
+      window.location.href = "admin.html";
+    } else if (usuario.tipo === "piloto") {
+      window.location.href = "piloto.html";
+    } else {
+      window.location.href = "cliente.html";
     }
-
-    localStorage.setItem(
-        "usuarioLogado",
-        JSON.stringify(usuario)
-    );
-
-    if(usuario.tipo === "admin"){
-
-        window.location.href =
-            "admin.html";
-    }
-
-    else if(usuario.tipo === "piloto"){
-
-        window.location.href =
-            "piloto.html";
-    }
-
-    else{
-
-        window.location.href =
-            "cliente.html";
-    }
+  } catch (erro) {
+    alert(erro.message);
+  }
 }

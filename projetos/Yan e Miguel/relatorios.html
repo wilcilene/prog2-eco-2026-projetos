@@ -3,89 +3,92 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Relatórios</title>
+    <title>Relatórios</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header>
+    <header>
 
-<div class="logo">
-🏁 RaceHub
-</div>
+        <div class="logo">
+            🏁 RaceHub
+        </div>
 
-<nav>
+        <nav>
 
-<a href="admin.html">
-Dashboard
-</a>
+            <a href="admin.html">
+                Dashboard
+            </a>
 
-</nav>
+        </nav>
 
-</header>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-<h1>Relatórios Gerais</h1>
+        <h1>Relatórios Gerais</h1>
 
-<div class="dashboard-cards">
+        <div class="dashboard-cards">
 
-<div class="dash-card">
+            <div class="dash-card">
 
-<h2>👥</h2>
+                <h2>👥</h2>
 
-<h3 id="pilotos"></h3>
+                <h3 id="pilotos"></h3>
 
-<p>Pilotos</p>
+                <p>Pilotos</p>
 
-</div>
+            </div>
 
-<div class="dash-card">
+            <div class="dash-card">
 
-<h2>📅</h2>
+                <h2>📅</h2>
 
-<h3 id="reservas"></h3>
+                <h3 id="reservas"></h3>
 
-<p>Reservas</p>
+                <p>Reservas</p>
 
-</div>
+            </div>
 
-<div class="dash-card">
+            <div class="dash-card">
 
-<h2>🏁</h2>
+                <h2>🏁</h2>
 
-<h3 id="corridas"></h3>
+                <h3 id="corridas"></h3>
 
-<p>Corridas</p>
+                <p>Corridas</p>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<script src="database.js"></script>
+    <script src="database.js"></script>
 
-<script>
+    <script>
 
-document.getElementById("pilotos")
-.innerText =
-obterPilotos().length;
+        async function carregarRelatorios() {
 
-document.getElementById("reservas")
-.innerText =
-obterReservas().length;
+            const [pilotos, reservas, corridas] = await Promise.all([
+                obterPilotos(),
+                obterReservas(),
+                obterCorridas()
+            ]);
 
-document.getElementById("corridas")
-.innerText =
-obterCorridas().length;
+            document.getElementById("pilotos").innerText = pilotos.length;
+            document.getElementById("reservas").innerText = reservas.length;
+            document.getElementById("corridas").innerText = corridas.length;
+        }
 
-</script>
+        carregarRelatorios();
+
+    </script>
 
 </body>
 

@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -16,137 +15,133 @@
 
 <body>
 
-<header>
+    <header>
 
-    <div class="logo">
-        🏁 RaceHub
-    </div>
+        <div class="logo">
+            🏁 RaceHub
+        </div>
 
-    <nav>
+        <nav>
 
-        <a href="index.html">
-            Home
-        </a>
+            <a href="index.html">
+                Home
+            </a>
 
-        <a href="cliente.html">
-            Dashboard
-        </a>
+            <a href="cliente.html">
+                Dashboard
+            </a>
 
-    </nav>
+        </nav>
 
-</header>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-    <h1>Agenda da Pista</h1>
+        <h1>Agenda da Pista</h1>
 
-    <div class="agenda-box">
+        <div class="agenda-box">
 
-        <h2>Selecionar Data</h2>
+            <h2>Selecionar Data</h2>
 
-        <input
-            type="date"
-            id="dataReserva">
+            <input type="date" id="dataReserva">
 
-        <h2>Selecionar Horário</h2>
+            <h2>Selecionar Horário</h2>
 
-        <select id="horario">
+            <select id="horario">
 
-            <option>08:00</option>
-            <option>10:00</option>
-            <option>12:00</option>
-            <option>14:00</option>
-            <option>16:00</option>
-            <option>18:00</option>
+                <option>08:00</option>
+                <option>10:00</option>
+                <option>12:00</option>
+                <option>14:00</option>
+                <option>16:00</option>
+                <option>18:00</option>
 
-        </select>
+            </select>
 
-        <button
-            class="btn-principal"
-            onclick="reservarData()">
+            <button class="btn-principal" onclick="reservarDataForm()">
 
-            Reservar
+                Reservar
 
-        </button>
+            </button>
 
-        <h3 id="resultadoAgenda"></h3>
+            <h3 id="resultadoAgenda"></h3>
 
-        <div id="listaReservas"></div>
+            <div id="listaReservas"></div>
+
+        </div>
 
     </div>
 
-</div>
+    <script src="database.js"></script>
 
-<script src="database.js"></script>
+    <script>
 
-<script>
+        async function reservarDataForm() {
 
-function reservarData(){
+            const data =
+                document.getElementById("dataReserva").value;
 
-    const data =
-        document.getElementById("dataReserva").value;
+            const horario =
+                document.getElementById("horario").value;
 
-    const horario =
-        document.getElementById("horario").value;
+            if (data === "") {
 
-    if(data === ""){
+                alert("Selecione uma data");
 
-        alert("Selecione uma data");
+                return;
+            }
 
-        return;
-    }
+            const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-    const reservas = obterReservas();
+            try {
+                await criarReserva({
+                    usuario_id: usuarioLogado ? usuarioLogado.id : null,
+                    data,
+                    horario
+                });
 
-    reservas.push({
+                document.getElementById("resultadoAgenda")
+                    .innerHTML = `✅ Reserva realizada para ${data} às ${horario}`;
 
-        data: data,
+                await carregarReservas();
 
-        horario: horario
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
 
-    });
+        async function carregarReservas() {
 
-    salvarReservas(reservas);
+            const reservas = await obterReservas();
 
-    document.getElementById("resultadoAgenda")
-        .innerHTML =
+            let html = "";
 
-        `✅ Reserva realizada para ${data} às ${horario}`;
+            reservas.forEach(r => {
 
-    carregarReservas();
-}
+                const dataFormatada = new Date(r.data).toLocaleDateString('pt-BR');
 
-function carregarReservas(){
-
-    const reservas = obterReservas();
-
-    let html = "";
-
-    reservas.forEach(r => {
-
-        html += `
+                html += `
 
         <div class="corrida-card">
 
-            <h3>📅 ${r.data}</h3>
+            <h3>📅 ${dataFormatada}</h3>
 
             <p>Horário: ${r.horario}</p>
 
         </div>
 
         `;
-    });
+            });
 
-    document
-        .getElementById("listaReservas")
-        .innerHTML = html;
-}
+            document
+                .getElementById("listaReservas")
+                .innerHTML = html;
+        }
 
-carregarReservas();
+        carregarReservas();
 
-</script>
+    </script>
 
 </body>
 
 </html>
-```

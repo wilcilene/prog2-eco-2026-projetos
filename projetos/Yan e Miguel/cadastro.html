@@ -1,103 +1,74 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Cadastro - RaceHub</title>
+    <title>Cadastro - RaceHub</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<div class="hero">
+    <div class="hero">
 
-    <div class="login-container">
+        <div class="login-container">
 
-        <h2>Criar Conta</h2>
+            <h2>Criar Conta</h2>
 
-        <input
-            type="text"
-            id="nome"
-            placeholder="Nome Completo">
+            <input type="text" id="nome" placeholder="Nome Completo">
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Email">
+            <input type="email" id="email" placeholder="Email">
 
-        <input
-            type="password"
-            id="senha"
-            placeholder="Senha">
+            <input type="password" id="senha" placeholder="Senha">
 
-        <button
-            class="btn-login"
-            onclick="cadastrarCliente()">
+            <button class="btn-login" onclick="cadastrarCliente()">
 
-            Criar Conta
+                Criar Conta
 
-        </button>
+            </button>
+
+        </div>
 
     </div>
 
-</div>
+    <script src="database.js"></script>
 
-<script src="database.js"></script>
+    <script>
 
-<script>
+        async function cadastrarCliente() {
 
-function cadastrarCliente(){
+            const nome =
+                document.getElementById("nome").value;
 
-    const nome =
-        document.getElementById("nome").value;
+            const email =
+                document.getElementById("email").value;
 
-    const email =
-        document.getElementById("email").value;
+            const senha =
+                document.getElementById("senha").value;
 
-    const senha =
-        document.getElementById("senha").value;
+            if (nome === "" || email === "" || senha === "") {
+                alert("Preencha todos os campos");
+                return;
+            }
 
-    const usuarios =
-        obterUsuarios();
+            try {
+                await cadastrarUsuario({ nome, email, senha, tipo: "cliente" });
 
-    if(
-        usuarios.some(
-            u => u.email === email
-        )
-    ){
-        alert("Email já cadastrado");
-        return;
-    }
+                alert("Conta criada com sucesso");
 
-    usuarios.push({
+                window.location.href = "index.html";
 
-        id: Date.now(),
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
 
-        nome,
-        email,
-        senha,
-
-        tipo: "cliente",
-
-        protegido: false
-
-    });
-
-    salvarUsuarios(usuarios);
-
-    alert("Conta criada com sucesso");
-
-    window.location.href = "index.html";
-}
-
-</script>
+    </script>
 
 </body>
 
 </html>
-```

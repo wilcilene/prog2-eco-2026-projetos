@@ -3,99 +3,46 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Pilotos</title>
+    <title>Área do Piloto - RaceHub</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header>
+    <div class="sidebar">
 
-<div class="logo">
-🏁 RaceHub
-</div>
+        <h2>🏁 RaceHub</h2>
 
-</header>
+        <a href="piloto.html">Dashboard</a>
 
-<div class="hero">
+        <a href="agenda.html">Agenda</a>
 
-<h1>Pilotos Cadastrados</h1>
+        <a href="tempos.html">Ranking de Tempos</a>
 
-<div class="corrida-container">
+    </div>
 
-<input
-id="nomePiloto"
-placeholder="Nome do Piloto">
+    <div class="main">
 
-<button
-class="btn-principal"
-onclick="cadastrarPiloto()">
+        <h1>Área do Piloto</h1>
 
-Cadastrar
+        <p id="boasVindas"></p>
 
-</button>
+    </div>
 
-</div>
+    <script src="database.js"></script>
 
-<div id="listaPilotos"></div>
+    <script>
 
-</div>
+        const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-<script src="database.js"></script>
+        document.getElementById("boasVindas").innerText =
+            usuarioLogado ? `Bem-vindo, ${usuarioLogado.nome}!` : "";
 
-<script>
-
-function cadastrarPiloto(){
-
-    const nome =
-        document.getElementById("nomePiloto").value;
-
-    if(nome === "") return;
-
-    const pilotos =
-        obterPilotos();
-
-    pilotos.push({
-        nome
-    });
-
-    salvarPilotos(pilotos);
-
-    atualizarPilotos();
-}
-
-function atualizarPilotos(){
-
-    const pilotos =
-        obterPilotos();
-
-    let html = "";
-
-    pilotos.forEach(p => {
-
-        html += `
-
-        <div class="corrida-card">
-
-            <h2>${p.nome}</h2>
-
-        </div>
-
-        `;
-    });
-
-    document
-        .getElementById("listaPilotos")
-        .innerHTML = html;
-}
-
-atualizarPilotos();
-
-</script>
+    </script>
 
 </body>
 

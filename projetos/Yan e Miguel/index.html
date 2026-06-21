@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,152 +8,137 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<header>
-    <div class="logo">
+    <header>
+        <div class="logo">
 
-    🏁 RaceHub
+            🏁 RaceHub
 
-    <span class="sublogo">
-        Track Management System
-    </span>
+            <span class="sublogo">
+                Track Management System
+            </span>
 
-</div>
+        </div>
 
-    <nav>
-        <a href="#sobre">Sobre</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#agenda">Agenda</a>
-        <a href="#login">Login</a>
-    </nav>
-</header>
+        <nav>
+            <a href="#sobre">Sobre</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#agenda">Agenda</a>
+            <a href="#login">Login</a>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>
-    Velocidade, Segurança e Performance
-</h1>
-
-    <p>
-        Gerencie corridas, acompanhe tempos de volta e reserve horários
-        para utilizar a pista.
-    </p>
-
-    <button
-    class="btn-home"
-    onclick="abrirLogin()">
-
-    🏁 Acessar o RaceHub
-
-</button>
-</section>
-
-<section id="sobre" class="sobre">
-
-    <div class="sobre-container">
-
-        <h2>Sobre a Pista</h2>
+    <section class="hero">
+        <h1>
+            Velocidade, Segurança e Performance
+        </h1>
 
         <p>
-            Nossa pista oferece estrutura completa para pilotos
-            amadores e profissionais, com áreas de preparação,
-            monitoramento de desempenho e infraestrutura moderna
-            para eventos e treinamentos.
+            Gerencie corridas, acompanhe tempos de volta e reserve horários
+            para utilizar a pista.
         </p>
 
-    </div>
+        <button class="btn-home" onclick="abrirLogin()">
 
-</section>
-
-<section id="servicos">
-
-    <h2 class="titulo-secao">
-        Serviços
-    </h2>
-
-    <div class="cards">
-
-        <button class="card-btn"
-            onclick="window.location.href='agenda.html'">
-
-            <h3>📅 Agendamento</h3>
-            <p>Reserve datas e horários disponíveis.</p>
+            🏁 Acessar o RaceHub
 
         </button>
+    </section>
 
-        <button class="card-btn"
-            onclick="window.location.href='tempos.html'">
+    <section id="sobre" class="sobre">
 
-            <h3>⏱️ Tempos de Volta</h3>
-            <p>Consulte seu desempenho.</p>
+        <div class="sobre-container">
 
-        </button>
+            <h2>Sobre a Pista</h2>
 
-        <button class="card-btn"
-            onclick="window.location.href='corridas.html'">
+            <p>
+                Nossa pista oferece estrutura completa para pilotos
+                amadores e profissionais, com áreas de preparação,
+                monitoramento de desempenho e infraestrutura moderna
+                para eventos e treinamentos.
+            </p>
 
-            <h3>🏁 Corridas</h3>
-            <p>Gerencie eventos e competições.</p>
+        </div>
 
-        </button>
+    </section>
 
-    </div>
+    <section id="servicos">
 
-</section>
+        <h2 class="titulo-secao">
+            Serviços
+        </h2>
 
-<section id="login">
+        <div class="cards">
 
-    <div class="login-container">
+            <button class="card-btn" onclick="window.location.href='agenda.html'">
 
-        <h2>Entrar no RaceHub</h2>
+                <h3>📅 Agendamento</h3>
+                <p>Reserve datas e horários disponíveis.</p>
 
-        <p>
-            Acesse sua conta para gerenciar reservas,
-            corridas e tempos de volta.
-        </p>
+            </button>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Digite seu email">
+            <button class="card-btn" onclick="window.location.href='tempos.html'">
 
-        <input
-            type="password"
-            id="senha"
-            placeholder="Digite sua senha">
+                <h3>⏱️ Tempos de Volta</h3>
+                <p>Consulte seu desempenho.</p>
 
-        
+            </button>
 
-        <button
-            class="btn-login"
-            onclick="login()">
+            <button class="card-btn" onclick="window.location.href='corridas.html'">
 
-            Entrar
-        </button>
-        <button
-class="btn-login"
-onclick="window.location.href='cadastro.html'">
+                <h3>🏁 Corridas</h3>
+                <p>Gerencie eventos e competições.</p>
 
-Criar Conta
+            </button>
 
-</button>
+        </div>
 
-    </div>
+    </section>
 
-</section>
+    <section id="login">
 
-<script src="database.js"></script>
-<script src="script.js"></script>
+        <div class="login-container">
+
+            <h2>Entrar no RaceHub</h2>
+
+            <p>
+                Acesse sua conta para gerenciar reservas,
+                corridas e tempos de volta.
+            </p>
+
+            <input type="email" id="email" placeholder="Digite seu email">
+
+            <input type="password" id="senha" placeholder="Digite sua senha">
+
+
+
+            <button class="btn-login" onclick="login()">
+
+                Entrar
+            </button>
+            <button class="btn-login" onclick="window.location.href='cadastro.html'">
+
+                Criar Conta
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <script src="database.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>

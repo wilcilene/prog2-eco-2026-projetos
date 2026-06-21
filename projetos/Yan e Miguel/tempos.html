@@ -3,125 +3,114 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Tempos de Volta - RaceHub</title>
+    <title>Tempos de Volta - RaceHub</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header>
+    <header>
 
-    <div class="logo">
-        🏁 RaceHub
-    </div>
+        <div class="logo">
+            🏁 RaceHub
+        </div>
 
-    <nav>
+        <nav>
 
-        <a href="index.html">
-            Home
-        </a>
+            <a href="index.html">
+                Home
+            </a>
 
-        <a href="admin.html">
-            Dashboard
-        </a>
+            <a href="admin.html">
+                Dashboard
+            </a>
 
-    </nav>
+        </nav>
 
-</header>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-    <h1>Ranking de Tempos</h1>
+        <h1>Ranking de Tempos</h1>
 
-    <div class="corrida-container">
+        <div class="corrida-container">
 
-        <input
-            id="nomePiloto"
-            placeholder="Nome do Piloto">
+            <select id="pilotoSelect"></select>
 
-        <input
-            id="tempoVolta"
-            placeholder="Ex: 1:24.321">
+            <input id="tempoVolta" placeholder="Ex: 84.321 (segundos)">
 
-        <button
-            class="btn-principal"
-            onclick="registrarTempo()">
+            <button class="btn-principal" onclick="registrarTempoForm()">
 
-            Registrar Tempo
+                Registrar Tempo
 
-        </button>
+            </button>
+
+        </div>
+
+        <div id="ranking"></div>
 
     </div>
 
-    <div id="ranking"></div>
+    <script src="database.js"></script>
 
-</div>
+    <script>
 
-<script src="database.js"></script>
+        async function carregarPilotosSelect() {
 
-<script>
+            const pilotos = await obterPilotos();
 
-function registrarTempo(){
+            const select = document.getElementById("pilotoSelect");
 
-    const piloto =
-        document.getElementById("nomePiloto").value;
+            if (pilotos.length === 0) {
+                select.innerHTML = `<option value="">Nenhum piloto cadastrado</option>`;
+                return;
+            }
 
-    const tempo =
-        document.getElementById("tempoVolta").value;
+            select.innerHTML = pilotos
+                .map(p => `<option value="${p.id}">${p.nome}</option>`)
+                .join("");
+        }
 
-    if(piloto === "" || tempo === ""){
+        async function registrarTempoForm() {
 
-        alert("Preencha todos os campos");
+            const pilotoId =
+                document.getElementById("pilotoSelect").value;
 
-        return;
-    }
+            const tempo =
+                document.getElementById("tempoVolta").value;
 
-    const partes =
-        tempo.split(":");
+            if (pilotoId === "" || tempo === "") {
 
-    const minutos =
-        Number(partes[0]);
+                alert("Selecione o piloto e informe o tempo");
 
-    const segundos =
-        Number(partes[1]);
+                return;
+            }
 
-    const tempoTotal =
-        minutos * 60 + segundos;
+            try {
+                await registrarResultado({
+                    piloto_id: pilotoId,
+                    tempo_volta: tempo
+                });
 
-    const tempos =
-        obterTempos();
+                document.getElementById("tempoVolta").value = "";
 
-    tempos.push({
+                await carregarRanking();
 
-        piloto,
-        tempo,
-        tempoTotal
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
 
-    });
+        async function carregarRanking() {
 
-    salvarTempos(tempos);
+            const resultados = await obterResultados();
+            // já vem ordenado do servidor, do menor tempo pro maior
 
-    document.getElementById("nomePiloto").value = "";
-    document.getElementById("tempoVolta").value = "";
-
-    carregarRanking();
-}
-
-function carregarRanking(){
-
-    const tempos =
-        obterTempos();
-
-    tempos.sort(
-        (a,b) =>
-        a.tempoTotal - b.tempoTotal
-    );
-
-    let html = `
+            let html = `
 
     <div class="ranking-container">
 
@@ -131,26 +120,21 @@ function carregarRanking(){
 
     `;
 
-    tempos.forEach((t,index) => {
+            resultados.forEach((r, index) => {
 
-        let medalha = "";
+                let medalha = "";
 
-        if(index === 0){
+                if (index === 0) {
+                    medalha = "🥇";
+                }
+                else if (index === 1) {
+                    medalha = "🥈";
+                }
+                else if (index === 2) {
+                    medalha = "🥉";
+                }
 
-            medalha = "🥇";
-        }
-
-        else if(index === 1){
-
-            medalha = "🥈";
-        }
-
-        else if(index === 2){
-
-            medalha = "🥉";
-        }
-
-        html += `
+                html += `
 
         <table class="ranking">
 
@@ -159,13 +143,13 @@ function carregarRanking(){
                 <td>
 
                     ${medalha}
-                    ${t.piloto}
+                    ${r.piloto}
 
                 </td>
 
                 <td>
 
-                    ${t.tempo}
+                    ${r.tempo_volta}s
 
                 </td>
 
@@ -174,17 +158,18 @@ function carregarRanking(){
         </table>
 
         `;
-    });
+            });
 
-    html += "</div>";
+            html += "</div>";
 
-    document.getElementById("ranking")
-        .innerHTML = html;
-}
+            document.getElementById("ranking")
+                .innerHTML = html;
+        }
 
-carregarRanking();
+        carregarPilotosSelect();
+        carregarRanking();
 
-</script>
+    </script>
 
 </body>
 

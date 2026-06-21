@@ -1,127 +1,113 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Corridas - RaceHub</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Corridas - RaceHub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+    <header>
 
-<div class="logo">🏁 RaceHub</div>
+        <div class="logo">🏁 RaceHub</div>
 
-<nav>
-<a href="index.html">Home</a>
-</nav>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
 
-</header>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-<h1>Gerenciamento de Corridas</h1>
+        <h1>Gerenciamento de Corridas</h1>
 
-<div class="hero">
+        <div class="corrida-container">
 
-    <h1>Gerenciamento de Corridas</h1>
+            <input id="nomeCorrida" placeholder="Nome da Corrida">
 
-    <div class="corrida-container">
+            <input id="dataCorrida" type="date">
 
-        <input
-            id="nomeCorrida"
-            placeholder="Nome da Corrida">
+            <button class="btn-principal" onclick="criarCorridaForm()">
 
-        <input
-            id="pilotos"
-            type="number"
-            placeholder="Quantidade de Pilotos">
+                Criar Corrida
 
-        <button
-            class="btn-principal"
-            onclick="criarCorrida()">
+            </button>
 
-            Criar Corrida
+        </div>
 
-        </button>
+        <div id="listaCorridas"></div>
 
     </div>
 
-    <div id="listaCorridas"></div>
+    <script src="database.js"></script>
 
-</div>
+    <script>
 
-<div id="listaCorridas"></div>
+        async function criarCorridaForm() {
 
-</body>
-</html>
-<script src="database.js"></script>
+            const nome =
+                document.getElementById("nomeCorrida").value;
 
-<script>
+            const data =
+                document.getElementById("dataCorrida").value;
 
-function criarCorrida(){
+            if (nome === "") {
 
-    const nome =
-        document.getElementById("nomeCorrida").value;
+                alert("Preencha o nome da corrida");
 
-    const pilotos =
-        document.getElementById("pilotos").value;
+                return;
+            }
 
-    if(nome === "" || pilotos === ""){
+            try {
+                await criarCorrida({ nome, data });
 
-        alert("Preencha todos os campos");
+                await atualizarCorridas();
 
-        return;
-    }
+                document.getElementById("nomeCorrida").value = "";
+                document.getElementById("dataCorrida").value = "";
 
-    const corridas = obterCorridas();
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
 
-    corridas.push({
+        async function atualizarCorridas() {
 
-        nome,
-        pilotos
+            const corridas = await obterCorridas();
 
-    });
+            let html = "";
 
-    salvarCorridas(corridas);
+            corridas.forEach(c => {
 
-    atualizarCorridas();
-
-    document.getElementById("nomeCorrida").value = "";
-    document.getElementById("pilotos").value = "";
-}
-
-function atualizarCorridas(){
-
-    const corridas = obterCorridas();
-
-    let html = "";
-
-    corridas.forEach(c => {
-
-        html += `
+                html += `
 
         <div class="corrida-card">
 
             <h2>${c.nome}</h2>
 
-            <p>👥 ${c.pilotos} pilotos</p>
+            <p>📅 ${c.data ? new Date(c.data).toLocaleDateString('pt-BR') : 'Sem data'}</p>
 
             <span class="status">
 
-                Agendada
+                ${c.status}
 
             </span>
 
         </div>
 
         `;
-    });
+            });
 
-    document.getElementById("listaCorridas")
-        .innerHTML = html;
-}
+            document.getElementById("listaCorridas")
+                .innerHTML = html;
+        }
 
-atualizarCorridas();
+        atualizarCorridas();
 
-</script>
+    </script>
+
+</body>
+
+</html>

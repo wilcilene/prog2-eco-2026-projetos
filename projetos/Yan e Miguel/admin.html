@@ -13,122 +13,107 @@
 
 <body>
 
-<div class="sidebar">
+    <div class="sidebar">
 
-    <h2>🏁 RaceHub</h2>
+        <h2>🏁 RaceHub</h2>
 
-    <a href="admin.html">Dashboard</a>
+        <a href="admin.html">Dashboard</a>
 
-    <a href="pilotos.html">Pilotos</a>
+        <a href="pilotos.html">Pilotos</a>
 
-    <a href="reservas-admin.html">Reservas</a>
+        <a href="reservas-admin.html">Reservas</a>
 
-    <a href="corridas.html">Corridas</a>
+        <a href="corridas.html">Corridas</a>
 
-    <a href="tempos.html">Tempos</a>
+        <a href="tempos.html">Tempos</a>
 
-    <a href="relatorios.html">Relatórios</a>
-
-</div>
-
-<div class="main">
-
-    <h1>Dashboard Administrativo</h1>
-
-    <div class="dashboard-cards">
-
-        <div
-            class="dash-card"
-            onclick="window.location.href='pilotos.html'">
-
-            <h2>👥</h2>
-
-            <h3 id="totalPilotos">0</h3>
-
-            <p>Pilotos Cadastrados</p>
-
-        </div>
-
-        <div
-            class="dash-card"
-            onclick="window.location.href='reservas-admin.html'">
-
-            <h2>📅</h2>
-
-            <h3 id="totalReservas">0</h3>
-
-            <p>Reservas</p>
-
-        </div>
-
-        <div
-            class="dash-card"
-            onclick="window.location.href='corridas.html'">
-
-            <h2>🏁</h2>
-
-            <h3 id="totalCorridas">0</h3>
-
-            <p>Corridas</p>
-
-        </div>
-
-        <div
-    class="dash-card"
-    onclick="window.location.href='tempos.html'">
-
-    <h2>⚡</h2>
-
-    <h3 id="melhorVolta">-</h3>
-
-    <p id="pilotoMelhorVolta">
-        Nenhum tempo registrado
-    </p>
-
-</div>
+        <a href="relatorios.html">Relatórios</a>
 
     </div>
 
-</div>
+    <div class="main">
 
-<script src="database.js"></script>
+        <h1>Dashboard Administrativo</h1>
 
-<script>
+        <div class="dashboard-cards">
 
-document.getElementById("totalPilotos")
-.innerText = obterPilotos().length;
+            <div class="dash-card" onclick="window.location.href='pilotos.html'">
 
-document.getElementById("totalReservas")
-.innerText = obterReservas().length;
+                <h2>👥</h2>
 
-document.getElementById("totalCorridas")
-.innerText = obterCorridas().length;
+                <h3 id="totalPilotos">0</h3>
 
-const tempos = obterTempos();
+                <p>Pilotos Cadastrados</p>
 
-if(tempos.length > 0){
+            </div>
 
-    tempos.sort(
-        (a,b) =>
-        a.tempoTotal - b.tempoTotal
-    );
+            <div class="dash-card" onclick="window.location.href='reservas-admin.html'">
 
-    document.getElementById("melhorVolta")
-    .innerText = tempos[0].tempo;
+                <h2>📅</h2>
 
-    document.getElementById("pilotoMelhorVolta")
-    .innerText = tempos[0].piloto;
+                <h3 id="totalReservas">0</h3>
 
-}else{
+                <p>Reservas</p>
 
-    document.getElementById("melhorVolta")
-    .innerText = "-";
+            </div>
 
-    document.getElementById("pilotoMelhorVolta")
-    .innerText = "Nenhum tempo registrado";
-}
+            <div class="dash-card" onclick="window.location.href='corridas.html'">
 
-</script>
+                <h2>🏁</h2>
+
+                <h3 id="totalCorridas">0</h3>
+
+                <p>Corridas</p>
+
+            </div>
+
+            <div class="dash-card" onclick="window.location.href='tempos.html'">
+
+                <h2>⚡</h2>
+
+                <h3 id="melhorVolta">-</h3>
+
+                <p id="pilotoMelhorVolta">
+                    Nenhum tempo registrado
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="database.js"></script>
+
+    <script>
+
+        async function carregarDashboard() {
+
+            const [pilotos, reservas, corridas, resultados] = await Promise.all([
+                obterPilotos(),
+                obterReservas(),
+                obterCorridas(),
+                obterResultados()
+            ]);
+
+            document.getElementById("totalPilotos").innerText = pilotos.length;
+            document.getElementById("totalReservas").innerText = reservas.length;
+            document.getElementById("totalCorridas").innerText = corridas.length;
+
+            if (resultados.length > 0) {
+                // resultados já vem ordenado do servidor (menor tempo_volta primeiro)
+                const melhor = resultados[0];
+                document.getElementById("melhorVolta").innerText = melhor.tempo_volta;
+                document.getElementById("pilotoMelhorVolta").innerText = melhor.piloto;
+            } else {
+                document.getElementById("melhorVolta").innerText = "-";
+                document.getElementById("pilotoMelhorVolta").innerText = "Nenhum tempo registrado";
+            }
+        }
+
+        carregarDashboard();
+
+    </script>
 
 </body>
 

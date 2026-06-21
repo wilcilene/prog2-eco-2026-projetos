@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Login - RaceHub</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Login - RaceHub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-    <div class="logo">RaceHub</div>
-</header>
+    <header>
+        <div class="logo">🏁 RaceHub</div>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-    <h1>Login</h1>
+        <h1>Login</h1>
 
-    <input id="email" placeholder="Email">
+        <input id="email" placeholder="Email">
 
-    <br>
+        <br>
 
-    <input id="senha" type="password" placeholder="Senha">
+        <input id="senha" type="password" placeholder="Senha">
 
-    <br>
+        <br>
 
-    <select id="tipo">
+        <button class="btn" onclick="login()">
+            Entrar
+        </button>
 
-        <option value="admin">Administrador</option>
-        <option value="piloto">Piloto</option>
-        <option value="cliente">Cliente</option>
+    </div>
 
-    </select>
-
-    <br>
-
-    <button class="btn" onclick="login()">
-        Entrar
-    </button>
-
-</div>
-
-<script src="script.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>

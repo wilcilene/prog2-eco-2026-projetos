@@ -3,160 +3,112 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Pilotos - RaceHub</title>
+    <title>Pilotos - RaceHub</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<header>
+    <header>
 
-<div class="logo">
+        <div class="logo">
 
-🏁 RaceHub
+            🏁 RaceHub
 
-</div>
+        </div>
 
-<nav>
+        <nav>
 
-<a href="admin.html">
+            <a href="admin.html">
 
-Dashboard
+                Dashboard
 
-</a>
+            </a>
 
-</nav>
+        </nav>
 
-</header>
+    </header>
 
-<div class="hero">
+    <div class="hero">
 
-<h1>Gerenciamento de Pilotos</h1>
+        <h1>Gerenciamento de Pilotos</h1>
 
-<div class="piloto-form">
+        <div class="piloto-form">
 
-    <input
-        type="text"
-        id="nomePiloto"
-        placeholder="Nome do Piloto">
+            <input type="text" id="nomePiloto" placeholder="Nome do Piloto">
 
-    <input
-        type="email"
-        id="emailPiloto"
-        placeholder="Email">
+            <input type="email" id="emailPiloto" placeholder="Email">
 
-    <input
-        type="password"
-        id="senhaPiloto"
-        placeholder="Senha Inicial">
+            <input type="password" id="senhaPiloto" placeholder="Senha Inicial">
 
-    <button
-        class="btn-piloto"
-        onclick="cadastrarPiloto()">
+            <button class="btn-piloto" onclick="cadastrarPilotoForm()">
 
-        ➕ Cadastrar
+                ➕ Cadastrar
 
-    </button>
+            </button>
 
-</div>
+        </div>
 
-<div id="listaPilotos"></div>
+        <div id="listaPilotos"></div>
 
-</div>
+    </div>
 
-<script src="database.js"></script>
+    <script src="database.js"></script>
 
-<script>
+    <script>
 
-function cadastrarPiloto(){
+        async function cadastrarPilotoForm() {
 
-    const nome =
-        document.getElementById("nomePiloto").value;
+            const nome =
+                document.getElementById("nomePiloto").value;
 
-    const email =
-        document.getElementById("emailPiloto").value;
+            const email =
+                document.getElementById("emailPiloto").value;
 
-    const senha =
-        document.getElementById("senhaPiloto").value;
+            const senha =
+                document.getElementById("senhaPiloto").value;
 
-    if(
-        nome === "" ||
-        email === "" ||
-        senha === ""
-    ){
-        alert("Preencha todos os campos");
-        return;
-    }
+            if (
+                nome === "" ||
+                email === "" ||
+                senha === ""
+            ) {
+                alert("Preencha todos os campos");
+                return;
+            }
 
-    const usuarios =
-        obterUsuarios();
+            try {
+                await cadastrarPiloto({ nome, email, senha });
 
-    if(
-        usuarios.some(
-            u => u.email === email
-        )
-    ){
-        alert("Email já cadastrado");
-        return;
-    }
+                await atualizarPilotos();
 
-    usuarios.push({
+                document.getElementById("nomePiloto").value = "";
+                document.getElementById("emailPiloto").value = "";
+                document.getElementById("senhaPiloto").value = "";
 
-        id: Date.now(),
+            } catch (erro) {
+                alert(erro.message);
+            }
+        }
 
-        nome,
-        email,
-        senha,
+        async function excluirPilotoForm(id) {
+            await excluirPiloto(id);
+            await atualizarPilotos();
+        }
 
-        tipo: "piloto",
+        async function atualizarPilotos() {
 
-        protegido: false
+            const pilotos = await obterPilotos();
 
-    });
+            let html = "";
 
-    salvarUsuarios(usuarios);
+            pilotos.forEach((p) => {
 
-    atualizarPilotos();
-
-    document.getElementById("nomePiloto").value = "";
-    document.getElementById("emailPiloto").value = "";
-    document.getElementById("senhaPiloto").value = "";
-}
-
-function excluirPiloto(id){
-
-    let usuarios =
-        obterUsuarios();
-
-    usuarios =
-        usuarios.filter(
-            u => u.id !== id
-        );
-
-    salvarUsuarios(usuarios);
-
-    atualizarPilotos();
-}
-
-function atualizarPilotos(){
-
-    const usuarios =
-        obterUsuarios();
-
-    const pilotos =
-        usuarios.filter(
-            u => u.tipo === "piloto"
-        );
-
-    let html = "";
-
-    pilotos.forEach((p,index) => {
-
-        html += `
+                html += `
 
         <div class="piloto-card">
 
@@ -178,7 +130,7 @@ function atualizarPilotos(){
 
             <button
                 class="btn-piloto"
-                onclick="excluirPiloto(${p.id})">
+                onclick="excluirPilotoForm(${p.id})">
 
                 Excluir
 
@@ -187,16 +139,16 @@ function atualizarPilotos(){
         </div>
 
         `;
-    });
+            });
 
-    document
-        .getElementById("listaPilotos")
-        .innerHTML = html;
-}
+            document
+                .getElementById("listaPilotos")
+                .innerHTML = html;
+        }
 
-atualizarPilotos();
+        atualizarPilotos();
 
-</script>
+    </script>
 
 </body>
 

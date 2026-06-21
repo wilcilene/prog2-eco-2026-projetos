@@ -6,8 +6,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "express": "^4.22.2"
+    "express": "^4.22.2",
+    "mysql2": "^3.11.0"
   },
   "description": "O presente projeto tem como objetivo o desenvolvimento de um sistema de gerenciamento para uma pista de corrida, visando otimizar a organização, controle e operação das atividades realizadas no local. O sistema será responsável por integrar informações relacionadas a pilotos, veículos, corridas e utilização da pista, proporcionando maior eficiência, segurança e praticidade tanto para os usuários quanto para os administradores.",
   "keywords": [],
