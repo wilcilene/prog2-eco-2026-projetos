@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campanha</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <button onclick="voltar()">
+            ← Voltar
+        </button>
+
+        <h1 id="nomeCampanhaTitulo"></h1>
+
+        <h2>Criar Personagem</h2>
+
+        <div class="ficha">
+            <h3>Imagem do Personagem</h3>
+
+<input
+    type="file"
+    id="imagemPersonagem"
+    accept="image/*">
+
+            <input type="text" id="jogador" placeholder="Nome do Jogador">
+
+            <input type="text" id="personagem" placeholder="Nome do Personagem">
+
+            <input type="number" id="idade" placeholder="Idade">
+
+            <input type="text" id="altura" placeholder="Altura">
+
+            <input type="text" id="genero" placeholder="Gênero">
+
+            <input type="text" id="sexualidade" placeholder="Sexualidade">
+
+            <input type="text" id="raca" placeholder="Raça">
+
+            <input type="text" id="classe" placeholder="Classe">
+
+            <input type="number" id="nivel" placeholder="Nível">
+
+            <textarea id="lore" placeholder="Lore do personagem"></textarea>
+
+            <h3>Atributos</h3>
+
+            <div class="atributos">
+
+                <input type="number" id="forca" placeholder="Força">
+
+                <input type="number" id="destreza" placeholder="Destreza">
+
+                <input type="number" id="constituicao" placeholder="Constituição">
+
+                <input type="number" id="inteligencia" placeholder="Inteligência">
+
+                <input type="number" id="sabedoria" placeholder="Sabedoria">
+
+                <input type="number" id="carisma" placeholder="Carisma">
+
+            </div>
+
+            <button onclick="criarPersonagem()">
+                Salvar Personagem
+            </button>
+
+        </div>
+
+       <h2>Sistema de Dados</h2>
+
+<div class="dados-container">
+
+    <button onclick="rolarDado(4)">d4</button>
+
+    <button onclick="rolarDado(6)">d6</button>
+
+    <button onclick="rolarDado(8)">d8</button>
+
+    <button onclick="rolarDado(10)">d10</button>
+
+    <button onclick="rolarDado(12)">d12</button>
+
+    <button onclick="rolarDado(20)">d20</button>
+
+    <button onclick="rolarDado(100)">d100</button>
+
+</div>
+
+<div id="resultadoDado" class="resultado-dado">
+    Role um dado
+</div>
+
+<div id="historicoDados" class="historico-dados">
+</div>
+
+<h2>Personagens</h2>
+
+<div id="listaPersonagens"></div>
+
+    </div>
+
+    <script src="campanha.js"></script>
+</body>
+</html>
