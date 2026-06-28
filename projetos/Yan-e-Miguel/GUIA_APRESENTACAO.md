@@ -1,4 +1,4 @@
-# Guia de apresentação — RaceHub v2.4
+# Guia de apresentação — RaceHub v3.0.2
 
 Este arquivo serve como cola para explicar o projeto na apresentação.
 
