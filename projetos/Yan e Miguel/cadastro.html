@@ -1,74 +1,160 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
-    <title>Cadastro - RaceHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Criar conta</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <div class="hero">
+    <main class="login-screen">
 
-        <div class="login-container">
+        <section class="login-visual">
 
-            <h2>Criar Conta</h2>
+            <div class="auth-brand animate-left">
+                <h2>RaceHub</h2>
+                <span>Client Access Registration</span>
+            </div>
 
-            <input type="text" id="nome" placeholder="Nome Completo">
+            <div class="auth-info animate-fade">
+                <h1>Entre para a experiência RaceHub.</h1>
 
-            <input type="email" id="email" placeholder="Email">
+                <p>
+                    Crie sua conta de cliente para reservar horários, acompanhar eventos e acessar a central da pista.
+                </p>
 
-            <input type="password" id="senha" placeholder="Senha">
+                <div class="auth-features">
 
-            <button class="btn-login" onclick="cadastrarCliente()">
+                    <div class="auth-feature">
+                        <i class="bi bi-calendar-plus"></i>
+                        <strong>Reservas</strong>
+                        <span>Agende horários disponíveis.</span>
+                    </div>
 
-                Criar Conta
+                    <div class="auth-feature">
+                        <i class="bi bi-flag"></i>
+                        <strong>Eventos</strong>
+                        <span>Acompanhe corridas futuras.</span>
+                    </div>
 
-            </button>
+                    <div class="auth-feature">
+                        <i class="bi bi-person-check"></i>
+                        <strong>Perfil</strong>
+                        <span>Acesso individual e seguro.</span>
+                    </div>
 
-        </div>
+                </div>
+            </div>
 
-    </div>
+        </section>
 
-    <script src="database.js"></script>
+        <section class="login-card">
 
-    <script>
+            <div class="auth-box animate-scale">
 
-        async function cadastrarCliente() {
+                <div class="auth-header">
+                    <div class="auth-kicker">Novo cliente</div>
 
-            const nome =
-                document.getElementById("nome").value;
+                    <h1>Criar conta</h1>
 
-            const email =
-                document.getElementById("email").value;
+                    <p>
+                        Preencha os dados abaixo para criar seu acesso como cliente.
+                    </p>
+                </div>
 
-            const senha =
-                document.getElementById("senha").value;
+                <form class="auth-form" onsubmit="criarContaCliente(event)">
 
-            if (nome === "" || email === "" || senha === "") {
-                alert("Preencha todos os campos");
-                return;
-            }
+                    <div class="form-group">
+                        <label for="nome">Nome completo</label>
 
-            try {
-                await cadastrarUsuario({ nome, email, senha, tipo: "cliente" });
+                        <div class="input-icon">
+                            <i class="bi bi-person"></i>
+                            <input 
+                                class="input" 
+                                type="text" 
+                                id="nome" 
+                                placeholder="Digite seu nome completo" 
+                                required
+                            >
+                        </div>
+                    </div>
 
-                alert("Conta criada com sucesso");
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
 
-                window.location.href = "index.html";
+                        <div class="input-icon">
+                            <i class="bi bi-envelope"></i>
+                            <input 
+                                class="input" 
+                                type="email" 
+                                id="email" 
+                                placeholder="seuemail@exemplo.com" 
+                                required
+                            >
+                        </div>
+                    </div>
 
-            } catch (erro) {
-                alert(erro.message);
-            }
-        }
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
 
-    </script>
+                        <div class="input-icon">
+                            <i class="bi bi-lock"></i>
+                            <input 
+                                class="input" 
+                                type="password" 
+                                id="senha" 
+                                placeholder="Crie uma senha" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmarSenha">Confirmar senha</label>
+
+                        <div class="input-icon">
+                            <i class="bi bi-shield-lock"></i>
+                            <input 
+                                class="input" 
+                                type="password" 
+                                id="confirmarSenha" 
+                                placeholder="Digite a senha novamente" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div id="cadastroMessage" class="auth-message"></div>
+
+                    <div class="auth-actions">
+
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-person-plus"></i>
+                            Criar conta
+                        </button>
+
+                        <a href="index.html" class="auth-link">
+                            Já possui conta? Entrar no RaceHub
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <script src="js/cadastro.js"></script>
 
 </body>
-
 </html>

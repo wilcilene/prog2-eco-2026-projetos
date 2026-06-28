@@ -1,0 +1,577 @@
+/* ===========================================================
+   RaceHub v2.0
+   LIGHT PREMIUM THEME
+   Fundo claro + cards brancos + sidebar escura
+===========================================================*/
+
+:root{
+    --background:#eef1f5;
+    --background-secondary:#f6f7f9;
+
+    --surface:#ffffff;
+    --surface-light:#f8f9fb;
+    --surface-hover:#eef1f5;
+    --panel:#ffffff;
+    --panel-soft:#f7f8fa;
+    --panel-light:#ffffff;
+
+    --text:#151922;
+    --text-secondary:#3d4451;
+    --text-muted:#6b7280;
+
+    --border:#d9dee7;
+
+    --primary:#d5001c;
+    --primary-dark:#9d0014;
+    --gold:#a9831f;
+
+    --gradient-card:linear-gradient(145deg, #ffffff, #f4f6f9);
+    --gradient-dark:linear-gradient(180deg, #ffffff, #f3f5f8);
+
+    --shadow-sm:0 12px 32px rgba(20,24,35,.08);
+    --shadow-md:0 20px 55px rgba(20,24,35,.12);
+    --shadow-lg:0 35px 90px rgba(20,24,35,.18);
+
+    --font:"Segoe UI", "Inter", "Sora", Arial, sans-serif;
+}
+
+
+/* =========================
+   BASE GERAL
+========================= */
+
+html,
+body{
+    background:#eef1f5 !important;
+    color:var(--text) !important;
+    font-family:var(--font) !important;
+}
+
+body{
+    font-weight:400 !important;
+    letter-spacing:-0.2px;
+}
+
+body::before{
+    background:
+        radial-gradient(circle at 90% 5%, rgba(213,0,28,.10), transparent 28%),
+        radial-gradient(circle at 10% 90%, rgba(201,162,39,.10), transparent 30%),
+        linear-gradient(135deg, #eef1f5, #f8f9fb) !important;
+    opacity:1 !important;
+}
+
+body::after{
+    display:none !important;
+}
+
+.main,
+.page{
+    background:transparent !important;
+}
+
+
+/* =========================
+   TEXTO
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+th{
+    color:#111827 !important;
+    font-family:var(--font) !important;
+    font-weight:700 !important;
+}
+
+p,
+span,
+label,
+td,
+li,
+small{
+    color:#4b5563 !important;
+}
+
+.page-title p,
+.dashboard-title p,
+.widget-subtitle,
+.form-subtitle,
+.card-text,
+.stats-label,
+.timeline-content p,
+.schedule-info p{
+    color:#6b7280 !important;
+}
+
+
+/* =========================
+   SIDEBAR ESCURA LEGÍVEL
+========================= */
+
+.sidebar{
+    background:#111827 !important;
+    border-right:1px solid rgba(255,255,255,.08) !important;
+    box-shadow:12px 0 35px rgba(17,24,39,.22) !important;
+}
+
+.rh-logo h1,
+.logo h1{
+    color:#ffffff !important;
+    font-weight:800 !important;
+}
+
+.rh-logo span,
+.logo span{
+    color:#9ca3af !important;
+}
+
+.sidebar .divider{
+    background:rgba(255,255,255,.10) !important;
+}
+
+.menu a{
+    color:#d1d5db !important;
+    background:transparent !important;
+}
+
+.menu a i{
+    color:#d1d5db !important;
+}
+
+.menu a:hover{
+    background:#1f2937 !important;
+    color:#ffffff !important;
+}
+
+.menu a:hover i{
+    color:#ffffff !important;
+}
+
+.menu .active{
+    background:linear-gradient(135deg, #d5001c, #ff3048) !important;
+    color:#ffffff !important;
+    box-shadow:0 14px 35px rgba(213,0,28,.30) !important;
+}
+
+.menu .active i{
+    color:#ffffff !important;
+}
+
+.sidebar .btn-secondary{
+    background:#1f2937 !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+}
+
+.sidebar .btn-secondary i{
+    color:#ffffff !important;
+}
+
+
+/* =========================
+   TOPBAR CLARA
+========================= */
+
+.topbar{
+    background:rgba(255,255,255,.86) !important;
+    border-bottom:1px solid var(--border) !important;
+    box-shadow:0 10px 30px rgba(20,24,35,.08) !important;
+    backdrop-filter:blur(18px);
+}
+
+.topbar strong{
+    color:#111827 !important;
+}
+
+.topbar p{
+    color:#6b7280 !important;
+}
+
+
+/* =========================
+   CARDS / PAINÉIS
+========================= */
+
+.card,
+.stats-card,
+.widget,
+.panel,
+.form-card,
+.table-container,
+.auth-box{
+    background:#ffffff !important;
+    border:1px solid var(--border) !important;
+    box-shadow:var(--shadow-sm) !important;
+}
+
+.card:hover,
+.stats-card:hover,
+.widget:hover{
+    background:#ffffff !important;
+    border-color:rgba(213,0,28,.28) !important;
+    box-shadow:var(--shadow-md) !important;
+}
+
+.panel-header{
+    background:#ffffff !important;
+    border-bottom:1px solid var(--border) !important;
+}
+
+.panel-body{
+    background:#ffffff !important;
+}
+
+.stats-card{
+    min-height:170px;
+}
+
+.stats-card::before{
+    background:rgba(213,0,28,.08) !important;
+}
+
+.stats-icon{
+    background:rgba(213,0,28,.10) !important;
+    color:#d5001c !important;
+}
+
+.stats-icon i{
+    color:#d5001c !important;
+}
+
+.stats-number,
+.kpi-value{
+    color:#111827 !important;
+    font-weight:800 !important;
+}
+
+.widget-title,
+.form-title,
+.card-title{
+    color:#111827 !important;
+}
+
+
+/* =========================
+   TABELAS
+========================= */
+
+.table{
+    background:#ffffff !important;
+}
+
+.table thead{
+    background:#f3f4f6 !important;
+}
+
+.table thead th{
+    color:#111827 !important;
+    border-bottom:1px solid var(--border) !important;
+}
+
+.table tbody td{
+    color:#374151 !important;
+    border-bottom:1px solid #e5e7eb !important;
+}
+
+.table tbody tr:nth-child(even){
+    background:#f9fafb !important;
+}
+
+.table tbody tr:hover{
+    background:#f1f3f7 !important;
+}
+
+.table-number{
+    color:#111827 !important;
+}
+
+.table-highlight{
+    color:#a9831f !important;
+}
+
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+
+.input,
+.search input,
+input,
+select,
+textarea{
+    background:#ffffff !important;
+    color:#111827 !important;
+    border:1px solid #cfd6e1 !important;
+}
+
+.input:hover,
+.search input:hover,
+input:hover,
+select:hover,
+textarea:hover{
+    border-color:#9ca3af !important;
+}
+
+.input:focus,
+.search input:focus,
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#d5001c !important;
+    box-shadow:0 0 0 4px rgba(213,0,28,.14) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+.search input::placeholder{
+    color:#9ca3af !important;
+}
+
+select option{
+    background:#ffffff !important;
+    color:#111827 !important;
+}
+
+.input-icon i,
+.search i{
+    color:#6b7280 !important;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn{
+    font-family:var(--font) !important;
+    font-weight:700 !important;
+}
+
+.btn-primary{
+    color:#ffffff !important;
+    background:linear-gradient(135deg, #d5001c, #ff3048) !important;
+    box-shadow:0 14px 35px rgba(213,0,28,.24) !important;
+}
+
+.btn-primary,
+.btn-primary i,
+.btn-primary span{
+    color:#ffffff !important;
+}
+
+.btn-secondary{
+    color:#111827 !important;
+    background:#ffffff !important;
+    border:1px solid #cfd6e1 !important;
+}
+
+.btn-secondary i{
+    color:#111827 !important;
+}
+
+.btn-secondary:hover{
+    background:#f3f4f6 !important;
+}
+
+
+/* =========================
+   EMPTY / ALERTS
+========================= */
+
+.empty{
+    background:transparent !important;
+}
+
+.empty i{
+    color:#9ca3af !important;
+}
+
+.empty h2{
+    color:#111827 !important;
+}
+
+.empty p{
+    color:#6b7280 !important;
+}
+
+.alert{
+    border-radius:16px !important;
+}
+
+.alert-danger{
+    background:#fee2e2 !important;
+    color:#991b1b !important;
+    border-left:5px solid #dc2626 !important;
+}
+
+.alert-warning{
+    background:#fef3c7 !important;
+    color:#92400e !important;
+    border-left:5px solid #d97706 !important;
+}
+
+.alert-success{
+    background:#dcfce7 !important;
+    color:#166534 !important;
+    border-left:5px solid #16a34a !important;
+}
+
+
+/* =========================
+   AGENDA / RANKING / TIMELINE
+========================= */
+
+.schedule-card,
+.ranking-item,
+.stat-box{
+    background:#f8fafc !important;
+    border:1px solid #e5e7eb !important;
+}
+
+.schedule-card:hover,
+.ranking-item:hover,
+.stat-box:hover{
+    background:#f1f5f9 !important;
+    border-color:rgba(213,0,28,.22) !important;
+}
+
+.schedule-hour,
+.best-time{
+    color:#a9831f !important;
+}
+
+.pilot-name{
+    color:#111827 !important;
+}
+
+.position{
+    color:#ffffff !important;
+    background:linear-gradient(135deg, #d5001c, #ff3048) !important;
+}
+
+.timeline-dot{
+    background:#d5001c !important;
+    box-shadow:0 0 0 5px rgba(213,0,28,.12) !important;
+}
+
+.timeline-content h4{
+    color:#111827 !important;
+}
+
+
+/* =========================
+   AVATAR / BADGES / STATUS
+========================= */
+
+.avatar{
+    background:linear-gradient(135deg, #d5001c, #ff3048) !important;
+    color:#ffffff !important;
+}
+
+.badge-danger{
+    background:#fee2e2 !important;
+    color:#991b1b !important;
+}
+
+.badge-warning{
+    background:#fef3c7 !important;
+    color:#92400e !important;
+}
+
+.badge-success{
+    background:#dcfce7 !important;
+    color:#166534 !important;
+}
+
+.status-success{
+    background:#dcfce7 !important;
+    color:#166534 !important;
+}
+
+.status-warning{
+    background:#fef3c7 !important;
+    color:#92400e !important;
+}
+
+.status-danger{
+    background:#fee2e2 !important;
+    color:#991b1b !important;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+a{
+    color:inherit !important;
+}
+
+a.stats-card,
+a.card{
+    color:inherit !important;
+}
+
+
+/* =========================
+   LOGIN EM TEMA CLARO
+========================= */
+
+.login-card{
+    background:#eef1f5 !important;
+}
+
+.login-visual{
+    background:
+        linear-gradient(90deg, rgba(17,24,39,.86), rgba(17,24,39,.45)),
+        radial-gradient(circle at 20% 30%, rgba(213,0,28,.30), transparent 30%),
+        linear-gradient(135deg, #111827, #1f2937) !important;
+}
+
+.auth-brand h2,
+.auth-info h1{
+    color:#ffffff !important;
+}
+
+.auth-brand span,
+.auth-info p{
+    color:#d1d5db !important;
+}
+
+.auth-feature{
+    background:rgba(255,255,255,.12) !important;
+    border:1px solid rgba(255,255,255,.16) !important;
+}
+
+.auth-feature strong{
+    color:#ffffff !important;
+}
+
+.auth-feature span{
+    color:#d1d5db !important;
+}
+
+.auth-header h1{
+    color:#111827 !important;
+}
+
+.auth-header p,
+.auth-link{
+    color:#6b7280 !important;
+}
+
+.auth-link:hover{
+    color:#d5001c !important;
+}
+
+.auth-kicker{
+    color:#a9831f !important;
+}
+
+.auth-message{
+    color:#dc2626 !important;
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Permite que a página se adapte para celular, tablet e desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Perfil</title>
+
+    <!-- Importa todo o visual do projeto -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Container principal do sistema -->
+    <div class="app">
+
+        <!-- Sidebar da página de perfil -->
+        <aside class="sidebar">
+
+            <div>
+
+                <!-- Logo do sistema -->
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Driver Profile</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- O menu é preenchido pelo JavaScript conforme o tipo do usuário -->
+                <nav class="menu" id="menuPerfil">
+                    <a href="perfil.html" class="active">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
+
+            </div>
+
+            <!-- Botão de logout -->
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <main class="main">
+
+            <!-- Barra superior com dados do usuário logado -->
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Gerenciamento do perfil pessoal</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <!-- Cabeçalho da página -->
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1>Meu perfil</h1>
+                        <p>Visualize e atualize seus dados de acesso ao RaceHub.</p>
+                    </div>
+
+                    <button class="btn btn-secondary" id="btnVoltarPainel">
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar ao painel
+                    </button>
+
+                </div>
+
+                <!-- Cards superiores com informações resumidas -->
+                <div class="stats-grid">
+
+                    <div class="stats-card stats-card-veiculos-perfil">
+                        <div class="stats-icon">
+                            <i class="bi bi-car-front"></i>
+                        </div>
+
+                        <!--
+                            Este card mostra quantos veículos o usuário possui.
+                            A lista pequena abaixo é preenchida pelo js/perfil.js.
+                        -->
+                        <div class="stats-number" id="perfilTotalVeiculos">0</div>
+                        <div class="stats-label">Veículos cadastrados</div>
+                        <div class="perfil-mini-lista-veiculos" id="perfilMiniListaVeiculos">
+                            Nenhum veículo cadastrado.
+                        </div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div class="stats-number" id="perfilTipo">-</div>
+                        <div class="stats-label">Tipo de conta</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+
+                        <div class="stats-number" id="perfilCriadoEm">-</div>
+                        <div class="stats-label">Criado em</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+
+                        <div class="stats-number">Ativo</div>
+                        <div class="stats-label">Status da conta</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2">
+
+                    <!-- Card visual com dados atuais do usuário -->
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Dados atuais</h2>
+                                <p class="widget-subtitle">Informações salvas no banco de dados.</p>
+                            </div>
+
+                            <i class="bi bi-person-circle" style="color:var(--gold);font-size:28px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="profile-card">
+
+                                <div class="avatar avatar-profile" id="perfilAvatar">RH</div>
+
+                                <div style="margin-top:18px;">
+                                    <h2 id="perfilNomeAtual">Usuário</h2>
+                                    <p id="perfilEmailAtual" style="margin-top:6px;">email@racehub.com</p>
+                                </div>
+
+                                <div style="margin-top:22px;">
+                                    <span id="perfilBadgeTipo" class="badge badge-success">Cliente</span>
+                                </div>
+
+                                <!--
+                                    Lista completa dos veículos do usuário.
+                                    Para pilotos, mostra os carros cadastrados.
+                                    Para clientes/admins sem carros, mostra uma mensagem padrão.
+                                -->
+                                <div class="perfil-veiculos-box">
+                                    <h3>Veículos do usuário</h3>
+                                    <div id="perfilListaVeiculos" class="perfil-veiculos-lista">
+                                        Nenhum veículo cadastrado.
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!-- Formulário de edição do perfil -->
+                    <section class="form-card">
+
+                        <h2 class="form-title">Editar perfil</h2>
+
+                        <p class="form-subtitle">
+                            Atualize seus dados pessoais. Para manter a senha atual, deixe o campo de senha vazio.
+                        </p>
+
+                        <!-- O envio deste formulário é controlado pelo arquivo js/perfil.js -->
+                        <form class="form" id="formPerfil">
+
+                            <!-- Foto de perfil da versão 3.0.
+                                 A imagem é convertida para Base64 pelo js/perfil.js e salva no banco. -->
+                            <div class="form-group">
+                                <label for="perfilFoto">Foto de perfil</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-image"></i>
+                                    <input class="input" type="file" id="perfilFoto" accept="image/*">
+                                </div>
+
+                                <p style="margin-top:8px;font-size:13px;color:var(--text-muted);">
+                                    Use uma imagem leve. Ela aparecerá no avatar do sistema.
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="perfilNome">Nome completo <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person"></i>
+                                    <input 
+                                        class="input" 
+                                        type="text" 
+                                        id="perfilNome" 
+                                        placeholder="Seu nome completo" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="perfilEmail">E-mail <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-envelope"></i>
+                                    <input 
+                                        class="input" 
+                                        type="email" 
+                                        id="perfilEmail" 
+                                        placeholder="seuemail@racehub.com" 
+                                        required
+                                    >
+                                </div>
+
+                                <p id="perfilEmailAviso" style="display:none;margin-top:8px;font-size:13px;color:var(--gold);">
+                                    Administradores fixos não podem alterar o e-mail.
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="perfilSenha">Nova senha</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-lock"></i>
+                                    <input 
+                                        class="input" 
+                                        type="password" 
+                                        id="perfilSenha" 
+                                        placeholder="Preencha apenas se quiser alterar"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="perfilConfirmarSenha">Confirmar nova senha</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-lock-fill"></i>
+                                    <input 
+                                        class="input" 
+                                        type="password" 
+                                        id="perfilConfirmarSenha" 
+                                        placeholder="Repita a nova senha"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Mensagens de erro e sucesso aparecem aqui -->
+                            <div id="perfilMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-secondary" type="button" id="btnResetPerfil">
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                    Restaurar dados
+                                </button>
+
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-check-circle"></i>
+                                    Salvar alterações
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Funções globais do projeto -->
+    <script src="script.js"></script>
+
+    <!-- Lógica específica da página de perfil -->
+    <script src="js/perfil.js"></script>
+
+</body>
+</html>

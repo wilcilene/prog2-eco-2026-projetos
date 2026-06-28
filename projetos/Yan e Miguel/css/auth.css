@@ -1,0 +1,175 @@
+/* ===========================================================
+   RaceHub v2.0
+   AUTH / LOGIN
+===========================================================*/
+
+.auth-box{
+    width:100%;
+    max-width:460px;
+    padding:46px;
+    border-radius:30px;
+    background:rgba(18,18,20,.82);
+    border:1px solid var(--glass-border);
+    box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(20px);
+}
+
+.auth-header{
+    margin-bottom:34px;
+}
+
+.auth-kicker{
+    color:var(--gold);
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+}
+
+.auth-header h1{
+    font-size:42px;
+    line-height:1.1;
+    margin-bottom:14px;
+}
+
+.auth-header p{
+    color:var(--text-muted);
+}
+
+.auth-form{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+.auth-actions{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:8px;
+}
+
+.auth-link{
+    color:var(--text-muted);
+    text-align:center;
+    font-size:14px;
+}
+
+.auth-link:hover{
+    color:var(--primary);
+}
+
+.auth-message{
+    min-height:22px;
+    color:var(--danger);
+    font-size:14px;
+}
+
+.auth-brand{
+    position:absolute;
+    top:42px;
+    left:52px;
+    z-index:2;
+}
+
+.auth-brand h2{
+    font-size:34px;
+    color:var(--primary);
+    letter-spacing:-2px;
+}
+
+.auth-brand span{
+    color:var(--text-muted);
+    font-size:13px;
+}
+
+.auth-info{
+    position:absolute;
+    left:52px;
+    bottom:52px;
+    z-index:2;
+    max-width:620px;
+}
+
+.auth-info h1{
+    font-size:62px;
+    line-height:1;
+    margin-bottom:24px;
+}
+
+.auth-info p{
+    max-width:520px;
+    color:#d0d0d0;
+}
+
+.auth-features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:34px;
+}
+
+.auth-feature{
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+}
+
+.auth-feature i{
+    color:var(--primary);
+    font-size:24px;
+    margin-bottom:14px;
+}
+
+.auth-feature strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+.auth-feature span{
+    color:var(--text-muted);
+    font-size:13px;
+}
+
+.login-visual{
+    position:relative;
+    min-height:100vh;
+    overflow:hidden;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.38)),
+        radial-gradient(circle at 20% 30%, rgba(213,0,28,.32), transparent 28%),
+        radial-gradient(circle at 80% 70%, rgba(201,162,39,.14), transparent 30%),
+        linear-gradient(135deg, #070707, #171717);
+}
+
+.login-visual::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(115deg, transparent 0%, transparent 42%, rgba(213,0,28,.16) 43%, transparent 45%),
+        linear-gradient(118deg, transparent 0%, transparent 55%, rgba(255,255,255,.08) 56%, transparent 57%);
+    opacity:.8;
+}
+
+.login-visual::after{
+    content:"";
+    position:absolute;
+    width:720px;
+    height:240px;
+    right:-120px;
+    bottom:70px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.08);
+    transform:rotate(-8deg);
+}
+
+@media(max-width:1100px){
+    .auth-brand,
+    .auth-info{
+        display:none;
+    }
+}

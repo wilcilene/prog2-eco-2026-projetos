@@ -1,49 +1,263 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
-    <title>Área do Piloto - RaceHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Piloto</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <div class="sidebar">
+    <div class="app">
 
-        <h2>🏁 RaceHub</h2>
+        <aside class="sidebar">
 
-        <a href="piloto.html">Dashboard</a>
+            <div>
 
-        <a href="agenda.html">Agenda</a>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Pilot Performance Center</span>
+                </div>
 
-        <a href="tempos.html">Ranking de Tempos</a>
+                <div class="divider"></div>
+
+                <nav class="menu">
+                    <a href="piloto.html" class="active">
+                        <i class="bi bi-speedometer2"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="veiculos.html">
+                        <i class="bi bi-car-front"></i>
+                        Meus veículos
+                    </a>
+
+                    <a href="corridas.html">
+                        <i class="bi bi-flag"></i>
+                        Corridas
+                    </a>
+
+                    <a href="tempos.html">
+                        <i class="bi bi-stopwatch"></i>
+                        Meus tempos
+                    </a>
+
+                    <a href="relatorios.html">
+                        <i class="bi bi-bar-chart"></i>
+                        Ranking
+                    </a>
+
+
+                    <a href="perfil.html">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
+
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Central de desempenho do piloto</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Piloto</strong>
+                        <p data-user-role>Piloto</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="dashboard">
+
+                    <div class="dashboard-header">
+
+                        <div class="dashboard-title">
+                            <h1>Meu desempenho</h1>
+                            <p>Acompanhe seus tempos, corridas e evolução na pista.</p>
+                        </div>
+
+                        <a href="tempos.html" class="btn btn-primary">
+                            <i class="bi bi-stopwatch"></i>
+                            Ver tempos
+                        </a>
+
+                    </div>
+
+                    <div class="dashboard-grid">
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-stopwatch"></i>
+                            </div>
+
+                            <div class="stats-number" id="melhorTempoPiloto">-</div>
+                            <div class="stats-label">Minha melhor volta</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-activity"></i>
+                            </div>
+
+                            <div class="stats-number" id="mediaTempoPiloto">-</div>
+                            <div class="stats-label">Média dos tempos</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+
+                            <div class="stats-number" id="posicaoRanking">-</div>
+                            <div class="stats-label">Posição no ranking</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-flag"></i>
+                            </div>
+
+                            <div class="stats-number" id="totalCorridasPiloto">0</div>
+                            <div class="stats-label">Registros de corrida</div>
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-2">
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Últimos tempos</h2>
+                                    <p class="widget-subtitle">Seus registros mais recentes.</p>
+                                </div>
+
+                                <i class="bi bi-clock-history" style="color:var(--primary);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="ultimosTemposPiloto">
+                                <div class="alert alert-warning">
+                                    Carregando tempos...
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Ranking geral</h2>
+                                    <p class="widget-subtitle">Melhores voltas registradas.</p>
+                                </div>
+
+                                <i class="bi bi-trophy" style="color:var(--gold);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="rankingGeralPiloto">
+                                <div class="alert alert-warning">
+                                    Carregando ranking...
+                                </div>
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                    <div class="grid grid-2">
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Próximas corridas</h2>
+                                    <p class="widget-subtitle">Eventos futuros cadastrados na pista.</p>
+                                </div>
+
+                                <i class="bi bi-calendar-event" style="color:var(--primary);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="corridasFuturasPiloto">
+                                <div class="alert alert-warning">
+                                    Carregando corridas...
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Resumo técnico</h2>
+                                    <p class="widget-subtitle">Indicadores pessoais do piloto.</p>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid">
+
+                                <div class="stat-box">
+                                    <h3 id="totalTemposPiloto">0</h3>
+                                    <span>Tempos registrados</span>
+                                </div>
+
+                                <div class="stat-box">
+                                    <h3 id="tempoMaisRecente">-</h3>
+                                    <span>Último tempo</span>
+                                </div>
+
+                                <div class="stat-box">
+                                    <h3 id="melhorClassificacao">-</h3>
+                                    <span>Melhor posição</span>
+                                </div>
+
+                                <div class="stat-box">
+                                    <h3 id="corridasDisponiveis">0</h3>
+                                    <span>Corridas disponíveis</span>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <div class="main">
+    <script src="script.js"></script>
 
-        <h1>Área do Piloto</h1>
-
-        <p id="boasVindas"></p>
-
-    </div>
-
-    <script src="database.js"></script>
-
-    <script>
-
-        const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-        document.getElementById("boasVindas").innerText =
-            usuarioLogado ? `Bem-vindo, ${usuarioLogado.nome}!` : "";
-
-    </script>
+    <script src="js/piloto.js"></script>
 
 </body>
-
 </html>

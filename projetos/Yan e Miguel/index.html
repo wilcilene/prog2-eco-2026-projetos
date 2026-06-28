@@ -1,144 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Hub</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <title>RaceHub | Login</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">
+    <main class="login-screen">
 
-            🏁 RaceHub
+        <section class="login-visual">
 
-            <span class="sublogo">
-                Track Management System
-            </span>
+            <div class="auth-brand animate-left">
+                <h2>RaceHub</h2>
+                <span>Motorsport Management System</span>
+            </div>
 
-        </div>
+            <div class="auth-info animate-fade">
+                <h1>Controle total da pista.</h1>
 
-        <nav>
-            <a href="#sobre">Sobre</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#login">Login</a>
-        </nav>
-    </header>
+                <p>
+                    Gerencie pilotos, reservas, corridas, tempos e resultados em uma plataforma criada para performance, precisão e organização.
+                </p>
 
-    <section class="hero">
-        <h1>
-            Velocidade, Segurança e Performance
-        </h1>
+                <div class="auth-features">
 
-        <p>
-            Gerencie corridas, acompanhe tempos de volta e reserve horários
-            para utilizar a pista.
-        </p>
+                    <div class="auth-feature">
+                        <i class="bi bi-speedometer2"></i>
+                        <strong>Performance</strong>
+                        <span>Tempos, rankings e resultados.</span>
+                    </div>
 
-        <button class="btn-home" onclick="abrirLogin()">
+                    <div class="auth-feature">
+                        <i class="bi bi-calendar-check"></i>
+                        <strong>Reservas</strong>
+                        <span>Agenda e disponibilidade da pista.</span>
+                    </div>
 
-            🏁 Acessar o RaceHub
+                    <div class="auth-feature">
+                        <i class="bi bi-shield-check"></i>
+                        <strong>Controle</strong>
+                        <span>Acesso por perfil de usuário.</span>
+                    </div>
 
-        </button>
-    </section>
+                </div>
+            </div>
 
-    <section id="sobre" class="sobre">
+        </section>
 
-        <div class="sobre-container">
+        <section class="login-card">
 
-            <h2>Sobre a Pista</h2>
+            <div class="auth-box animate-scale">
 
-            <p>
-                Nossa pista oferece estrutura completa para pilotos
-                amadores e profissionais, com áreas de preparação,
-                monitoramento de desempenho e infraestrutura moderna
-                para eventos e treinamentos.
-            </p>
+                <div class="auth-header">
+                    <div class="auth-kicker">Acesso seguro</div>
 
-        </div>
+                    <h1>Entrar no RaceHub</h1>
 
-    </section>
+                    <p>
+                        Acesse sua conta para continuar no painel de controle.
+                    </p>
+                </div>
 
-    <section id="servicos">
+                <form class="auth-form" onsubmit="login(event)">
 
-        <h2 class="titulo-secao">
-            Serviços
-        </h2>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
 
-        <div class="cards">
+                        <div class="input-icon">
+                            <i class="bi bi-envelope"></i>
+                            <input 
+                                class="input" 
+                                type="email" 
+                                id="email" 
+                                placeholder="seuemail@racehub.com" 
+                                required
+                            >
+                        </div>
+                    </div>
 
-            <button class="card-btn" onclick="window.location.href='agenda.html'">
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
 
-                <h3>📅 Agendamento</h3>
-                <p>Reserve datas e horários disponíveis.</p>
+                        <div class="input-icon">
+                            <i class="bi bi-lock"></i>
+                            <input 
+                                class="input" 
+                                type="password" 
+                                id="senha" 
+                                placeholder="Digite sua senha" 
+                                required
+                            >
+                        </div>
+                    </div>
 
-            </button>
+                    <div id="loginMessage" class="auth-message"></div>
 
-            <button class="card-btn" onclick="window.location.href='tempos.html'">
+                    <div class="auth-actions">
 
-                <h3>⏱️ Tempos de Volta</h3>
-                <p>Consulte seu desempenho.</p>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Entrar
+                        </button>
 
-            </button>
+                        <a href="cadastro.html" class="auth-link">
+                            Ainda não tem conta? Criar conta de cliente
+                        </a>
 
-            <button class="card-btn" onclick="window.location.href='corridas.html'">
+                    </div>
 
-                <h3>🏁 Corridas</h3>
-                <p>Gerencie eventos e competições.</p>
+                </form>
 
-            </button>
+            </div>
 
-        </div>
+        </section>
 
-    </section>
+    </main>
 
-    <section id="login">
-
-        <div class="login-container">
-
-            <h2>Entrar no RaceHub</h2>
-
-            <p>
-                Acesse sua conta para gerenciar reservas,
-                corridas e tempos de volta.
-            </p>
-
-            <input type="email" id="email" placeholder="Digite seu email">
-
-            <input type="password" id="senha" placeholder="Digite sua senha">
-
-
-
-            <button class="btn-login" onclick="login()">
-
-                Entrar
-            </button>
-            <button class="btn-login" onclick="window.location.href='cadastro.html'">
-
-                Criar Conta
-
-            </button>
-
-        </div>
-
-    </section>
-
-    <script src="database.js"></script>
     <script src="script.js"></script>
 
 </body>
-
 </html>

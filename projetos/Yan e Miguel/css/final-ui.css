@@ -1,0 +1,2155 @@
+/* ===========================================================
+   RaceHub v2.0
+   FINAL DARK UI
+   Tema escuro premium + sidebar compacta + cards arredondados
+===========================================================*/
+
+:root{
+    --sidebar-collapsed:82px;
+    --sidebar-expanded:286px;
+
+    --background:#07090d;
+    --background-secondary:#0d1118;
+
+    --surface:#151a23;
+    --surface-soft:#1b212c;
+    --surface-hover:#242b38;
+
+    --text:#f5f7fa;
+    --text-secondary:#d4dae3;
+    --text-muted:#9aa4b2;
+
+    --border:rgba(255,255,255,.11);
+
+    --primary:#d5001c;
+    --primary-light:#ff3048;
+    --gold:#c9a227;
+
+    --radius-card:28px;
+    --radius-panel:30px;
+    --radius-small:18px;
+
+    --shadow-sm:0 16px 38px rgba(0,0,0,.34);
+    --shadow-md:0 24px 60px rgba(0,0,0,.48);
+    --shadow-red:0 16px 36px rgba(213,0,28,.25);
+
+    --font:"Segoe UI", "Sora", Arial, sans-serif;
+}
+
+
+/* =========================
+   BASE ESCURA
+========================= */
+
+html,
+body{
+    background:var(--background) !important;
+    color:var(--text) !important;
+    font-family:var(--font) !important;
+}
+
+body{
+    font-weight:400 !important;
+    letter-spacing:-0.2px;
+}
+
+body::before{
+    content:"" !important;
+    position:fixed !important;
+    inset:0 !important;
+    background:
+        radial-gradient(circle at 88% 8%, rgba(213,0,28,.18), transparent 32%),
+        radial-gradient(circle at 12% 92%, rgba(201,162,39,.10), transparent 30%),
+        linear-gradient(135deg, #07090d, #10141c 55%, #080a0f) !important;
+    z-index:-2 !important;
+}
+
+body::after{
+    content:"" !important;
+    position:fixed !important;
+    inset:0 !important;
+    background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px) !important;
+    background-size:46px 46px !important;
+    opacity:.22 !important;
+    z-index:-1 !important;
+}
+
+.app,
+.main,
+.page{
+    background:transparent !important;
+}
+
+.main{
+    margin-left:var(--sidebar-collapsed) !important;
+    transition:margin-left .28s ease !important;
+    min-height:100vh !important;
+}
+
+.sidebar:hover ~ .main{
+    margin-left:var(--sidebar-expanded) !important;
+}
+
+
+/* =========================
+   SIDEBAR COMPACTA EXPANSÍVEL
+========================= */
+
+.sidebar{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+
+    width:var(--sidebar-collapsed) !important;
+    height:100vh !important;
+
+    padding:18px 14px !important;
+
+    background:#0d1118 !important;
+    border-right:1px solid rgba(255,255,255,.10) !important;
+    box-shadow:12px 0 40px rgba(0,0,0,.35) !important;
+
+    overflow:hidden !important;
+    z-index:1000 !important;
+
+    transition:
+        width .28s ease,
+        padding .28s ease,
+        box-shadow .28s ease !important;
+}
+
+.sidebar:hover{
+    width:var(--sidebar-expanded) !important;
+    padding:26px 24px !important;
+    box-shadow:18px 0 55px rgba(0,0,0,.48) !important;
+}
+
+
+/* Logo compacta */
+
+.rh-logo,
+.logo{
+    min-height:58px !important;
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center !important;
+    text-align:center !important;
+}
+
+.sidebar:hover .rh-logo,
+.sidebar:hover .logo{
+    justify-content:flex-start !important;
+    align-items:flex-start !important;
+    text-align:left !important;
+}
+
+.rh-logo h1,
+.logo h1{
+    color:#ffffff !important;
+    font-size:0 !important;
+    line-height:1 !important;
+    font-weight:800 !important;
+    letter-spacing:-1px !important;
+}
+
+.rh-logo h1::after,
+.logo h1::after{
+    content:"RH";
+    font-size:25px !important;
+    color:#ffffff !important;
+}
+
+.sidebar:hover .rh-logo h1,
+.sidebar:hover .logo h1{
+    font-size:31px !important;
+}
+
+.sidebar:hover .rh-logo h1::after,
+.sidebar:hover .logo h1::after{
+    content:"";
+}
+
+.rh-logo span,
+.logo span{
+    display:none !important;
+    color:var(--text-muted) !important;
+    font-size:13px !important;
+    margin-top:6px !important;
+}
+
+.sidebar:hover .rh-logo span,
+.sidebar:hover .logo span{
+    display:block !important;
+}
+
+.sidebar .divider{
+    background:rgba(255,255,255,.10) !important;
+    margin:18px 0 !important;
+}
+
+.sidebar:not(:hover) .divider{
+    margin:16px auto !important;
+    width:42px !important;
+}
+
+
+/* Menu */
+
+.menu{
+    gap:10px !important;
+}
+
+.menu a{
+    width:100% !important;
+    height:52px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:14px !important;
+
+    padding:0 16px !important;
+    border-radius:18px !important;
+
+    background:transparent !important;
+    color:#d7dde8 !important;
+
+    font-size:15px !important;
+    font-weight:600 !important;
+
+    white-space:nowrap !important;
+    overflow:hidden !important;
+
+    transition:.25s ease !important;
+}
+
+.sidebar:not(:hover) .menu a{
+    justify-content:center !important;
+    padding:0 !important;
+    gap:0 !important;
+    font-size:0 !important;
+}
+
+.menu a i{
+    color:#d7dde8 !important;
+    font-size:20px !important;
+    min-width:22px !important;
+    text-align:center !important;
+}
+
+.sidebar:not(:hover) .menu a i{
+    font-size:21px !important;
+    min-width:auto !important;
+}
+
+.menu a:hover{
+    background:#1b212c !important;
+    color:#ffffff !important;
+}
+
+.menu a:hover i{
+    color:#ffffff !important;
+}
+
+.menu .active{
+    background:linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    color:#ffffff !important;
+    box-shadow:var(--shadow-red) !important;
+}
+
+.menu .active i{
+    color:#ffffff !important;
+}
+
+
+/* Botão sair */
+
+.sidebar .btn{
+    width:100% !important;
+    height:52px !important;
+    border-radius:18px !important;
+    background:#1b212c !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+}
+
+.sidebar .btn i{
+    color:#ffffff !important;
+    font-size:20px !important;
+}
+
+.sidebar:not(:hover) .btn{
+    padding:0 !important;
+    font-size:0 !important;
+}
+
+.sidebar:not(:hover) .btn i{
+    font-size:21px !important;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    background:rgba(13,17,24,.92) !important;
+    border-bottom:1px solid var(--border) !important;
+    box-shadow:0 12px 35px rgba(0,0,0,.28) !important;
+    backdrop-filter:blur(18px) !important;
+}
+
+.topbar strong{
+    color:#ffffff !important;
+}
+
+.topbar p{
+    color:var(--text-muted) !important;
+}
+
+
+/* =========================
+   TEXTOS
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+th{
+    color:#ffffff !important;
+    font-family:var(--font) !important;
+}
+
+p,
+span,
+label,
+td,
+li,
+small{
+    color:var(--text-secondary) !important;
+}
+
+.page-title p,
+.dashboard-title p,
+.widget-subtitle,
+.form-subtitle,
+.card-text,
+.stats-label,
+.timeline-content p,
+.schedule-info p{
+    color:var(--text-muted) !important;
+}
+
+
+/* =========================
+   CARDS ARREDONDADOS
+========================= */
+
+.card,
+.stats-card,
+.widget,
+.panel,
+.form-card,
+.table-container,
+.auth-box{
+    background:linear-gradient(145deg, #1a202b, #121720) !important;
+    border:1px solid var(--border) !important;
+    box-shadow:var(--shadow-sm) !important;
+    border-radius:var(--radius-card) !important;
+    overflow:hidden !important;
+}
+
+.card:hover,
+.stats-card:hover,
+.widget:hover{
+    background:linear-gradient(145deg, #202735, #151b25) !important;
+    border-color:rgba(213,0,28,.34) !important;
+    box-shadow:var(--shadow-md) !important;
+}
+
+.panel{
+    border-radius:var(--radius-panel) !important;
+}
+
+.panel-header{
+    background:#1a202b !important;
+    border-bottom:1px solid var(--border) !important;
+    border-radius:var(--radius-panel) var(--radius-panel) 0 0 !important;
+}
+
+.panel-body{
+    background:#121720 !important;
+    border-radius:0 0 var(--radius-panel) var(--radius-panel) !important;
+}
+
+.stats-card{
+    min-height:165px !important;
+    border-radius:var(--radius-card) !important;
+}
+
+.stats-card::before{
+    background:rgba(213,0,28,.10) !important;
+}
+
+.stats-icon{
+    background:rgba(213,0,28,.16) !important;
+    color:var(--primary-light) !important;
+    border-radius:20px !important;
+}
+
+.stats-icon i{
+    color:var(--primary-light) !important;
+}
+
+.stats-number,
+.kpi-value{
+    color:#ffffff !important;
+    font-weight:800 !important;
+}
+
+.widget-title,
+.form-title,
+.card-title,
+.empty h2,
+.timeline-content h4,
+.pilot-name{
+    color:#ffffff !important;
+}
+
+
+/* Corrige especificamente os cards quadrados do dashboard admin */
+
+.dashboard .card,
+.dashboard .stats-card,
+.dashboard .widget,
+.dashboard .stat-box,
+.dashboard .schedule-card,
+.dashboard .ranking-item{
+    border-radius:26px !important;
+    overflow:hidden !important;
+}
+
+.dashboard .grid .card{
+    border-radius:24px !important;
+}
+
+.dashboard-grid > .stats-card{
+    border-radius:28px !important;
+}
+
+
+/* =========================
+   WIDGETS INTERNOS
+========================= */
+
+.schedule-card,
+.ranking-item,
+.stat-box{
+    background:#1b212c !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    border-radius:22px !important;
+    overflow:hidden !important;
+}
+
+.schedule-card:hover,
+.ranking-item:hover,
+.stat-box:hover{
+    background:#232a37 !important;
+    border-color:rgba(213,0,28,.28) !important;
+}
+
+.schedule-hour,
+.best-time,
+.table-highlight{
+    color:var(--gold) !important;
+}
+
+.position{
+    background:linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    color:#ffffff !important;
+}
+
+.timeline-dot{
+    background:var(--primary) !important;
+    box-shadow:0 0 0 5px rgba(213,0,28,.16) !important;
+}
+
+
+/* =========================
+   TABELAS
+========================= */
+
+.table{
+    background:#121720 !important;
+}
+
+.table thead{
+    background:#1e2531 !important;
+}
+
+.table thead th{
+    color:#ffffff !important;
+    border-bottom:1px solid var(--border) !important;
+}
+
+.table tbody td{
+    color:#d4dae3 !important;
+    border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+
+.table tbody tr:nth-child(even){
+    background:#171d27 !important;
+}
+
+.table tbody tr:hover{
+    background:#222936 !important;
+}
+
+.table-number{
+    color:#ffffff !important;
+}
+
+
+/* =========================
+   FORMULÁRIOS
+========================= */
+
+.input,
+.search input,
+input,
+select,
+textarea{
+    background:#0e131b !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,.14) !important;
+    border-radius:18px !important;
+}
+
+.input:hover,
+.search input:hover,
+input:hover,
+select:hover,
+textarea:hover{
+    border-color:rgba(255,255,255,.28) !important;
+}
+
+.input:focus,
+.search input:focus,
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--primary) !important;
+    box-shadow:0 0 0 4px rgba(213,0,28,.18) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+.search input::placeholder{
+    color:#8d96a3 !important;
+}
+
+select option{
+    background:#111720 !important;
+    color:#ffffff !important;
+}
+
+.input-icon i,
+.search i{
+    color:#a7b0bf !important;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn{
+    font-family:var(--font) !important;
+    font-weight:700 !important;
+    border-radius:18px !important;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    color:#ffffff !important;
+    box-shadow:var(--shadow-red) !important;
+}
+
+.btn-primary i,
+.btn-primary span{
+    color:#ffffff !important;
+}
+
+.btn-secondary{
+    background:#1b212c !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+}
+
+.btn-secondary i{
+    color:#ffffff !important;
+}
+
+.btn-secondary:hover{
+    background:#252d3b !important;
+}
+
+
+/* =========================
+   AVATAR / STATUS
+========================= */
+
+.avatar{
+    background:linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    color:#ffffff !important;
+}
+
+.status-success,
+.badge-success{
+    background:rgba(62,207,142,.16) !important;
+    color:#8ff5c5 !important;
+}
+
+.status-warning,
+.badge-warning{
+    background:rgba(255,184,0,.16) !important;
+    color:#ffd36a !important;
+}
+
+.status-danger,
+.badge-danger{
+    background:rgba(255,76,76,.16) !important;
+    color:#ff9b9b !important;
+}
+
+
+/* =========================
+   EMPTY / ALERTAS
+========================= */
+
+.empty{
+    background:transparent !important;
+}
+
+.empty i{
+    color:#727d8f !important;
+}
+
+.empty p{
+    color:var(--text-muted) !important;
+}
+
+.alert{
+    border-radius:18px !important;
+}
+
+.alert-danger{
+    background:rgba(255,76,76,.14) !important;
+    color:#ffc7c7 !important;
+    border-left:5px solid #ff4c4c !important;
+}
+
+.alert-warning{
+    background:rgba(255,184,0,.14) !important;
+    color:#ffe1a0 !important;
+    border-left:5px solid #ffb800 !important;
+}
+
+.alert-success{
+    background:rgba(62,207,142,.14) !important;
+    color:#c4f7df !important;
+    border-left:5px solid #3ecf8e !important;
+}
+
+
+/* =========================
+   LOGIN ESCURO
+========================= */
+
+.login-card{
+    background:#07090d !important;
+}
+
+.login-visual{
+    background:
+        linear-gradient(90deg, rgba(0,0,0,.84), rgba(0,0,0,.46)),
+        radial-gradient(circle at 20% 30%, rgba(213,0,28,.30), transparent 30%),
+        radial-gradient(circle at 78% 72%, rgba(201,162,39,.14), transparent 30%),
+        linear-gradient(135deg, #080a0f, #151b25) !important;
+}
+
+.auth-brand h2,
+.auth-info h1,
+.auth-feature strong{
+    color:#ffffff !important;
+}
+
+.auth-brand span,
+.auth-info p,
+.auth-feature span{
+    color:#d4dae3 !important;
+}
+
+.auth-feature{
+    background:rgba(255,255,255,.08) !important;
+    border:1px solid rgba(255,255,255,.14) !important;
+    border-radius:22px !important;
+}
+
+.auth-header h1{
+    color:#ffffff !important;
+}
+
+.auth-header p,
+.auth-link{
+    color:var(--text-muted) !important;
+}
+
+.auth-kicker{
+    color:var(--gold) !important;
+}
+
+.auth-message{
+    color:#ff7b7b !important;
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:760px){
+
+    .sidebar{
+        position:relative !important;
+        width:100% !important;
+        height:auto !important;
+        padding:18px !important;
+    }
+
+    .sidebar:hover{
+        width:100% !important;
+    }
+
+    .sidebar:not(:hover) .menu a,
+    .sidebar:not(:hover) .btn{
+        font-size:15px !important;
+        justify-content:flex-start !important;
+        padding:0 16px !important;
+        gap:14px !important;
+    }
+
+    .sidebar:not(:hover) .rh-logo h1{
+        font-size:30px !important;
+    }
+
+    .sidebar:not(:hover) .rh-logo h1::after{
+        content:"" !important;
+    }
+
+    .sidebar:not(:hover) .rh-logo span{
+        display:block !important;
+    }
+
+    .main,
+    .sidebar:hover ~ .main{
+        margin-left:0 !important;
+    }
+}
+/* ===========================================================
+   AJUSTE DOS ÍCONES DOS CARDS
+   Afasta os símbolos da borda
+===========================================================*/
+
+.stats-card{
+    padding:30px !important;
+    overflow:hidden !important;
+}
+
+.stats-icon{
+    width:62px !important;
+    height:62px !important;
+
+    min-width:62px !important;
+    min-height:62px !important;
+
+    margin-bottom:22px !important;
+    margin-left:0 !important;
+    margin-top:0 !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    border-radius:20px !important;
+    position:relative !important;
+    z-index:2 !important;
+}
+
+.stats-icon i{
+    font-size:27px !important;
+    line-height:1 !important;
+}
+
+.stats-card::before{
+    right:-45px !important;
+    top:-45px !important;
+    z-index:1 !important;
+}
+
+.stats-number,
+.stats-label{
+    position:relative !important;
+    z-index:2 !important;
+}
+
+
+/* Cards menores dentro do dashboard */
+
+.stat-box{
+    padding:24px !important;
+    border-radius:22px !important;
+}
+
+.card{
+    padding:28px !important;
+    border-radius:24px !important;
+}
+
+.card-title i{
+    margin-right:8px !important;
+    display:inline-flex !important;
+    transform:translateY(2px);
+}
+/* ===========================================================
+   AJUSTE FINAL - BOTÕES E AVATAR
+   Corrige ícones vazando dos botões e avatar quadrado
+===========================================================*/
+
+
+/* =========================
+   BOTÕES GERAIS
+========================= */
+
+.btn,
+button.btn,
+a.btn{
+    min-height:54px !important;
+    height:auto !important;
+
+    padding:0 26px !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    gap:10px !important;
+
+    border-radius:18px !important;
+
+    line-height:1 !important;
+
+    overflow:visible !important;
+
+    white-space:nowrap !important;
+}
+
+.btn i,
+button.btn i,
+a.btn i{
+    position:static !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    width:20px !important;
+    height:20px !important;
+
+    min-width:20px !important;
+    min-height:20px !important;
+
+    font-size:18px !important;
+    line-height:1 !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    transform:none !important;
+
+    flex-shrink:0 !important;
+}
+
+
+/* =========================
+   BOTÕES VERMELHOS
+========================= */
+
+.btn-primary{
+    min-height:56px !important;
+
+    padding:0 28px !important;
+
+    border-radius:18px !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    gap:10px !important;
+
+    overflow:visible !important;
+}
+
+.btn-primary i{
+    color:#ffffff !important;
+
+    width:20px !important;
+    height:20px !important;
+
+    font-size:18px !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    flex-shrink:0 !important;
+}
+
+
+/* =========================
+   BOTÕES DENTRO DE FORMULÁRIOS
+========================= */
+
+.form-footer .btn{
+    min-height:56px !important;
+
+    padding:0 28px !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    gap:10px !important;
+}
+
+.form-footer .btn i{
+    position:static !important;
+    transform:none !important;
+}
+
+
+/* =========================
+   BOTÕES GRANDES / LINKS
+========================= */
+
+.dashboard-header .btn,
+.page-header .btn,
+.auth-actions .btn{
+    min-height:56px !important;
+
+    padding:0 30px !important;
+
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    gap:10px !important;
+}
+
+.dashboard-header .btn i,
+.page-header .btn i,
+.auth-actions .btn i{
+    position:static !important;
+    transform:none !important;
+}
+
+
+/* =========================
+   AVATAR REDONDO
+========================= */
+
+.avatar,
+[data-user-avatar]{
+    width:52px !important;
+    height:52px !important;
+
+    min-width:52px !important;
+    min-height:52px !important;
+
+    max-width:52px !important;
+    max-height:52px !important;
+
+    aspect-ratio:1 / 1 !important;
+
+    border-radius:50% !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    overflow:hidden !important;
+
+    background:linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+
+    color:#ffffff !important;
+
+    font-weight:800 !important;
+    font-size:17px !important;
+
+    line-height:1 !important;
+
+    flex-shrink:0 !important;
+}
+
+.avatar img,
+[data-user-avatar] img{
+    width:100% !important;
+    height:100% !important;
+
+    object-fit:cover !important;
+
+    border-radius:50% !important;
+}
+
+
+/* =========================
+   TOPBAR USER
+========================= */
+
+.dashboard-user{
+    display:flex !important;
+    align-items:center !important;
+    gap:16px !important;
+}
+
+.dashboard-user > div:first-child{
+    text-align:right !important;
+}
+/* ===========================================================
+   DASHBOARD ADMIN - CARDS FUNCIONAIS
+===========================================================*/
+
+.stat-box.click,
+.schedule-card.click,
+.ranking-item.click{
+    cursor:pointer !important;
+    transition:.25s ease !important;
+}
+
+.stat-box.click:hover,
+.schedule-card.click:hover,
+.ranking-item.click:hover{
+    transform:translateY(-4px) !important;
+    border-color:rgba(213,0,28,.36) !important;
+    box-shadow:0 16px 36px rgba(0,0,0,.32) !important;
+}
+
+.stat-box.click:active,
+.schedule-card.click:active,
+.ranking-item.click:active{
+    transform:translateY(-1px) !important;
+}
+/* ===========================================================
+   CORREÇÃO INPUT-ICON COM SELECT
+   Corrige ícones sobrepostos nos campos de corrida/piloto
+===========================================================*/
+
+.input-icon{
+    position:relative !important;
+    width:100% !important;
+}
+
+.input-icon i{
+    position:absolute !important;
+    left:20px !important;
+    top:50% !important;
+    transform:translateY(-50%) !important;
+
+    width:20px !important;
+    height:20px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    font-size:18px !important;
+    line-height:1 !important;
+
+    color:#a7b0bf !important;
+
+    pointer-events:none !important;
+    z-index:2 !important;
+}
+
+.input-icon .input,
+.input-icon input,
+.input-icon select,
+.input-icon textarea{
+    padding-left:56px !important;
+}
+
+.input-icon select.input{
+    appearance:auto !important;
+    padding-right:44px !important;
+}
+
+.input-icon textarea.input{
+    padding-top:20px !important;
+}
+
+.input-icon textarea + i,
+.input-icon i.textarea-icon{
+    top:28px !important;
+    transform:none !important;
+}
+/* ===========================================================
+   SIDEBAR LOGO - TEXTO EM DUAS LINHAS
+   RaceHub em cima / subtítulo embaixo
+===========================================================*/
+
+.rh-logo,
+.logo{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:6px !important;
+    width:100% !important;
+    min-height:58px !important;
+    text-align:center !important;
+}
+
+.sidebar:hover .rh-logo,
+.sidebar:hover .logo{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    text-align:left !important;
+}
+
+.rh-logo h1,
+.logo h1{
+    display:block !important;
+    width:100% !important;
+    margin:0 !important;
+    line-height:1 !important;
+}
+
+.rh-logo span,
+.logo span{
+    width:100% !important;
+    display:none !important;
+    margin:0 !important;
+    line-height:1.3 !important;
+    white-space:normal !important;
+}
+
+.sidebar:hover .rh-logo span,
+.sidebar:hover .logo span{
+    display:block !important;
+}
+/* ===========================================================
+   AÇÕES ADMIN - EXCLUIR / ALTERAR TIPO
+===========================================================*/
+
+.action-danger{
+    background:rgba(255,76,76,.14) !important;
+    color:#ff9b9b !important;
+}
+
+.action-danger i{
+    color:#ff9b9b !important;
+}
+
+.action-danger:hover{
+    background:#d5001c !important;
+    color:#ffffff !important;
+}
+
+.action-danger:hover i{
+    color:#ffffff !important;
+}
+
+.select-tipo-usuario{
+    height:42px !important;
+    min-height:42px !important;
+    padding:0 14px !important;
+    border-radius:14px !important;
+    font-size:14px !important;
+    width:150px !important;
+}
+/* ===========================================================
+   BOTÃO EDITAR
+===========================================================*/
+
+.action-edit{
+    background:rgba(201,162,39,.14) !important;
+    color:#ffd36a !important;
+}
+
+.action-edit i{
+    color:#ffd36a !important;
+}
+
+.action-edit:hover{
+    background:#c9a227 !important;
+    color:#111111 !important;
+}
+
+.action-edit:hover i{
+    color:#111111 !important;
+}
+/* ===========================================================
+   INSCRIÇÕES EM CORRIDAS
+===========================================================*/
+
+.action-success{
+    background:rgba(62,207,142,.16) !important;
+    color:#8ff5c5 !important;
+}
+
+.action-success i{
+    color:#8ff5c5 !important;
+}
+
+.action-success:hover{
+    background:#3ecf8e !important;
+    color:#07110c !important;
+}
+
+.action-success:hover i{
+    color:#07110c !important;
+}
+
+.table td p{
+    font-size:13px !important;
+    line-height:1.4 !important;
+}
+/* ===========================================================
+   MENSAGENS DE SUCESSO / ERRO
+===========================================================*/
+
+.auth-message{
+    font-weight:600 !important;
+}
+
+.auth-message[style*="success"],
+.auth-message[style*="--success"],
+.auth-message[style*="#3ecf8e"],
+.auth-message.success{
+    color:#3ecf8e !important;
+}
+
+.auth-message[style*="danger"],
+.auth-message[style*="--danger"],
+.auth-message.error{
+    color:#ff7b7b !important;
+}
+/* ===========================================================
+   CORREÇÃO TAMANHO DOS CARDS DE RESERVAS ADMIN
+===========================================================*/
+
+.stats-grid{
+    display:grid !important;
+    grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+    gap:22px !important;
+    width:100% !important;
+}
+
+.stats-grid .stats-card{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+}
+
+@media(max-width:1100px){
+    .stats-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media(max-width:650px){
+    .stats-grid{
+        grid-template-columns:1fr !important;
+    }
+}
+/* ===========================================================
+   ESPAÇAMENTO ENTRE CARDS DE RESUMO E CONTEÚDO ABAIXO
+===========================================================*/
+
+.stats-grid{
+    margin-bottom:32px !important;
+}
+
+.stats-grid + .card,
+.stats-grid + .dashboard-grid,
+.stats-grid + .table-container,
+.stats-grid + .content-grid,
+.stats-grid + section{
+    margin-top:10px !important;
+}
+/* ===========================================================
+   PÁGINA DE PERFIL
+===========================================================*/
+
+.profile-card{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    padding:28px !important;
+}
+
+.avatar-profile{
+    width:94px !important;
+    height:94px !important;
+    min-width:94px !important;
+    min-height:94px !important;
+    font-size:30px !important;
+    border-radius:50% !important;
+    box-shadow:0 18px 38px rgba(0,0,0,.35) !important;
+}
+
+#perfilEmail[readonly]{
+    cursor:not-allowed !important;
+}
+
+/* ===========================================================
+   AVATAR / PERFIL CLICÁVEL
+   Melhora a experiência: clicar no usuário da topbar abre perfil.html.
+===========================================================*/
+
+.dashboard-user{
+    cursor:pointer !important;
+    transition:.25s ease !important;
+    border-radius:18px !important;
+    padding:6px 8px !important;
+}
+
+.dashboard-user:hover{
+    background:rgba(255,255,255,.05) !important;
+}
+
+.dashboard-user:hover .avatar{
+    transform:scale(1.06) !important;
+    box-shadow:0 0 0 4px rgba(213,0,28,.18) !important;
+}
+
+/* ===========================================================
+   v2.4 - VEÍCULOS
+   Estilos usados nos selects de veículos nas inscrições e tempos.
+===========================================================*/
+
+.table-actions-wrap{
+    display:flex !important;
+    align-items:center !important;
+    flex-wrap:wrap !important;
+    gap:8px !important;
+}
+
+.select-veiculo-inscricao,
+.select-veiculo-dashboard{
+    min-height:38px !important;
+    height:38px !important;
+    max-width:190px !important;
+    padding:0 12px !important;
+    border-radius:14px !important;
+    font-size:13px !important;
+}
+
+.select-veiculo-dashboard{
+    width:100% !important;
+    max-width:260px !important;
+    margin-top:8px !important;
+}
+
+.vehicle-muted{
+    margin-top:6px !important;
+    font-size:13px !important;
+    color:var(--text-muted) !important;
+}
+
+.action-warning{
+    background:rgba(201,162,39,.16) !important;
+    color:#ffd36a !important;
+}
+
+.action-warning i{
+    color:#ffd36a !important;
+}
+
+.action-warning:hover{
+    background:#c9a227 !important;
+    color:#111111 !important;
+}
+
+.action-warning:hover i{
+    color:#111111 !important;
+}
+
+
+/* ===========================================================
+   PERFIL - LISTA DE VEÍCULOS
+=========================================================== */
+
+.perfil-mini-lista-veiculos{
+    margin-top:12px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:5px !important;
+    font-size:12px !important;
+    color:var(--text-muted) !important;
+    line-height:1.35 !important;
+}
+
+.perfil-mini-lista-veiculos span{
+    color:#ffffff !important;
+    font-weight:600 !important;
+}
+
+.perfil-mini-lista-veiculos small{
+    color:var(--gold) !important;
+    font-weight:700 !important;
+}
+
+.perfil-veiculos-box{
+    margin-top:28px !important;
+    width:100% !important;
+    text-align:left !important;
+}
+
+.perfil-veiculos-box h3{
+    color:#ffffff !important;
+    font-size:16px !important;
+    margin-bottom:14px !important;
+}
+
+.perfil-veiculos-lista{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:12px !important;
+}
+
+.perfil-veiculo-item{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:14px !important;
+    padding:14px 16px !important;
+    border-radius:18px !important;
+    background:rgba(255,255,255,.045) !important;
+    border:1px solid rgba(255,255,255,.08) !important;
+}
+
+.perfil-veiculo-item strong{
+    color:#ffffff !important;
+    font-size:14px !important;
+}
+
+.perfil-veiculo-item p,
+.perfil-veiculo-vazio{
+    margin-top:4px !important;
+    color:var(--text-muted) !important;
+    font-size:13px !important;
+}
+
+.perfil-veiculo-item i{
+    color:var(--gold) !important;
+    font-size:22px !important;
+}
+
+.action-disabled,
+.action-disabled:hover{
+    opacity:.45 !important;
+    cursor:not-allowed !important;
+    background:rgba(255,255,255,.08) !important;
+    color:var(--text-muted) !important;
+    transform:none !important;
+}
+
+/* ===========================================================
+   v2.4.3 - RANKING DO ADMIN E CORREÇÃO DE OVERFLOW
+   - colore os tempos do ranking por posição;
+   - impede tempos longos, como 150.685s, de saírem dos cards.
+===========================================================*/
+
+.ranking-admin-dashboard .best-time,
+.ranking-list .best-time{
+    white-space:nowrap !important;
+    flex-shrink:0 !important;
+}
+
+.ranking-time-gold{
+    color:#ffd36a !important;
+    text-shadow:0 0 14px rgba(255,211,106,.26) !important;
+}
+
+.ranking-time-silver{
+    color:#d7dde8 !important;
+    text-shadow:0 0 14px rgba(215,221,232,.18) !important;
+}
+
+.ranking-time-bronze{
+    color:#cd7f32 !important;
+    text-shadow:0 0 14px rgba(205,127,50,.22) !important;
+}
+
+.ranking-time-white{
+    color:#ffffff !important;
+}
+
+/* Cards pequenos usados no Resumo operacional e Resumo técnico. */
+.stat-box{
+    min-width:0 !important;
+    overflow:hidden !important;
+}
+
+.stat-box h3{
+    max-width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+    font-size:clamp(24px, 2.1vw, 36px) !important;
+    line-height:1.05 !important;
+    letter-spacing:.02em !important;
+}
+
+.stat-box span{
+    display:block !important;
+    max-width:100% !important;
+    line-height:1.35 !important;
+}
+
+/* Cards da tela de relatórios ficam mais compactos para caber valores com segundos. */
+#resumoMediaTempo,
+#tempoMaisRecente{
+    font-size:clamp(22px, 1.9vw, 32px) !important;
+}
+
+/* ===========================================================
+   v2.4.4 - CORES UNIVERSAIS DOS RANKINGS
+   -----------------------------------------------------------
+   Aplica a mesma regra de medalhas em todos os rankings:
+   1º tempo: dourado
+   2º tempo: prateado
+   3º tempo: bronze
+   4º e 5º: branco
+
+   Funciona nos cards de ranking (.ranking-list) e também
+   nas tabelas de tempos que usam .table-highlight.
+===========================================================*/
+
+.ranking-list .ranking-item:nth-child(1) .best-time,
+.table tbody tr:nth-child(1) .table-highlight{
+    color:#ffd36a !important;
+    text-shadow:0 0 14px rgba(255,211,106,.28) !important;
+}
+
+.ranking-list .ranking-item:nth-child(2) .best-time,
+.table tbody tr:nth-child(2) .table-highlight{
+    color:#d7dde8 !important;
+    text-shadow:0 0 14px rgba(215,221,232,.20) !important;
+}
+
+.ranking-list .ranking-item:nth-child(3) .best-time,
+.table tbody tr:nth-child(3) .table-highlight{
+    color:#cd7f32 !important;
+    text-shadow:0 0 14px rgba(205,127,50,.24) !important;
+}
+
+.ranking-list .ranking-item:nth-child(n+4) .best-time,
+.table tbody tr:nth-child(n+4) .table-highlight{
+    color:#ffffff !important;
+    text-shadow:none !important;
+}
+
+/* Garante que tempos grandes não estourem os cards em nenhum dashboard. */
+.best-time,
+.table-highlight,
+.stats-number,
+.stat-box h3,
+.stat-box .stats-number{
+    max-width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+}
+
+/* ===========================================================
+   RACEHUB 3.0 - FOTO, MODAIS, SOCIAL E DETALHES
+===========================================================*/
+
+.avatar-com-foto img,
+.avatar img,
+.avatar-profile img,
+.avatar-social img,
+.small-avatar img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    border-radius:50% !important;
+    display:block !important;
+}
+
+.tempo-ouro{ color:#ffd36a !important; text-shadow:0 0 14px rgba(255,211,106,.28) !important; }
+.tempo-prata{ color:#d7dde8 !important; text-shadow:0 0 14px rgba(215,221,232,.20) !important; }
+.tempo-bronze{ color:#cd7f32 !important; text-shadow:0 0 14px rgba(205,127,50,.24) !important; }
+.tempo-normal{ color:#ffffff !important; text-shadow:none !important; }
+
+.rh-modal-backdrop{
+    position:fixed !important;
+    inset:0 !important;
+    display:none !important;
+    align-items:center !important;
+    justify-content:center !important;
+    z-index:9999 !important;
+    padding:24px !important;
+    background:rgba(0,0,0,.62) !important;
+    backdrop-filter:blur(10px) !important;
+}
+
+.rh-modal-backdrop.active{
+    display:flex !important;
+}
+
+.rh-modal{
+    width:min(460px, 100%) !important;
+    padding:32px !important;
+    border-radius:28px !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    background:linear-gradient(145deg, rgba(18,22,31,.98), rgba(7,9,14,.98)) !important;
+    box-shadow:0 28px 70px rgba(0,0,0,.55) !important;
+    text-align:center !important;
+}
+
+.rh-modal-icon{
+    width:58px !important;
+    height:58px !important;
+    margin:0 auto 18px !important;
+    border-radius:20px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:rgba(213,0,28,.16) !important;
+    color:var(--primary) !important;
+    font-size:28px !important;
+}
+
+.rh-modal h2{
+    margin:0 0 10px !important;
+    color:white !important;
+}
+
+.rh-modal p{
+    margin:0 !important;
+    color:var(--text-muted) !important;
+    line-height:1.55 !important;
+}
+
+.rh-modal-actions{
+    display:flex !important;
+    justify-content:center !important;
+    gap:12px !important;
+    margin-top:26px !important;
+    flex-wrap:wrap !important;
+}
+
+.social-grid{
+    display:grid !important;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)) !important;
+    gap:22px !important;
+}
+
+.social-card{
+    padding:28px !important;
+    border-radius:26px !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    background:rgba(255,255,255,.035) !important;
+    text-align:center !important;
+}
+
+.avatar-social{
+    width:76px !important;
+    height:76px !important;
+    margin:0 auto 16px !important;
+    font-size:24px !important;
+}
+
+.social-card h2{
+    color:white !important;
+    margin:0 0 6px !important;
+}
+
+.social-card p{
+    color:var(--text-muted) !important;
+    margin:0 !important;
+}
+
+.social-stats{
+    display:grid !important;
+    grid-template-columns:repeat(3, 1fr) !important;
+    gap:10px !important;
+    margin:22px 0 !important;
+}
+
+.social-stats div{
+    padding:14px 10px !important;
+    border-radius:18px !important;
+    background:rgba(255,255,255,.045) !important;
+}
+
+.social-stats strong{
+    display:block !important;
+    color:white !important;
+    font-size:22px !important;
+}
+
+.social-stats span{
+    display:block !important;
+    color:var(--text-muted) !important;
+    font-size:12px !important;
+    margin-top:4px !important;
+}
+
+.social-best-time{
+    padding:14px !important;
+    border-radius:18px !important;
+    background:rgba(213,0,28,.12) !important;
+    color:var(--text-muted) !important;
+}
+
+.social-best-time strong{
+    color:#ffd36a !important;
+}
+
+.detail-row{
+    display:flex !important;
+    align-items:center !important;
+    gap:14px !important;
+    padding:16px 0 !important;
+    border-bottom:1px solid rgba(255,255,255,.08) !important;
+}
+
+.detail-row:last-child{
+    border-bottom:0 !important;
+}
+
+.small-avatar{
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+    font-size:14px !important;
+}
+
+/* ===========================================================
+   RACEHUB 3.0 - CENTRAL DE NOTIFICAÇÕES
+===========================================================*/
+.racehub-notifications{
+    margin:0 0 28px !important;
+    padding:18px 22px !important;
+    border-radius:22px !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    background:linear-gradient(135deg, rgba(213,0,28,.12), rgba(255,255,255,.035)) !important;
+}
+
+.racehub-notifications strong{
+    display:flex !important;
+    gap:10px !important;
+    align-items:center !important;
+    color:white !important;
+    margin-bottom:6px !important;
+}
+
+.racehub-notifications p{
+    margin:0 !important;
+    color:var(--text-muted) !important;
+    line-height:1.5 !important;
+}
+
+/* ===========================================================
+   v3.0.1 - CORREÇÃO DA SIDEBAR COM MUITOS LINKS
+   Mantém o botão Sair sempre visível e permite rolagem no menu.
+===========================================================*/
+
+.sidebar{
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:space-between !important;
+    overflow:hidden !important;
+}
+
+.sidebar > div:first-child{
+    min-height:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    flex:1 1 auto !important;
+}
+
+.sidebar > div:last-child{
+    flex:0 0 auto !important;
+    margin-top:14px !important;
+}
+
+.sidebar .menu{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding-right:2px !important;
+    max-height:calc(100vh - 165px) !important;
+}
+
+.sidebar .menu::-webkit-scrollbar{
+    width:4px !important;
+}
+
+.sidebar .menu::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.16) !important;
+    border-radius:999px !important;
+}
+
+.sidebar:not(:hover) .menu::-webkit-scrollbar{
+    width:0 !important;
+}
+
+
+/* ===========================================================
+   v3.0.2 - PERFIS PÚBLICOS E FILTROS DE RANKING
+===========================================================*/
+
+.social-card-click{
+    cursor:pointer !important;
+    transition:.25s ease !important;
+}
+
+.social-card-click:hover{
+    transform:translateY(-5px) !important;
+    border-color:rgba(213,0,28,.38) !important;
+    box-shadow:0 18px 42px rgba(0,0,0,.35) !important;
+}
+
+.link-piloto-publico{
+    border:0 !important;
+    background:transparent !important;
+    color:inherit !important;
+    font:inherit !important;
+    padding:0 !important;
+    cursor:pointer !important;
+    text-align:left !important;
+}
+
+.link-piloto-publico:hover{
+    color:#ffd36a !important;
+    text-decoration:underline !important;
+}
+
+.ranking-veiculo-header{
+    gap:18px !important;
+}
+
+.ranking-veiculo-filtro{
+    margin-left:auto !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:10px !important;
+}
+
+.ranking-veiculo-filtro .input{
+    min-height:42px !important;
+    height:42px !important;
+    width:190px !important;
+    padding:0 14px !important;
+    border-radius:14px !important;
+}
+
+.profile-public-hero{
+    margin-bottom:32px !important;
+}
+
+.public-profile-card{
+    display:flex !important;
+    align-items:center !important;
+    gap:22px !important;
+    padding:30px !important;
+    border-radius:28px !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    background:linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.025)) !important;
+    box-shadow:0 22px 46px rgba(0,0,0,.30) !important;
+}
+
+.public-profile-card h2{
+    margin:0 0 6px !important;
+    color:white !important;
+    font-size:30px !important;
+}
+
+.public-profile-card p{
+    margin:0 0 14px !important;
+    color:var(--text-muted) !important;
+}
+
+.avatar-public-profile{
+    width:104px !important;
+    height:104px !important;
+    min-width:104px !important;
+    min-height:104px !important;
+    font-size:34px !important;
+    border-radius:50% !important;
+}
+
+@media(max-width:760px){
+    .public-profile-card{
+        align-items:flex-start !important;
+        flex-direction:column !important;
+    }
+
+    .ranking-veiculo-header{
+        flex-direction:column !important;
+        align-items:flex-start !important;
+    }
+
+    .ranking-veiculo-filtro{
+        margin-left:0 !important;
+        width:100% !important;
+    }
+
+    .ranking-veiculo-filtro .input{
+        width:100% !important;
+    }
+}
+/* ===========================================================
+   MODAL DE VISUALIZAÇÃO DE VEÍCULO
+===========================================================*/
+
+.vehicle-modal-overlay{
+    position:fixed !important;
+    inset:0 !important;
+    z-index:9999 !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    padding:24px !important;
+
+    background:rgba(0,0,0,.72) !important;
+    backdrop-filter:blur(16px) !important;
+}
+
+.vehicle-modal{
+    width:min(720px, 100%) !important;
+
+    background:linear-gradient(145deg, #121821, #07090d) !important;
+
+    border:1px solid rgba(255,255,255,.10) !important;
+    border-radius:30px !important;
+
+    box-shadow:
+        0 28px 80px rgba(0,0,0,.65),
+        inset 0 1px 0 rgba(255,255,255,.05) !important;
+
+    overflow:hidden !important;
+
+    animation:modalVehicleIn .22s ease forwards !important;
+}
+
+.vehicle-modal-header{
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    gap:24px !important;
+
+    padding:30px 34px !important;
+
+    border-bottom:1px solid rgba(255,255,255,.08) !important;
+
+    background:
+        radial-gradient(circle at top right, rgba(213,0,28,.20), transparent 35%),
+        linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.01)) !important;
+}
+
+.vehicle-modal-kicker{
+    display:inline-flex !important;
+
+    margin-bottom:10px !important;
+
+    color:var(--gold) !important;
+
+    font-size:13px !important;
+    font-weight:800 !important;
+    letter-spacing:.12em !important;
+    text-transform:uppercase !important;
+}
+
+.vehicle-modal-header h2{
+    margin:0 !important;
+
+    color:#ffffff !important;
+
+    font-size:30px !important;
+    font-weight:850 !important;
+    line-height:1.1 !important;
+}
+
+.vehicle-modal-header p{
+    margin-top:8px !important;
+
+    color:#aeb8c7 !important;
+
+    font-size:15px !important;
+}
+
+.vehicle-modal-close{
+    width:44px !important;
+    height:44px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    border:none !important;
+    border-radius:16px !important;
+
+    background:rgba(255,255,255,.06) !important;
+    color:#ffffff !important;
+
+    cursor:pointer !important;
+    transition:.25s ease !important;
+}
+
+.vehicle-modal-close:hover{
+    background:#d5001c !important;
+    transform:scale(1.04) !important;
+}
+
+.vehicle-modal-body{
+    padding:34px !important;
+}
+
+.vehicle-hero-icon{
+    width:86px !important;
+    height:86px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    margin-bottom:26px !important;
+
+    border-radius:28px !important;
+
+    background:
+        linear-gradient(145deg, rgba(213,0,28,.26), rgba(201,162,39,.14)) !important;
+
+    border:1px solid rgba(255,255,255,.10) !important;
+}
+
+.vehicle-hero-icon i{
+    font-size:38px !important;
+    color:#ffffff !important;
+}
+
+.vehicle-info-grid{
+    display:grid !important;
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+    gap:16px !important;
+}
+
+.vehicle-info-card{
+    padding:20px !important;
+
+    border-radius:20px !important;
+
+    background:rgba(255,255,255,.035) !important;
+    border:1px solid rgba(255,255,255,.08) !important;
+}
+
+.vehicle-info-card span,
+.vehicle-observations span{
+    display:block !important;
+
+    margin-bottom:8px !important;
+
+    color:#8f9bad !important;
+
+    font-size:12px !important;
+    font-weight:800 !important;
+    letter-spacing:.08em !important;
+    text-transform:uppercase !important;
+}
+
+.vehicle-info-card strong{
+    color:#ffffff !important;
+
+    font-size:17px !important;
+    font-weight:800 !important;
+}
+
+.vehicle-observations{
+    margin-top:18px !important;
+    padding:22px !important;
+
+    border-radius:22px !important;
+
+    background:rgba(213,0,28,.08) !important;
+    border:1px solid rgba(213,0,28,.20) !important;
+}
+
+.vehicle-observations p{
+    margin:0 !important;
+
+    color:#ffffff !important;
+
+    font-size:15px !important;
+    line-height:1.7 !important;
+}
+
+.vehicle-modal-footer{
+    display:flex !important;
+    justify-content:flex-end !important;
+
+    padding:0 34px 34px !important;
+}
+
+@keyframes modalVehicleIn{
+    from{
+        opacity:0;
+        transform:translateY(18px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+@media(max-width:650px){
+    .vehicle-info-grid{
+        grid-template-columns:1fr !important;
+    }
+
+    .vehicle-modal-header{
+        padding:26px !important;
+    }
+
+    .vehicle-modal-body{
+        padding:26px !important;
+    }
+
+    .vehicle-modal-header h2{
+        font-size:24px !important;
+    }
+}

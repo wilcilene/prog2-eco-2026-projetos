@@ -1,0 +1,297 @@
+/* ===========================================================
+   RaceHub v2.0
+   FORMS
+===========================================================*/
+
+
+.form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+}
+
+
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:24px;
+
+}
+
+
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+.form-group label{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:var(--text-secondary);
+
+}
+
+
+
+.input{
+
+    width:100%;
+
+    height:60px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:0 22px;
+
+    color:white;
+
+    font-size:15px;
+
+    transition:.30s;
+
+}
+
+
+
+.input::placeholder{
+
+    color:#777;
+
+}
+
+
+
+.input:hover{
+
+    border-color:#3A3A3A;
+
+}
+
+
+
+.input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+        0 0 0 4px rgba(213,0,28,.12);
+
+}
+
+
+
+select.input{
+
+    cursor:pointer;
+
+}
+
+
+
+textarea.input{
+
+    min-height:180px;
+
+    padding:20px;
+
+    resize:vertical;
+
+}
+
+
+
+.input-icon{
+
+    position:relative;
+
+}
+
+
+
+.input-icon i{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#888;
+
+    font-size:18px;
+
+}
+
+
+
+.input-icon input{
+
+    padding-left:52px;
+
+}
+
+
+
+.search{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:420px;
+
+}
+
+
+
+.search input{
+
+    width:100%;
+
+    height:54px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:999px;
+
+    padding-left:55px;
+
+    color:white;
+
+}
+
+
+
+.search i{
+
+    position:absolute;
+
+    left:22px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#888;
+
+}
+
+
+
+.checkbox{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+
+.checkbox input{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+
+
+.radio-group{
+
+    display:flex;
+
+    gap:25px;
+
+}
+
+
+
+.form-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:18px;
+
+    margin-top:10px;
+
+}
+
+
+
+.required{
+
+    color:var(--primary);
+
+}
+
+
+
+.form-card{
+
+    width:100%;
+
+    background:var(--gradient-card);
+
+    border:1px solid var(--glass-border);
+
+    border-radius:24px;
+
+    padding:40px;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.form-title{
+
+    font-size:28px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.form-subtitle{
+
+    color:var(--text-muted);
+
+    margin-bottom:35px;
+
+}

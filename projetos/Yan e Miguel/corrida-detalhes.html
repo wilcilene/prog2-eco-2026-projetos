@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaceHub | Detalhes da corrida</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Race Details</span>
+                </div>
+                <div class="divider"></div>
+                <nav class="menu" id="sidebarMenu"></nav>
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Detalhes completos do evento</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+            </header>
+
+            <section class="page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1 id="tituloCorridaDetalhes">Corrida</h1>
+                        <p id="subtituloCorridaDetalhes">Informações, inscritos e ranking da corrida.</p>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="window.location.href='corridas.html'">
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar para corridas
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-calendar-event"></i></div>
+                        <div class="stats-number" id="detalheData">-</div>
+                        <div class="stats-label">Data</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-clock"></i></div>
+                        <div class="stats-number" id="detalheHorario">-</div>
+                        <div class="stats-label">Horário</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-people"></i></div>
+                        <div class="stats-number" id="detalheInscritos">0/0</div>
+                        <div class="stats-label">Inscritos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-toggle-on"></i></div>
+                        <div class="stats-number" id="detalheStatus">-</div>
+                        <div class="stats-label">Status</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <section class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Inscritos</h2>
+                                <p style="margin-top:8px;">Pilotos e veículos confirmados.</p>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="listaInscritosDetalhes">
+                            <div class="alert alert-danger">Carregando inscritos...</div>
+                        </div>
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h2>Ranking da corrida</h2>
+                                <p style="margin-top:8px;">Tempos registrados neste evento.</p>
+                            </div>
+                        </div>
+                        <div class="panel-body" id="rankingCorridaDetalhes">
+                            <div class="alert alert-danger">Carregando ranking...</div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="js/corrida-detalhes.js"></script>
+</body>
+</html>

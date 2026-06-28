@@ -1,147 +1,304 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Agenda - RaceHub</title>
+    <title>RaceHub | Agenda</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <header>
+    <div class="app">
 
-        <div class="logo">
-            🏁 RaceHub
-        </div>
+        <aside class="sidebar">
 
-        <nav>
+            <div>
 
-            <a href="index.html">
-                Home
-            </a>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Client Experience Center</span>
+                </div>
 
-            <a href="cliente.html">
-                Dashboard
-            </a>
+                <div class="divider"></div>
 
-        </nav>
+                <nav class="menu">
+                    <a href="cliente.html">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        Dashboard
+                    </a>
 
-    </header>
+                    <a href="agenda.html" class="active">
+                        <i class="bi bi-calendar-plus"></i>
+                        Reservar pista
+                    </a>
 
-    <div class="hero">
+                    <a href="corridas.html">
+                        <i class="bi bi-flag"></i>
+                        Corridas
+                    </a>
 
-        <h1>Agenda da Pista</h1>
+                    <a href="relatorios.html">
+                        <i class="bi bi-bar-chart"></i>
+                        Resultados
+                    </a>
+                    
+                    <a href="perfil.html">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
 
-        <div class="agenda-box">
+            </div>
 
-            <h2>Selecionar Data</h2>
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
 
-            <input type="date" id="dataReserva">
+        </aside>
 
-            <h2>Selecionar Horário</h2>
+        <main class="main">
 
-            <select id="horario">
+            <header class="topbar">
 
-                <option>08:00</option>
-                <option>10:00</option>
-                <option>12:00</option>
-                <option>14:00</option>
-                <option>16:00</option>
-                <option>18:00</option>
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Agendamento de uso da pista</p>
+                </div>
 
-            </select>
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Cliente</strong>
+                        <p data-user-role>Cliente</p>
+                    </div>
 
-            <button class="btn-principal" onclick="reservarDataForm()">
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
 
-                Reservar
+            </header>
 
-            </button>
+            <section class="page">
 
-            <h3 id="resultadoAgenda"></h3>
+                <div class="page-header">
 
-            <div id="listaReservas"></div>
+                    <div class="page-title">
+                        <h1>Reservar pista</h1>
+                        <p>Escolha uma data e horário para agendar sua experiência no RaceHub.</p>
+                    </div>
 
-        </div>
+                    <a href="cliente.html" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar ao painel
+                    </a>
+
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalMinhasReservas">0</div>
+                        <div class="stats-label">Minhas reservas</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-arrow-up-right-circle"></i>
+                        </div>
+
+                        <div class="stats-number" id="minhasReservasFuturas">0</div>
+                        <div class="stats-label">Reservas futuras</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+
+                        <div class="stats-number" id="horariosOcupadosDia">0</div>
+                        <div class="stats-label">Horários ocupados no dia</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div class="stats-number">OK</div>
+                        <div class="stats-label">Reserva online</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2">
+
+                    <section class="form-card" id="formAgendaBox">
+
+                        <h2 class="form-title">Nova reserva</h2>
+
+                        <p class="form-subtitle">
+                            Informe a data e o horário desejado. O sistema mostrará os horários já ocupados para evitar conflitos.
+                        </p>
+
+                        <form class="form" onsubmit="criarReservaCliente(event)">
+
+                            <div class="form-group">
+                                <label for="dataAgenda">Data da reserva <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar"></i>
+                                    <input 
+                                        class="input" 
+                                        type="date" 
+                                        id="dataAgenda" 
+                                        required
+                                        onchange="atualizarDisponibilidadeDia()"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="horarioAgenda">Horário <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-clock"></i>
+                                    <input 
+                                        class="input" 
+                                        type="time" 
+                                        id="horarioAgenda" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div id="agendaMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-secondary" type="reset">
+                                    <i class="bi bi-x-circle"></i>
+                                    Limpar
+                                </button>
+
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-calendar-plus"></i>
+                                    Confirmar reserva
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Disponibilidade do dia</h2>
+                                <p class="widget-subtitle">Horários já reservados na data selecionada.</p>
+                            </div>
+
+                            <i class="bi bi-calendar-week" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="disponibilidadeDia">
+                            <div class="alert alert-warning">
+                                Selecione uma data para visualizar a disponibilidade.
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div class="grid grid-2" style="margin-top:35px;">
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Minhas próximas reservas</h2>
+                                <p class="widget-subtitle">Horários futuros vinculados à sua conta.</p>
+                            </div>
+
+                            <i class="bi bi-calendar-check" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="minhasProximasReservas">
+                            <div class="alert alert-warning">
+                                Carregando reservas...
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Regras da reserva</h2>
+                                <p class="widget-subtitle">Informações importantes antes de agendar.</p>
+                            </div>
+
+                            <i class="bi bi-info-circle" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="timeline">
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Horário único</h4>
+                                        <p>Evite reservar um horário que já aparece como ocupado na data selecionada.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Confirmação</h4>
+                                        <p>Após salvar, sua reserva aparecerá automaticamente no painel do cliente.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Organização</h4>
+                                        <p>Chegue com antecedência para preparação, briefing e liberação da pista.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <script src="database.js"></script>
+    <script src="script.js"></script>
 
-    <script>
-
-        async function reservarDataForm() {
-
-            const data =
-                document.getElementById("dataReserva").value;
-
-            const horario =
-                document.getElementById("horario").value;
-
-            if (data === "") {
-
-                alert("Selecione uma data");
-
-                return;
-            }
-
-            const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
-
-            try {
-                await criarReserva({
-                    usuario_id: usuarioLogado ? usuarioLogado.id : null,
-                    data,
-                    horario
-                });
-
-                document.getElementById("resultadoAgenda")
-                    .innerHTML = `✅ Reserva realizada para ${data} às ${horario}`;
-
-                await carregarReservas();
-
-            } catch (erro) {
-                alert(erro.message);
-            }
-        }
-
-        async function carregarReservas() {
-
-            const reservas = await obterReservas();
-
-            let html = "";
-
-            reservas.forEach(r => {
-
-                const dataFormatada = new Date(r.data).toLocaleDateString('pt-BR');
-
-                html += `
-
-        <div class="corrida-card">
-
-            <h3>📅 ${dataFormatada}</h3>
-
-            <p>Horário: ${r.horario}</p>
-
-        </div>
-
-        `;
-            });
-
-            document
-                .getElementById("listaReservas")
-                .innerHTML = html;
-        }
-
-        carregarReservas();
-
-    </script>
+    <script src="js/agenda.js"></script>
 
 </body>
-
 </html>

@@ -1,113 +1,346 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-    <title>Corridas - RaceHub</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Corridas</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
+    <div class="app">
 
-        <div class="logo">🏁 RaceHub</div>
+        <aside class="sidebar">
 
-        <nav>
-            <a href="index.html">Home</a>
-        </nav>
+            <div>
 
-    </header>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span id="sidebarSubtitle">Race Control Center</span>
+                </div>
 
-    <div class="hero">
+                <div class="divider"></div>
 
-        <h1>Gerenciamento de Corridas</h1>
+                <!-- Menu montado dinamicamente pelo js/corridas.js conforme o perfil logado -->
+                <nav class="menu" id="sidebarMenu"></nav>
 
-        <div class="corrida-container">
+            </div>
 
-            <input id="nomeCorrida" placeholder="Nome da Corrida">
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
 
-            <input id="dataCorrida" type="date">
+        </aside>
 
-            <button class="btn-principal" onclick="criarCorridaForm()">
+        <main class="main">
 
-                Criar Corrida
+            <header class="topbar">
 
-            </button>
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Calendário e gerenciamento de corridas</p>
+                </div>
 
-        </div>
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
 
-        <div id="listaCorridas"></div>
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1>Corridas</h1>
+                        <p>Consulte eventos, baterias e corridas cadastradas na pista.</p>
+                    </div>
+
+                    <button class="btn btn-primary" id="btnNovaCorrida" onclick="focarFormularioCorrida()">
+                        <i class="bi bi-plus-circle"></i>
+                        Nova corrida
+                    </button>
+
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-flag"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalCorridasPagina">0</div>
+                        <div class="stats-label">Corridas cadastradas</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+
+                        <div class="stats-number" id="corridasHojePagina">0</div>
+                        <div class="stats-label">Corridas hoje</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-arrow-up-right-circle"></i>
+                        </div>
+
+                        <div class="stats-number" id="corridasFuturasPagina">0</div>
+                        <div class="stats-label">Corridas futuras</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
+
+                        <div class="stats-number" id="proximaCorridaPagina">-</div>
+                        <div class="stats-label">Próxima corrida</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2" id="areaAdminCorridas">
+
+                    <section class="form-card" id="formCorridaBox">
+
+                       <h2 class="form-title" id="tituloFormCorrida">Cadastrar corrida</h2>
+
+                        <p class="form-subtitle">
+                            Registre uma nova corrida, evento ou bateria oficial no calendário da pista.
+                        </p>
+
+                        <form class="form" onsubmit="cadastrarCorrida(event)">
+
+                            <div class="form-group">
+                                <label for="nomeCorrida">Nome da corrida <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-flag"></i>
+                                    <input 
+                                        class="input" 
+                                        type="text" 
+                                        id="nomeCorrida" 
+                                        placeholder="Ex: Track Day Oficial" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label for="dataCorrida">Data <span class="required">*</span></label>
+
+                                    <div class="input-icon">
+                                        <i class="bi bi-calendar"></i>
+                                        <input 
+                                            class="input" 
+                                            type="date" 
+                                            id="dataCorrida" 
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="horarioCorrida">Horário <span class="required">*</span></label>
+
+                                    <div class="input-icon">
+                                        <i class="bi bi-clock"></i>
+                                        <input 
+                                            class="input" 
+                                            type="time" 
+                                            id="horarioCorrida" 
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Status e limite fazem parte da versão 3.0.
+                                 O status controla se a corrida aceita inscrições.
+                                 O limite impede que o evento passe da capacidade definida pelo admin. -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="statusCorrida">Status da corrida</label>
+                                    <div class="input-icon">
+                                        <i class="bi bi-toggle-on"></i>
+                                        <select class="input" id="statusCorrida">
+                                            <option value="aberta">Aberta para inscrições</option>
+                                            <option value="encerrada">Inscrições encerradas</option>
+                                            <option value="finalizada">Finalizada</option>
+                                            <option value="cancelada">Cancelada</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="limiteInscritosCorrida">Limite de inscritos</label>
+                                    <div class="input-icon">
+                                        <i class="bi bi-people"></i>
+                                        <input class="input" type="number" id="limiteInscritosCorrida" min="1" value="20" placeholder="Ex: 20">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="corridaMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-secondary" type="reset">
+                                    <i class="bi bi-x-circle"></i>
+                                    Limpar
+                                </button>
+
+                               <button 
+    class="btn btn-secondary" 
+    type="button" 
+    id="btnCancelarEdicaoCorrida" 
+    onclick="cancelarEdicaoCorrida()" 
+    style="display:none;"
+>
+    <i class="bi bi-arrow-counterclockwise"></i>
+    Cancelar edição
+</button>
+
+<button class="btn btn-primary" type="submit" id="btnSalvarCorrida">
+    <i class="bi bi-check-circle"></i>
+    <span id="textoSalvarCorrida">Cadastrar corrida</span>
+</button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Operação de pista</h2>
+                                <p class="widget-subtitle">Organização dos eventos cadastrados.</p>
+                            </div>
+
+                            <i class="bi bi-speedometer2" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="timeline">
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Planejamento</h4>
+                                        <p>Cadastre corridas futuras para organizar reservas, pilotos e resultados.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Controle</h4>
+                                        <p>As corridas cadastradas podem ser usadas nos tempos e relatórios.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Histórico</h4>
+                                        <p>Eventos antigos continuam disponíveis para consulta operacional.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <section class="panel" style="margin-top:35px;">
+
+                    <div class="panel-header flex-between">
+
+                        <div>
+                            <h2>Lista de corridas</h2>
+                            <p style="margin-top:8px;">Eventos cadastrados no calendário do RaceHub.</p>
+                        </div>
+
+                        <div class="search">
+                            <i class="bi bi-search"></i>
+                            <input 
+                                type="text" 
+                                id="buscaCorrida" 
+                                placeholder="Buscar corrida..." 
+                                oninput="filtrarCorridas()"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-container">
+
+                            <table class="table">
+
+                                <thead>
+                                    <tr>
+    <th>ID</th>
+    <th>Corrida</th>
+    <th>Data</th>
+    <th>Horário</th>
+    <th>Status</th>
+    <th>Inscritos</th>
+    <th>Ações</th>
+</tr>
+                                </thead>
+
+                                <tbody id="listaCorridas">
+                                    <tr>
+                                        <td colspan="7">Carregando corridas...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <script src="database.js"></script>
+    <script src="script.js"></script>
 
-    <script>
-
-        async function criarCorridaForm() {
-
-            const nome =
-                document.getElementById("nomeCorrida").value;
-
-            const data =
-                document.getElementById("dataCorrida").value;
-
-            if (nome === "") {
-
-                alert("Preencha o nome da corrida");
-
-                return;
-            }
-
-            try {
-                await criarCorrida({ nome, data });
-
-                await atualizarCorridas();
-
-                document.getElementById("nomeCorrida").value = "";
-                document.getElementById("dataCorrida").value = "";
-
-            } catch (erro) {
-                alert(erro.message);
-            }
-        }
-
-        async function atualizarCorridas() {
-
-            const corridas = await obterCorridas();
-
-            let html = "";
-
-            corridas.forEach(c => {
-
-                html += `
-
-        <div class="corrida-card">
-
-            <h2>${c.nome}</h2>
-
-            <p>📅 ${c.data ? new Date(c.data).toLocaleDateString('pt-BR') : 'Sem data'}</p>
-
-            <span class="status">
-
-                ${c.status}
-
-            </span>
-
-        </div>
-
-        `;
-            });
-
-            document.getElementById("listaCorridas")
-                .innerHTML = html;
-        }
-
-        atualizarCorridas();
-
-    </script>
+    <script src="js/corridas.js"></script>
 
 </body>
-
 </html>

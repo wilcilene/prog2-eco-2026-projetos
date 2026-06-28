@@ -1,38 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-    <title>Cliente - RaceHub</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Cliente</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="sidebar">
+    <div class="app">
 
-        <h2>🏁 RaceHub</h2>
+        <aside class="sidebar">
 
-        <a href="cliente.html">
-            Dashboard
-        </a>
+            <div>
 
-        <a href="agenda.html">
-            Agenda
-        </a>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Client Experience Center</span>
+                </div>
 
-        <a href="agenda.html">
-            Fazer Reserva
-        </a>
+                <div class="divider"></div>
+
+                <nav class="menu">
+                    <a href="cliente.html" class="active">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="agenda.html">
+                        <i class="bi bi-calendar-plus"></i>
+                        Reservar pista
+                    </a>
+
+                    <a href="corridas.html">
+                        <i class="bi bi-flag"></i>
+                        Corridas
+                    </a>
+
+                    <a href="relatorios.html">
+                        <i class="bi bi-bar-chart"></i>
+                        Resultados
+                    </a>
+
+                    <a href="perfil.html">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
+
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Central de reservas e experiência do cliente</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Cliente</strong>
+                        <p data-user-role>Cliente</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="dashboard">
+
+                    <div class="dashboard-header">
+
+                        <div class="dashboard-title">
+                            <h1>Minha área</h1>
+                            <p>Gerencie suas reservas, acompanhe corridas e veja sua experiência na pista.</p>
+                        </div>
+
+                        <a href="agenda.html" class="btn btn-primary">
+                            <i class="bi bi-calendar-plus"></i>
+                            Nova reserva
+                        </a>
+
+                    </div>
+
+                    <div class="dashboard-grid">
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+
+                            <div class="stats-number" id="totalReservasCliente">0</div>
+                            <div class="stats-label">Minhas reservas</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-clock"></i>
+                            </div>
+
+                            <div class="stats-number" id="proximaReservaCliente">-</div>
+                            <div class="stats-label">Próxima reserva</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-flag"></i>
+                            </div>
+
+                            <div class="stats-number" id="corridasDisponiveisCliente">0</div>
+                            <div class="stats-label">Corridas disponíveis</div>
+                        </div>
+
+                        <div class="stats-card">
+                            <div class="stats-icon">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+
+                            <div class="stats-number" id="reservasFuturasCliente">0</div>
+                            <div class="stats-label">Reservas futuras</div>
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-2">
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Minhas próximas reservas</h2>
+                                    <p class="widget-subtitle">Horários já agendados para uso da pista.</p>
+                                </div>
+
+                                <i class="bi bi-calendar-check" style="color:var(--primary);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="proximasReservasCliente">
+                                <div class="alert alert-warning">
+                                    Carregando reservas...
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Histórico de reservas</h2>
+                                    <p class="widget-subtitle">Últimos registros vinculados à sua conta.</p>
+                                </div>
+
+                                <i class="bi bi-clock-history" style="color:var(--gold);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="historicoReservasCliente">
+                                <div class="alert alert-warning">
+                                    Carregando histórico...
+                                </div>
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                    <div class="grid grid-2">
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Corridas futuras</h2>
+                                    <p class="widget-subtitle">Eventos cadastrados pela administração.</p>
+                                </div>
+
+                                <i class="bi bi-flag" style="color:var(--primary);font-size:26px;"></i>
+                            </div>
+
+                            <div class="widget-body" id="corridasFuturasCliente">
+                                <div class="alert alert-warning">
+                                    Carregando corridas...
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <section class="widget">
+
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Ações rápidas</h2>
+                                    <p class="widget-subtitle">Acesse rapidamente as principais funções.</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-2">
+
+                                <a href="agenda.html" class="card">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-calendar-plus" style="color:var(--primary);"></i>
+                                        Reservar
+                                    </h3>
+                                    <p class="card-text">Escolha data e horário para utilizar a pista.</p>
+                                </a>
+
+                                <a href="corridas.html" class="card">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-flag" style="color:var(--primary);"></i>
+                                        Corridas
+                                    </h3>
+                                    <p class="card-text">Visualize eventos e corridas cadastradas.</p>
+                                </a>
+
+                                <a href="relatorios.html" class="card">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-bar-chart" style="color:var(--primary);"></i>
+                                        Resultados
+                                    </h3>
+                                    <p class="card-text">Acompanhe rankings e resultados da pista.</p>
+                                </a>
+
+                                <a href="index.html" onclick="logout()" class="card">
+                                    <h3 class="card-title">
+                                        <i class="bi bi-box-arrow-left" style="color:var(--primary);"></i>
+                                        Encerrar
+                                    </h3>
+                                    <p class="card-text">Finalizar sessão com segurança.</p>
+                                </a>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <div class="main">
+    <script src="script.js"></script>
 
-        <h1>Área do Cliente</h1>
-
-    </div>
+    <script src="js/cliente.js"></script>
 
 </body>
-
 </html>
