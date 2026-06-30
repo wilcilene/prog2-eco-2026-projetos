@@ -1,28 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <link rel="stylesheet" href="auth.css">
     <meta charset="UTF-8">
     <title>Registro</title>
 </head>
 <body>
 
-    <h1>Criar Conta</h1>
+    <div class="auth-container">
 
-    <input type="text" id="nome" placeholder="Nome">
+        <div class="auth-card">
 
-    <br><br>
+            <h1>⚔ RPG Manager ⚔</h1>
 
-    <input type="email" id="email" placeholder="Email">
+            <h2>Criar Conta</h2>
 
-    <br><br>
+            <input
+                type="text"
+                id="nome"
+                placeholder="Nome">
 
-    <input type="password" id="senha" placeholder="Senha">
+            <input
+                type="email"
+                id="email"
+                placeholder="Email">
 
-    <br><br>
+            <input
+                type="password"
+                id="senha"
+                placeholder="Senha">
 
-    <button onclick="registrar()">
-        Registrar
-    </button>
+            <button onclick="registrar()">
+                Registrar
+            </button>
+
+            <p>
+
+                Já possui conta?
+
+                <a href="login.html">
+                    Fazer login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
 
     <script src="registro.js"></script>
 

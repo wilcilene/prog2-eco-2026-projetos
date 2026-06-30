@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 const db = mysql.createConnection({
     host: "localhost",
-    port: 3306,
+    port: 3307,
     user: "rpg_user",
     password: "rpg123",
     database: "rpg_manager"
@@ -233,6 +233,245 @@ app.post("/login", (req, res) => {
     );
 
 });
+
+app.get(
+    "/personagens/:campanhaId",
+    autenticarToken,
+    (req, res) => {
+
+    const campanhaId = req.params.campanhaId;
+
+    db.query(
+        "SELECT * FROM personagens WHERE campanha_id = ?",
+        [campanhaId],
+        (erro, resultado) => {
+
+            if (erro) {
+                return res.status(500).json(erro);
+            }
+
+            res.json(resultado);
+        }
+    );
+
+});
+app.post(
+    "/personagens",
+    autenticarToken,
+    (req, res) => {
+console.log(req.body);
+    const {
+        campanha_id,
+        jogador,
+        personagem,
+        idade,
+        altura,
+        genero,
+        sexualidade,
+        raca,
+        classe,
+        nivel,
+        lore,
+        imagem,
+        atributos
+    } = req.body;
+const idadeFinal =
+    idade === ""
+        ? null
+        : Number(idade);
+
+const nivelFinal =
+    nivel === ""
+        ? null
+        : Number(nivel);
+    db.query(
+        `INSERT INTO personagens
+        (
+            campanha_id,
+            jogador,
+            personagem,
+            idade,
+            altura,
+            genero,
+            sexualidade,
+            raca,
+            classe,
+            nivel,
+            lore,
+            imagem,
+            forca,
+            destreza,
+            constituicao,
+            inteligencia,
+            sabedoria,
+            carisma
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            campanha_id,
+            jogador,
+            personagem,
+            idadeFinal,
+            altura,
+            genero,
+            sexualidade,
+            raca,
+            classe,
+            nivelFinal,
+            lore,
+            imagem,
+            atributos.forca,
+            atributos.destreza,
+            atributos.constituicao,
+            atributos.inteligencia,
+            atributos.sabedoria,
+            atributos.carisma
+        ],
+        (erro, resultado) => {
+
+          if (erro) {
+
+    console.log("ERRO AO SALVAR PERSONAGEM:");
+    console.log(erro);
+
+    return res.status(500).json({
+        erro: erro.message
+    });
+}
+
+            res.json({
+                mensagem: "Personagem salvo!",
+                id: resultado.insertId
+            });
+
+        }
+    );
+
+});
+app.delete(
+    "/personagens/:id",
+    autenticarToken,
+    (req, res) => {
+
+        const id = req.params.id;
+
+        db.query(
+            "DELETE FROM personagens WHERE id = ?",
+            [id],
+            (erro) => {
+
+                if (erro) {
+                    return res.status(500).json(erro);
+                }
+
+                res.json({
+                    mensagem: "Personagem excluído!"
+                });
+
+            }
+        );
+
+    }
+);app.put(
+    "/personagens/:id",
+    autenticarToken,
+    (req, res) => {
+
+        const id = req.params.id;
+
+        const {
+            jogador,
+            personagem,
+            idade,
+            altura,
+            genero,
+            sexualidade,
+            raca,
+            classe,
+            nivel,
+            lore,
+            imagem,
+            atributos
+        } = req.body;
+
+        const idadeFinal =
+            idade === ""
+                ? null
+                : Number(idade);
+
+        const nivelFinal =
+            nivel === ""
+                ? null
+                : Number(nivel);
+
+        db.query(
+            `UPDATE personagens SET
+
+                jogador = ?,
+                personagem = ?,
+                idade = ?,
+                altura = ?,
+                genero = ?,
+                sexualidade = ?,
+                raca = ?,
+                classe = ?,
+                nivel = ?,
+                lore = ?,
+                imagem = ?,
+
+                forca = ?,
+                destreza = ?,
+                constituicao = ?,
+                inteligencia = ?,
+                sabedoria = ?,
+                carisma = ?
+
+            WHERE id = ?`,
+
+            [
+                jogador,
+                personagem,
+
+                idadeFinal,
+                altura,
+                genero,
+                sexualidade,
+
+                raca,
+                classe,
+
+                nivelFinal,
+
+                lore,
+                imagem,
+
+                Number(atributos.forca),
+                Number(atributos.destreza),
+                Number(atributos.constituicao),
+                Number(atributos.inteligencia),
+                Number(atributos.sabedoria),
+                Number(atributos.carisma),
+
+                id
+            ],
+
+            (erro) => {
+
+                if (erro) {
+                    return res.status(500).json(erro);
+                }
+
+                res.json({
+                    mensagem: "Personagem atualizado!"
+                });
+
+            }
+        );
+
+    }
+);
+
+
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
 });

@@ -1,18 +1,15 @@
+const campanhaId =
+    localStorage.getItem("campanhaAtual");
+
 let campanha = {
-    id: localStorage.getItem("campanhaAtual"),
+
+    id: campanhaId,
+
     nome: "Campanha",
+
     personagens: []
+
 };
-
-const personagensSalvos =
-    JSON.parse(
-        localStorage.getItem(
-            `personagens_${campanha.id}`
-        )
-    ) || [];
-
-campanha.personagens =
-    personagensSalvos;
     
 
 let imagemBase64 = "";
@@ -24,14 +21,51 @@ document.getElementById(
 
 let personagemEditando = null;
 
-function salvarTudo() {
+async function carregarPersonagens() {
 
-    localStorage.setItem(
-        `personagens_${campanha.id}`,
-        JSON.stringify(
-            campanha.personagens
-        )
-    );
+    const token =
+        localStorage.getItem("token");
+
+    try {
+
+        const resposta = await fetch(
+            `http://localhost:3000/personagens/${campanhaId}`,
+            {
+                headers: {
+                    Authorization: token
+                }
+            }
+        );
+
+        const dados =
+            await resposta.json();
+
+        campanha.personagens =
+            dados.map(p => ({
+
+                ...p,
+
+                atributos: {
+
+                    forca: p.forca,
+                    destreza: p.destreza,
+                    constituicao: p.constituicao,
+                    inteligencia: p.inteligencia,
+                    sabedoria: p.sabedoria,
+                    carisma: p.carisma
+
+                }
+
+            }));
+
+        renderizarPersonagens();
+
+    }
+    catch (erro) {
+
+        console.log(erro);
+
+    }
 
 }
 
@@ -57,13 +91,12 @@ document
     reader.readAsDataURL(arquivo);
 
 });
-
-function criarPersonagem() {
-    
+async function criarPersonagem() {
 
     const personagem = {
 
-            imagem: imagemBase64,
+        imagem: imagemBase64,
+
         jogador: document.getElementById("jogador").value,
 
         personagem: document.getElementById("personagem").value,
@@ -100,26 +133,84 @@ function criarPersonagem() {
         }
     };
 
-    // EDITANDO
-    if (personagemEditando !== null) {
+    const token =
+    localStorage.getItem("token");
 
-        campanha.personagens[personagemEditando] = personagem;
+try {
+
+    if (personagemEditando) {
+
+        // EDITAR PERSONAGEM
+
+        await fetch(
+            `http://localhost:3000/personagens/${personagemEditando}`,
+            {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    Authorization: token
+
+                },
+
+                body: JSON.stringify(personagem)
+
+            }
+        );
 
         personagemEditando = null;
 
     } else {
 
-        // CRIANDO
-        campanha.personagens.push(personagem);
-    }
+        // CRIAR PERSONAGEM
 
-    salvarTudo();
+        await fetch(
+            "http://localhost:3000/personagens",
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    Authorization: token
+
+                },
+
+                body: JSON.stringify({
+
+                    campanha_id: campanhaId,
+
+                    ...personagem
+
+                })
+
+            }
+        );
+
+    }
 
     limparCampos();
 
     alterarBotaoModoCriacao();
 
-    renderizarPersonagens();
+    carregarPersonagens();
+
+}
+catch (erro) {
+
+    console.log(
+        "Erro ao salvar personagem:",
+        erro
+    );
+
+}
 }
 
 function editarPersonagem(index) {
@@ -164,7 +255,7 @@ function editarPersonagem(index) {
     document.getElementById("carisma").value =
         p.atributos.carisma;
 
-    personagemEditando = index;
+    personagemEditando = p.id;
 
     alterarBotaoModoEdicao();
 
@@ -174,21 +265,47 @@ function editarPersonagem(index) {
     });
 }
 
-function deletarPersonagem(index) {
+async function deletarPersonagem(index) {
 
-    const confirmar = confirm(
-        "Deseja realmente excluir?"
-    );
+    const confirmar =
+        confirm(
+            "Deseja realmente excluir?"
+        );
 
     if (!confirmar) return;
 
-    campanha.personagens.splice(index, 1);
+    const token =
+        localStorage.getItem("token");
 
-    salvarTudo();
+    const id =
+        campanha.personagens[index].id;
 
-    renderizarPersonagens();
+    try {
+
+        await fetch(
+            `http://localhost:3000/personagens/${id}`,
+            {
+
+                method: "DELETE",
+
+                headers: {
+                    Authorization: token
+                }
+
+            }
+        );
+
+        carregarPersonagens();
+
+    }
+
+    catch (erro) {
+
+        console.log(erro);
+
+    }
+
 }
-
 function limparCampos() {
 
     document.querySelectorAll("input, textarea")
@@ -245,17 +362,17 @@ function renderizarPersonagens() {
 
                 <hr>
 
-                <p> FOR: ${p.atributos.forca}</p>
+                <p> FOR: ${p.forca}</p>
 
-                <p> DES: ${p.atributos.destreza}</p>
+                <p> DES: ${p.destreza}</p>
 
-                <p> CON: ${p.atributos.constituicao}</p>
+                <p> CON: ${p.constituicao}</p>
 
-                <p> INT: ${p.atributos.inteligencia}</p>
+                <p> INT: ${p.inteligencia}</p>
 
-                <p> SAB: ${p.atributos.sabedoria}</p>
+                <p> SAB: ${p.sabedoria}</p>
 
-                <p> CAR: ${p.atributos.carisma}</p>
+                <p> CAR: ${p.carisma}</p>
 
                 <div class="acoes">
 
@@ -276,7 +393,7 @@ function renderizarPersonagens() {
     });
 }
 
-renderizarPersonagens();
+carregarPersonagens();
 function rolarDado(lados) {
 
     const resultado = Math.floor(Math.random() * lados) + 1;

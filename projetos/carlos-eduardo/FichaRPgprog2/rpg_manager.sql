@@ -52,3 +52,5 @@ CREATE TABLE personagens (
 SHOW TABLES;
 DESCRIBE campanhas;
 SELECT * FROM usuarios;
+DESCRIBE personagens;
+SELECT * FROM personagens;
