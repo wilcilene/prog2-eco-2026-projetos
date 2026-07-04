@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/cadastro.css">
+    <link rel="stylesheet" href="css/MediaQuery.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Zerion</title>
+</head>
+<body>
+
+    <div class="galaxy"></div>
+    <div class="stars"></div>
+
+    <div class="stars stars-far"></div>
+    <div class="stars stars-mid"></div>
+    <div class="stars stars-near"></div>
+
+    <main>
+
+        <div id="logo">
+            <a href="index.html"><img src="./img/LogoParaMobile.png" alt=""></a>
+            <h1>Compartilhe seu universo.</h1>
+        </div>
+
+        
+
+        <section id="login">
+
+            <h1>Cadastro</h1>
+            <h2>Entre na Zerion e comece sua jornada no universo digital.</h2>
+
+            <form id="formCadastro" autocomplete="on">
+
+                <div class="campo">
+                    <label for="inome">Nome</label>
+                    <input type="text" name="nome" id="inome" placeholder="Seu nome" maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="inum">Telefone</label>
+                    <input type="tel" name="telefone" id="itelefone" placeholder="Número de celular" required>
+                </div>
+
+                <div class="campo">
+                    <label for="iusuario">Usuário</label>
+                    <input type="text" name="usuario" id="iusuario" placeholder="@usuario" maxlength="20" required>
+                </div>
+
+                <div class="campo">
+                    <label for="iemail">Email</label>
+                    <input type="email" name="email" id="iemail" placeholder="Seu E-mail" required maxlength="100">
+                </div>
+
+                <div class="campo">
+                    <p>Gênero</p>
+                    <select name="Sexo" id="igenero" required>
+                        <option value="">Selecione</option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                    <option value="other">Outro</option>
+                    <option value="not-say">Prefiro não informar</option>
+                    </select>
+                </div>
+
+
+                <div class="campo">
+                    <label for="isenha">Senha</label>
+                    <input type="password" name="senha" id="isenha" placeholder="Sua senha" minlength="7" maxlength="50" required>
+                </div>
+
+                <div class="termos">
+                    <input type="checkbox" id="termos" required>
+
+                    <label for="termos">
+                        Eu concordo com os 
+                        <a href="./termos.html">Termos de Uso</a> 
+                        e a 
+                        <a href="./priv.html">Política de Privacidade</a>.
+                    </label>
+                </div>
+
+                <button type="submit">Cadastrar</button>
+
+            </form>
+
+        </section>
+        
+    </main>
+
+    <script type="module" src="js/cadastro.js"></script>
+    <script src="https://unpkg.com/imask"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/ae3ae6f5a4.js" crossorigin="anonymous"></script>
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+    <div class="layout-perfil-desktop">
+
+        <main>
+
+            <div class="perfil-cover"></div>
+            
+                <div class="perfil-header-topo">
+                    <button id="btn-voltar-perfil" style="display:none;" title="Voltar">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+
+            <div class="perfil-header">
+
+                <div class="acoes-perfil">
+                    <button id="btnSeguir" type="button" style="display:none;">Seguir</button>
+                    <button id="btnMensagem" type="button" style="display:none;">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+
+                <div class="Avatar">
+                    <input type="file" id="input-imagem" accept="image/*" hidden>
+                    <button type="button" class="SemNada" id="btn_fotoperfil">
+                        <div class="FotoPerfil" id="foto-perfil">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="UsuarioInfos">
+                    <div class="DataUsuario">
+                        <p id="username-perfil">Carregando...</p>
+                        <p id="nome-perfil" class="nome-real"></p>
+                    </div>
+
+                    <div class="FFP">
+                        <div id="contagem-seguindo">
+                            <span class="numero">0</span>
+                            Seguindo
+                        </div>
+                        <div id="contagem-seguidores">
+                            <span class="numero">0</span>
+                            Seguidores
+                        </div>
+                        <div id="contagem-posts">
+                            <span class="numero">0</span>
+                            Posts
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <nav class="NavPerfil">
+                <div class="OpcoesNav">
+                    <button class="SemNada tab-btn ativa" data-tab="posts">Posts</button>
+                </div>
+                <div class="OpcoesNav">
+                    <button class="SemNada tab-btn" data-tab="comentarios">Comentários</button>
+                </div>
+                <div class="OpcoesNav">
+                    <button class="SemNada tab-btn" data-tab="likes">Likes</button>
+                </div>
+            </nav>
+
+            <ul class="publicacoes" id="lista-posts"></ul>
+
+        </main>
+
+        <aside class="sidebar-perfil">
+
+            <div class="sidebar-perfil-card">
+                <h3>Sobre</h3>
+                <div class="sidebar-perfil-info">
+                    <div class="sidebar-perfil-linha">
+                        <i class="fa-solid fa-satellite"></i>
+                        <span id="sidebar-username">—</span>
+                    </div>
+                    <div class="sidebar-perfil-linha">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span id="sidebar-criado">—</span>
+                    </div>
+                    <div class="sidebar-perfil-linha">
+                        <i class="fa-solid fa-users"></i>
+                        <span id="sidebar-contagem">0 seguidores · 0 seguindo</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <footer>
+        <nav id="navegacao">
+            <ul>
+                <li><a href="feed.html"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="notificacoes.html"><i class="fa-solid fa-bell"></i></a></li>
+                <li><a href="mensagens.html"><i class="fa-solid fa-message"></i></a></li>
+                <li><a href="busca.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user-astronaut" style="color:#00f2fe;"></i></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="js/perfil.js"></script>
+</body>
+</html>

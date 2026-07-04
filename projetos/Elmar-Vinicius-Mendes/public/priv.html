@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+            font-family: "Zen Dots", sans-serif;
+            font-weight: normal;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100dvh;
+
+            background-image: url(img/Background.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            width: 90%;
+            max-width: 600px;
+
+            position: relative;
+            display: flex;
+            flex-flow: column wrap;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        section {
+            background: linear-gradient(to bottom, #3753a6c8 40%, #123859);
+            border-radius: 10px;
+
+            padding: 20px;
+            color: white;
+
+            box-shadow: 0px 0px 46px 7px black;
+
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .conteudo {
+            font-size: 11px;
+            line-height: 1.6;
+
+            max-height: 500px;
+            overflow-y: auto;
+
+            padding-right: 10px;
+        }
+
+        .bloco {
+            margin-bottom: 20px;
+        }
+
+        .titulo {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .texto {
+            opacity: 0.85;
+        }
+
+        /*Isso aqui resolve a rolagem vertical do safari*/
+        .galaxy {
+            position: fixed;
+            inset: 0;
+
+            background-image: url("Background.jpg");
+            background-size: cover;
+            background-position: center;
+
+            z-index: 0;
+            transform: scale(1.05);
+        }
+
+        #logo{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        #logo h1 {
+            margin-top: 15px;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+
+            pointer-events: none;
+        }
+
+        #logo img{
+            margin-top: 0px;
+            width: 200px;
+            height: auto;
+            display: block;
+
+            transition: filter 1s ease;
+            cursor: default;
+        }
+
+        #logo:hover img {
+        filter: drop-shadow(0 0 15px rgb(255, 255, 255));
+        cursor: pointer;
+        }   
+
+    </style>
+</head>
+
+<body>
+
+    <div class="galaxy"></div>
+
+    <main>
+
+        <div id="logo">
+        <a href="index.html"><img src="img/LogoParaMobile.png" alt=""></a>
+        <h1>Compartilhe seu universo.</h1>
+        </div>
+
+        <section>
+
+            <h1>Política de Privacidade — Zerion</h1>
+
+            <div class="conteudo">
+
+                <div class="bloco">
+                    <div class="titulo">Última atualização</div>
+                    <div class="texto">17/05/2026</div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">1. Coleta de dados</div>
+                    <div class="texto">
+                        A Zerion pode coletar dados fornecidos voluntariamente pelo usuário,
+                        como nome, e-mail e informações inseridas durante o cadastro.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">2. Finalidade do uso</div>
+                    <div class="texto">
+                        Os dados coletados são utilizados exclusivamente para simulação de funcionalidades
+                        dentro do ambiente acadêmico do sistema.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">3. Armazenamento</div>
+                    <div class="texto">
+                        Por se tratar de um projeto acadêmico, não há garantia de armazenamento permanente,
+                        podendo os dados ser resetados ou removidos a qualquer momento.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">4. Compartilhamento</div>
+                    <div class="texto">
+                        Nenhuma informação é compartilhada com terceiros ou serviços externos,
+                        uma vez que o sistema não possui integração com plataformas reais.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">5. Segurança</div>
+                    <div class="texto">
+                        Não há garantia de segurança absoluta dos dados, dado o caráter experimental e educacional do projeto.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">6. Observação final</div>
+                    <div class="texto">
+                        Este sistema é uma simulação acadêmica sem caráter comercial ou operacional real.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>

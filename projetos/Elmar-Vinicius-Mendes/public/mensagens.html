@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens — Zerion</title>
+    <link rel="stylesheet" href="css/mensagens.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/ae3ae6f5a4.js" crossorigin="anonymous"></script>
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+    <header>
+        <span class="pagina-titulo">Mensagens</span>
+    </header>
+
+    <div class="layout-desktop layout-secundaria">
+
+        <aside class="sidebar-esquerda">
+            <div class="sidebar-logo">
+                <a href="feed.html"><img src="img/LogoParaMobile.png" alt="Zerion"></a>
+            </div>
+            <nav class="nav-lateral">
+                <a href="feed.html"><i class="fa-solid fa-house"></i><span class="label-nav">Início</span></a>
+                <a href="busca.html"><i class="fa-solid fa-magnifying-glass"></i><span class="label-nav">Explorar</span></a>
+                <a href="notificacoes.html"><i class="fa-solid fa-bell"></i><span class="label-nav">Notificações</span></a>
+                <a href="mensagens.html" class="ativo"><i class="fa-solid fa-message"></i><span class="label-nav">Mensagens</span></a>
+                <a href="perfil.html"><i class="fa-solid fa-user-astronaut"></i><span class="label-nav">Perfil</span></a>
+            </nav>
+            <button class="btn-novo-post btn-logout" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </button>
+        </aside>
+
+        <main>
+            <div class="mensagens-header-desktop">
+                <span class="pagina-titulo-desktop">Mensagens</span>
+            </div>
+
+            <section id="lista-conversas">
+                <ul class="conversas"></ul>
+            </section>
+
+            <section id="tela-chat">
+                <div class="chat-header">
+                    <button class="btn-voltar" id="btn-voltar">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div class="chat-avatar" id="chat-avatar"></div>
+                    <span class="chat-nome" id="chat-nome-usuario"></span>
+                </div>
+                <ul class="chat-mensagens" id="chat-mensagens"></ul>
+                <div class="chat-input-area">
+                    <input type="text" id="input-mensagem" placeholder="Mensagem..." autocomplete="off">
+                    <button class="btn-enviar" id="btn-enviar">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar-direita sidebar-direita-vazia"></aside>
+
+    </div>
+
+    <footer>
+        <nav id="navegacao">
+            <ul>
+                <li><a href="feed.html"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="notificacoes.html"><i class="fa-solid fa-bell"></i></a></li>
+                <li><a href="mensagens.html"><i class="fa-solid fa-message" style="color:#00f2fe;"></i></a></li>
+                <li><a href="busca.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user-astronaut"></i></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="js/mensagens.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem("usuario");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

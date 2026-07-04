@@ -1,4 +1,5 @@
 # [Zerion] – Trio
+![Logo-Zerion](/public/img/img-README/LogoReadMe.png)
 
 ## Integrantes
 |           Nome              | Matrícula  |                        GitHub                              |
@@ -7,10 +8,13 @@
 | João Victor de Souza Mendes | 2024000734 | [@JoaoVictorSMendes](https://github.com/JoaoVictorSMendes) |
 | Vinicius dos Santos Doneli  | 2022002382 | [@Donelli0](https://github.com/Donelli0)                   |
 
-
 ## Descrição do projeto
 
 > O projeto consiste na criação de uma rede social chamada "Zerion", Onde o usuário consegue criar uma conta, ver postagens em um feed, fazer comentários e dar curtidas nas postagens, além de poder seguir ou bloquear outros usuários. A rede social também conta com a parte do administrador que consegue excluir postagens e contas de usuários se alguma política for violada.
+
+
+## Diagrama de Classes
+![Diagrama-Classe](/public/img/img-README/DiagramaDeClasses.png)
 
 ---
 
@@ -45,9 +49,13 @@ npm start
 ## Estrutura de pastas
 
 ```
+logs/                  ← Registros do que foi feito no dia
+public/                
+  ├──css               ← Estilização das páginas
+  ├──img               ← Imagens do projeto
+  ├──js                ← JavaScript do frontend
+  ├──index.html        ← Ponto de Entrada
 src/
-  ├── index.html        ← ponto de entrada
-  ├── css/
   ├── js/
   │   ├── model/          ← classes de domínio
   │   ├── service/        ← regras de negócio
@@ -64,8 +72,8 @@ src/
 |---------|----------------------|------|--------|
 | E1      | Definição do projeto |06.04 |   ✅   |
 | E2      | Modelagem            |13.04 |   ✅   |
-| E3      | Backend + BD         | —    |   🔄   |
-| E4      | Interface integrada  | —    |   ⏳   |
-| E5      | Projeto final        | —    |   ⏳   |
+| E3      | Backend + BD         |15.06 |   ✅   |
+| E4      | Interface integrada  |19.06 |   ✅   |
+| E5      | Projeto final        |02.07 |   ✅   |
 
 > ⏳ Pendente | ✅ Concluído | 🔄 Em andamento

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+            font-family: "Zen Dots", sans-serif;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            background-color: black;
+
+            background-image: url(img/Background.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        main {
+            width: 90%;
+            max-width: 600px;
+
+            position: relative;
+
+            display: flex;
+            flex-flow: column wrap;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        section {
+            background: linear-gradient(to bottom, #3753a6c8 40%, #123859);
+            border-radius: 10px;
+
+            margin-bottom: 50px;
+
+            padding: 20px;
+            color: white;
+
+            box-shadow: 0px 0px 46px 7px black;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .conteudo {
+            font-size: 11px;
+            line-height: 1.6;
+
+            max-height: 500px;
+            overflow-y: auto;
+
+            padding-right: 10px;
+        }
+
+        .bloco {
+            margin-bottom: 20px;
+        }
+
+        .titulo {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .texto {
+            opacity: 0.85;
+        }
+
+        /*Isso aqui resolve a rolagem vertical do safari*/
+        .galaxy {
+            position: fixed;
+            inset: 0;
+
+            background-image: url("Background.jpg");
+            background-size: cover;
+            background-position: center;
+
+            z-index: 0;
+            transform: scale(1.05);
+        }
+
+        #logo{
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        #logo h1 {
+            margin-top: 15px;
+            margin-bottom: 50px;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+
+            pointer-events: none;
+        }
+
+        #logo img{
+            margin-top: 0px;
+            width: 200px;
+            height: auto;
+            display: block;
+
+            transition: filter 1s ease;
+            cursor: default;
+        }
+
+        #logo:hover img {
+        filter: drop-shadow(0 0 15px rgb(255, 255, 255));
+        cursor: pointer;
+        }   
+
+    </style>
+</head>
+
+<body>
+
+    <div class="galaxy"></div>
+
+    <main>
+
+        <div id="logo">
+        <a href="index.html"><img src="img/LogoParaMobile.png" alt=""></a>
+        <h1>Compartilhe seu universo.</h1>
+        </div>
+
+        <section>
+
+            <h1>Termos de Uso — Zerion</h1>
+
+            <div class="conteudo">
+
+                <div class="bloco">
+                    <div class="titulo">Última atualização</div>
+                    <div class="texto">17/05/2026</div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">1. Natureza do projeto</div>
+                    <div class="texto">
+                        A Zerion é uma aplicação desenvolvida com fins estritamente acadêmicos e demonstrativos,
+                        não constituindo serviço comercial, rede social real ou sistema em produção.
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">2. Uso da plataforma</div>
+                    <div class="texto">
+                        O usuário compromete-se a utilizar esta aplicação de forma adequada, compreendendo que:
+                        <br><br>
+                        • Os dados inseridos não possuem garantia de persistência ou integridade<br>
+                        • O sistema pode conter falhas ou comportamentos inesperados<br>
+                        • Não há garantia de disponibilidade contínua
+                    </div>
+                </div>
+
+                <div class="bloco">
+                    <div class="titulo">3. Responsabilidade</div>
+                    <div class="texto">
+                        O desenvolvedor não se responsabiliza por quaisquer danos diretos ou indiretos decorrentes do uso,
+                        visto que este sistema possui finalidade exclusivamente educacional.
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</body>
+</html>
