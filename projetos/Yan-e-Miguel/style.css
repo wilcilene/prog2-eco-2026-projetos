@@ -1,0 +1,20 @@
+/* ===========================================================
+   RaceHub v2.0
+   MAIN STYLESHEET
+===========================================================*/
+
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+@import url("./css/reset.css");
+@import url("./css/variables.css");
+@import url("./css/layout.css");
+@import url("./css/components.css");
+@import url("./css/forms.css");
+@import url("./css/tables.css");
+@import url("./css/dashboard.css");
+@import url("./css/auth.css");
+@import url("./css/animations.css");
+@import url("./css/responsive.css");
+@import url("./css/final-ui.css");
+@import url("./css/theme-login-black.css");

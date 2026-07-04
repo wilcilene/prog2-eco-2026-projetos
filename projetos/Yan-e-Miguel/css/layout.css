@@ -1,0 +1,602 @@
+/* ===========================================================
+   RaceHub v2.0
+   LAYOUT
+===========================================================*/
+
+
+/* =============================
+        BODY
+=============================*/
+
+body{
+
+    background:var(--background);
+
+    color:var(--text);
+
+    font-family:var(--font);
+
+    min-height:100vh;
+
+}
+
+
+/* =============================
+        BACKGROUND
+=============================*/
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(circle at top right,
+        rgba(213,0,28,.12),
+        transparent 35%),
+
+        radial-gradient(circle at bottom left,
+        rgba(201,162,39,.08),
+        transparent 30%),
+
+        linear-gradient(
+            180deg,
+            #0B0B0B,
+            #090909
+        );
+
+    z-index:-2;
+
+}
+
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+
+    linear-gradient(
+        rgba(255,255,255,.015) 1px,
+        transparent 1px),
+
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,.015) 1px,
+        transparent 1px);
+
+    background-size:45px 45px;
+
+    opacity:.35;
+
+    z-index:-1;
+
+}
+
+
+
+/* =============================
+        CONTAINER
+=============================*/
+
+.container{
+
+    width:min(92%, var(--container));
+
+    margin:auto;
+
+}
+
+
+
+/* =============================
+        APP
+=============================*/
+
+.app{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+
+
+/* =============================
+        MAIN
+=============================*/
+
+.main{
+
+    flex:1;
+
+    margin-left:var(--sidebar-width);
+
+    min-height:100vh;
+
+}
+
+
+
+/* =============================
+        SIDEBAR
+=============================*/
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:var(--sidebar-width);
+
+    height:100vh;
+
+    background:
+
+        rgba(18,18,18,.92);
+
+    backdrop-filter:blur(18px);
+
+    border-right:
+
+        1px solid var(--border);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    padding:30px;
+
+    z-index:var(--z-sidebar);
+
+}
+
+
+
+/* =============================
+        LOGO
+=============================*/
+
+.logo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.logo h1{
+
+    font-size:34px;
+
+    color:var(--primary);
+
+    letter-spacing:-1px;
+
+}
+
+.logo span{
+
+    color:var(--text-muted);
+
+    font-size:14px;
+
+}
+
+
+
+/* =============================
+        MENU
+=============================*/
+
+.menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    color:var(--text-secondary);
+
+    transition:var(--transition);
+
+}
+
+
+
+.menu a:hover{
+
+    background:var(--glass);
+
+    color:white;
+
+    transform:translateX(5px);
+
+}
+
+
+
+.menu .active{
+
+    background:var(--gradient-primary);
+
+    color:white;
+
+    box-shadow:var(--shadow-red);
+
+}
+
+
+
+/* =============================
+        TOPBAR
+=============================*/
+
+.topbar{
+
+    height:var(--header-height);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 45px;
+
+    border-bottom:
+
+        1px solid var(--border);
+
+    backdrop-filter:blur(20px);
+
+    background:rgba(15,15,15,.6);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+
+
+/* =============================
+        PAGE
+=============================*/
+
+.page{
+
+    padding:45px;
+
+}
+
+
+
+/* =============================
+        PAGE HEADER
+=============================*/
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+
+}
+
+
+
+.page-title{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+
+.page-title h1{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+
+
+.page-title p{
+
+    color:var(--text-muted);
+
+}
+
+
+
+/* =============================
+        GRID
+=============================*/
+
+.grid{
+
+    display:grid;
+
+    gap:30px;
+
+}
+
+
+
+.grid-2{
+
+    grid-template-columns:
+
+    repeat(2,1fr);
+
+}
+
+
+
+.grid-3{
+
+    grid-template-columns:
+
+    repeat(3,1fr);
+
+}
+
+
+
+.grid-4{
+
+    grid-template-columns:
+
+    repeat(4,1fr);
+
+}
+
+
+
+/* =============================
+        PANEL
+=============================*/
+
+.panel{
+
+    background:
+
+        var(--gradient-card);
+
+    border:
+
+        1px solid var(--glass-border);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.panel-header{
+
+    padding:28px 35px;
+
+    border-bottom:
+
+        1px solid var(--border);
+
+}
+
+
+
+.panel-header h2{
+
+    font-size:24px;
+
+}
+
+
+
+.panel-body{
+
+    padding:35px;
+
+}
+
+
+
+/* =============================
+        FLEX
+=============================*/
+
+.flex{
+
+    display:flex;
+
+}
+
+
+
+.flex-between{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+
+.flex-center{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+
+
+/* =============================
+        HERO
+=============================*/
+
+.hero{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:70px;
+
+}
+
+
+
+/* =============================
+        LOGIN
+=============================*/
+
+.login-screen{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:grid;
+
+    grid-template-columns:
+
+    1.1fr 520px;
+
+}
+
+
+
+.login-image{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+
+.login-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+.login-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+    90deg,
+
+    rgba(0,0,0,.60),
+
+    rgba(0,0,0,.30)
+
+    );
+
+}
+
+
+
+.login-card{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:60px;
+
+}
+
+
+
+/* =============================
+        FOOTER
+=============================*/
+
+.footer{
+
+    padding:40px;
+
+    text-align:center;
+
+    color:var(--text-muted);
+
+}

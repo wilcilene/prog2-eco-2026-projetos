@@ -1,0 +1,243 @@
+/* Arquivo de compatibilidade: mantém o import do style.css funcionando. */
+/* ===========================================================
+   RaceHub v2.0
+   VARIABLES
+   Design System
+===========================================================*/
+
+:root{
+
+    /* ===========================
+       CORES
+    ============================ */
+
+    --primary:#D5001C;
+    --primary-dark:#A40016;
+    --primary-light:#FF3A55;
+
+    --gold:#C9A227;
+
+    --background:#0A0A0A;
+    --background-secondary:#101010;
+    --surface:#171717;
+    --surface-light:#202020;
+    --surface-hover:#262626;
+
+    --white:#FFFFFF;
+    --text:#F5F5F5;
+    --text-secondary:#C5C5C5;
+    --text-muted:#8A8A8A;
+
+    --border:#2B2B2B;
+
+    --success:#3ECF8E;
+    --warning:#FFB800;
+    --danger:#FF4C4C;
+    --info:#2E9AFE;
+
+
+
+    /* ===========================
+       GLASS
+    ============================ */
+
+    --glass:rgba(255,255,255,.04);
+
+    --glass-border:rgba(255,255,255,.08);
+
+    --glass-hover:rgba(255,255,255,.07);
+
+
+
+    /* ===========================
+       SOMBRAS
+    ============================ */
+
+    --shadow-xs:
+        0 2px 8px rgba(0,0,0,.18);
+
+    --shadow-sm:
+        0 8px 20px rgba(0,0,0,.28);
+
+    --shadow-md:
+        0 18px 45px rgba(0,0,0,.38);
+
+    --shadow-lg:
+        0 30px 70px rgba(0,0,0,.55);
+
+    --shadow-red:
+        0 0 25px rgba(213,0,28,.35);
+
+    --shadow-red-big:
+        0 0 60px rgba(213,0,28,.25);
+
+
+
+    /* ===========================
+       BORDAS
+    ============================ */
+
+    --radius-xs:8px;
+    --radius-sm:12px;
+    --radius-md:18px;
+    --radius-lg:26px;
+    --radius-xl:40px;
+    --radius-round:999px;
+
+
+
+    /* ===========================
+       ESPAÇAMENTOS
+    ============================ */
+
+    --space-1:4px;
+    --space-2:8px;
+    --space-3:12px;
+    --space-4:16px;
+    --space-5:20px;
+    --space-6:24px;
+    --space-7:30px;
+    --space-8:40px;
+    --space-9:55px;
+    --space-10:70px;
+
+
+
+    /* ===========================
+       TRANSITIONS
+    ============================ */
+
+    --transition-fast:.20s;
+
+    --transition:.35s;
+
+    --transition-slow:.60s;
+
+
+
+    /* ===========================
+       FONTES
+    ============================ */
+
+    --font:"Sora",sans-serif;
+
+
+
+    /* ===========================
+       TAMANHOS
+    ============================ */
+
+    --title-xl:64px;
+
+    --title-lg:48px;
+
+    --title-md:36px;
+
+    --title-sm:28px;
+
+    --subtitle:22px;
+
+    --body:16px;
+
+    --small:14px;
+
+
+
+    /* ===========================
+       CONTAINER
+    ============================ */
+
+    --container:1400px;
+
+
+
+    /* ===========================
+       SIDEBAR
+    ============================ */
+
+    --sidebar-width:280px;
+
+
+
+    /* ===========================
+       HEADER
+    ============================ */
+
+    --header-height:90px;
+
+
+
+    /* ===========================
+       BOTÕES
+    ============================ */
+
+    --btn-height:58px;
+
+
+
+    /* ===========================
+       INPUTS
+    ============================ */
+
+    --input-height:60px;
+
+}
+
+
+
+/* ====================================
+   Gradientes oficiais
+==================================== */
+
+:root{
+
+    --gradient-primary:
+        linear-gradient(
+            135deg,
+            #D5001C 0%,
+            #FF314B 100%
+        );
+
+    --gradient-dark:
+        linear-gradient(
+            180deg,
+            #1A1A1A,
+            #0D0D0D
+        );
+
+    --gradient-card:
+        linear-gradient(
+            145deg,
+            #191919,
+            #121212
+        );
+
+}
+
+
+
+/* ====================================
+   Glassmorphism
+==================================== */
+
+:root{
+
+    --glass-blur:blur(18px);
+
+}
+
+
+
+/* ====================================
+   Z-index
+==================================== */
+
+:root{
+
+    --z-sidebar:900;
+
+    --z-header:950;
+
+    --z-modal:9999;
+
+}

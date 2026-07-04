@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Deixa o sistema responsivo em celular, tablet e desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Usuários</title>
+
+    <!-- Importa o CSS principal do projeto -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Container geral da aplicação -->
+    <div class="app">
+
+        <!-- Menu lateral do painel administrativo -->
+        <aside class="sidebar">
+
+            <div>
+
+                <!-- Logo exibida na sidebar -->
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Admin Control Center</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Links de navegação do admin -->
+                <nav class="menu">
+                    <a href="admin.html">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="pilotos.html">
+                        <i class="bi bi-person-badge"></i>
+                        Pilotos
+                    </a>
+
+                    <a href="veiculos.html">
+                        <i class="bi bi-car-front"></i>
+                        Veículos
+                    </a>
+
+                    <a href="reservas-admin.html">
+                        <i class="bi bi-calendar-check"></i>
+                        Reservas
+                    </a>
+
+                    <a href="corridas.html">
+                        <i class="bi bi-flag"></i>
+                        Corridas
+                    </a>
+
+                    <a href="tempos.html">
+                        <i class="bi bi-stopwatch"></i>
+                        Tempos
+                    </a>
+
+                    <a href="relatorios.html">
+                        <i class="bi bi-bar-chart"></i>
+                        Relatórios
+                    </a>
+
+                    <a href="usuarios.html" class="active">
+                        <i class="bi bi-people"></i>
+                        Usuários
+                    </a>
+
+
+                    <a href="perfil.html">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
+
+            </div>
+
+            <!-- Botão para encerrar a sessão do usuário logado -->
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- Área principal da página -->
+        <main class="main">
+
+            <!-- Barra superior com dados do usuário logado -->
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Controle de usuários e permissões</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Admin</strong>
+                        <p data-user-role>Admin</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <!-- Cabeçalho da página -->
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1>Usuários</h1>
+                        <p>Gerencie administradores, pilotos e clientes cadastrados no RaceHub.</p>
+                    </div>
+
+                    <!-- Leva o usuário para o formulário de cadastro/edição -->
+                    <button class="btn btn-primary" onclick="focarFormularioUsuario()">
+                        <i class="bi bi-person-plus"></i>
+                        Novo usuário
+                    </button>
+
+                </div>
+
+                <!-- Cards de resumo com dados calculados pelo JavaScript -->
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalUsuariosPagina">0</div>
+                        <div class="stats-label">Usuários cadastrados</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalAdminsPagina">0</div>
+                        <div class="stats-label">Administradores</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalPilotosUsuarios">0</div>
+                        <div class="stats-label">Pilotos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalClientesPagina">0</div>
+                        <div class="stats-label">Clientes</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2">
+
+                    <!-- Card do formulário de cadastro e edição de usuários -->
+                    <section class="form-card" id="formUsuarioBox">
+
+                        <!-- O JavaScript altera este título quando entra no modo edição -->
+                        <h2 class="form-title" id="tituloFormUsuario">Cadastrar usuário</h2>
+
+                        <p class="form-subtitle">
+                            Cadastre administradores, pilotos ou clientes. Também é possível editar dados de usuários já existentes.
+                        </p>
+
+                        <!-- 
+                            O formulário chama a função salvarUsuarioAdmin.
+                            Ela serve tanto para cadastrar quanto para editar.
+                        -->
+                        <form class="form" onsubmit="salvarUsuarioAdmin(event)">
+
+                            <div class="form-group">
+                                <label for="nomeUsuario">Nome completo <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person"></i>
+                                    <input 
+                                        class="input" 
+                                        type="text" 
+                                        id="nomeUsuario" 
+                                        placeholder="Nome do usuário" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailUsuario">E-mail <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-envelope"></i>
+                                    <input 
+                                        class="input" 
+                                        type="email" 
+                                        id="emailUsuario" 
+                                        placeholder="usuario@racehub.com" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senhaUsuario">Senha</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-lock"></i>
+                                    <input 
+                                        class="input" 
+                                        type="password" 
+                                        id="senhaUsuario" 
+                                        placeholder="Preencha para criar ou alterar a senha"
+                                    >
+                                </div>
+
+                                <p style="margin-top:8px;font-size:13px;color:var(--text-muted);">
+                                    No modo edição, deixe a senha em branco para manter a senha atual.
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoUsuario">Tipo de usuário <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person-gear"></i>
+
+                                    <!-- Define a permissão do usuário no sistema -->
+                                    <select class="input" id="tipoUsuario" required>
+                                        <option value="cliente">Cliente</option>
+                                        <option value="piloto">Piloto</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Local onde aparecem mensagens de sucesso ou erro -->
+                            <div id="usuarioMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+
+                                <!-- Este botão aparece somente quando estiver editando um usuário -->
+                                <button 
+                                    class="btn btn-secondary" 
+                                    type="button" 
+                                    id="btnCancelarEdicaoUsuario" 
+                                    onclick="cancelarEdicaoUsuario()" 
+                                    style="display:none;"
+                                >
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                    Cancelar edição
+                                </button>
+
+                                <!-- Limpa os campos do formulário -->
+                                <button class="btn btn-secondary" type="reset">
+                                    <i class="bi bi-x-circle"></i>
+                                    Limpar
+                                </button>
+
+                                <!-- Texto do botão muda entre cadastrar e salvar alterações -->
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-check-circle"></i>
+                                    <span id="textoSalvarUsuario">Cadastrar usuário</span>
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <!-- Card explicativo com regras de segurança -->
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Regras de segurança</h2>
+                                <p class="widget-subtitle">Controle de permissões do sistema.</p>
+                            </div>
+
+                            <i class="bi bi-shield-check" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="timeline">
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Admins fixos</h4>
+                                        <p>Os administradores principais não podem ser editados ou excluídos do sistema.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Clientes</h4>
+                                        <p>Clientes podem criar conta livremente pela tela de cadastro.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Pilotos</h4>
+                                        <p>Pilotos podem ser criados ou definidos pela administração.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <!-- Painel com a tabela de usuários cadastrados -->
+                <section class="panel" style="margin-top:35px;">
+
+                    <div class="panel-header flex-between">
+
+                        <div>
+                            <h2>Lista de usuários</h2>
+                            <p style="margin-top:8px;">Todos os usuários cadastrados no banco de dados.</p>
+                        </div>
+
+                        <!-- Campo de busca usado para filtrar a tabela em tempo real -->
+                        <div class="search">
+                            <i class="bi bi-search"></i>
+                            <input 
+                                type="text" 
+                                id="buscaUsuario" 
+                                placeholder="Buscar usuário..." 
+                                oninput="filtrarUsuarios()"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-container">
+
+                            <table class="table">
+
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>E-mail</th>
+                                        <th>Tipo</th>
+                                        <th>Status</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- O JavaScript insere os usuários dentro deste tbody -->
+                                <tbody id="listaUsuarios">
+                                    <tr>
+                                        <td colspan="7">Carregando usuários...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- script.js tem funções globais como apiGet, apiPost, apiPut, apiDelete, logout e requireAuth -->
+    <script src="script.js"></script>
+
+    <!-- usuarios.js tem a lógica específica desta página -->
+    <script src="js/usuarios.js"></script>
+
+</body>
+</html>

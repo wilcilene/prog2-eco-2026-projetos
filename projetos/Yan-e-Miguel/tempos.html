@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Tempos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div>
+
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span id="sidebarSubtitle">Timing Center</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <nav class="menu" id="sidebarMenu"></nav>
+
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Central de tempos, voltas e resultados</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1 id="tituloTempos">Tempos</h1>
+                        <p id="subtituloTempos">Consulte tempos, classificações e ranking geral da pista.</p>
+                    </div>
+
+                    <button class="btn btn-primary" id="btnNovoTempo" onclick="focarFormularioTempo()" style="display:none;">
+                        <i class="bi bi-plus-circle"></i>
+                        Registrar tempo
+                    </button>
+
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-stopwatch"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalTemposPagina">0</div>
+                        <div class="stats-label" id="labelTotalTempos">Tempos registrados</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+
+                        <div class="stats-number" id="melhorTempoPagina">-</div>
+                        <div class="stats-label">Melhor volta</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-activity"></i>
+                        </div>
+
+                        <div class="stats-number" id="mediaTempoPagina">-</div>
+                        <div class="stats-label">Média de tempos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+
+                        <div class="stats-number" id="liderRankingPagina">-</div>
+                        <div class="stats-label">Líder do ranking</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2" id="areaAdminTempos">
+
+                    <section class="form-card" id="formTempoBox">
+
+                        <h2 class="form-title">Registrar resultado</h2>
+
+                        <p class="form-subtitle">
+                            Lance o tempo de volta de um piloto em uma corrida cadastrada.
+                        </p>
+
+                        <form class="form" onsubmit="cadastrarResultado(event)">
+
+                            <div class="form-group">
+                                <label for="corridaResultado">Corrida <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-flag"></i>
+                                    <select class="input" id="corridaResultado" required>
+                                        <option value="">Selecione uma corrida</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pilotoResultado">Piloto <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person-badge"></i>
+                                    <select class="input" id="pilotoResultado" required>
+                                        <option value="">Selecione um piloto</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--
+                                O veículo depende do piloto selecionado.
+                                O JavaScript carrega somente os carros pertencentes ao piloto.
+                            -->
+                            <div class="form-group">
+                                <label for="veiculoResultado">Veículo <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-car-front"></i>
+                                    <select class="input" id="veiculoResultado" required>
+                                        <option value="">Selecione primeiro o piloto</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label for="tempoVolta">Tempo de volta <span class="required">*</span></label>
+
+                                    <div class="input-icon">
+                                        <i class="bi bi-stopwatch"></i>
+                                        <input 
+                                            class="input" 
+                                            type="number" 
+                                            id="tempoVolta" 
+                                            step="0.001" 
+                                            min="0" 
+                                            placeholder="Ex: 72.458" 
+                                            required
+                                        >
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="resultadoMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-secondary" type="reset">
+                                    <i class="bi bi-x-circle"></i>
+                                    Limpar
+                                </button>
+
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-check-circle"></i>
+                                    Registrar tempo
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Timing control</h2>
+                                <p class="widget-subtitle">Boas práticas para registrar tempos.</p>
+                            </div>
+
+                            <i class="bi bi-speedometer2" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="timeline">
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Precisão</h4>
+                                        <p>Registre tempos com três casas decimais para melhor controle.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Vínculo correto</h4>
+                                        <p>Associe sempre o tempo ao piloto, veículo e corrida correspondente.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Ranking automático</h4>
+                                        <p>O sistema ordena os melhores tempos automaticamente.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div class="grid grid-2" style="margin-top:35px;">
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Top 5 ranking</h2>
+                                <p class="widget-subtitle">Melhores voltas registradas no RaceHub.</p>
+                            </div>
+
+                            <i class="bi bi-trophy" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="topRankingTempos">
+                            <div class="alert alert-warning">
+                                Carregando ranking...
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title" id="tituloWidgetTempos">Últimos registros</h2>
+                                <p class="widget-subtitle" id="subtituloWidgetTempos">Resultados lançados recentemente.</p>
+                            </div>
+
+                            <i class="bi bi-clock-history" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="ultimosRegistrosTempos">
+                            <div class="alert alert-warning">
+                                Carregando registros...
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <section class="panel" style="margin-top:35px;">
+
+                    <div class="panel-header flex-between">
+
+                        <div>
+                            <h2 id="tituloTabelaTempos">Tabela de tempos</h2>
+                            <p style="margin-top:8px;">Lista completa dos registros disponíveis.</p>
+                        </div>
+
+                        <div class="search">
+                            <i class="bi bi-search"></i>
+                            <input 
+                                type="text" 
+                                id="buscaTempo" 
+                                placeholder="Buscar tempo..." 
+                                oninput="filtrarTempos()"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-container">
+
+                            <table class="table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Posição</th>
+                                        <th>Piloto</th>
+                                        <th>Veículo</th>
+                                        <th>Corrida</th>
+                                        <th>Tempo</th>
+                                        <th>ID</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaTempos">
+                                    <tr>
+                                        <td colspan="7">Carregando tempos...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+    <script src="js/tempos.js"></script>
+
+</body>
+</html>

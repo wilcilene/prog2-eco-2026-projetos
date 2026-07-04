@@ -1,0 +1,517 @@
+/* Arquivo de compatibilidade: mantém o import do style.css funcionando. */
+/* ===========================================================
+   RaceHub v2.0
+   COMPONENTS
+===========================================================*/
+
+
+/*==========================================================
+                    BOTÕES
+==========================================================*/
+
+.btn{
+
+    height:58px;
+
+    padding:0 30px;
+
+    border-radius:16px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    font-weight:600;
+
+    font-size:15px;
+
+    transition:.30s;
+
+    cursor:pointer;
+
+    border:none;
+
+}
+
+
+
+.btn-primary{
+
+    background:var(--gradient-primary);
+
+    color:white;
+
+    box-shadow:var(--shadow-red);
+
+}
+
+
+
+.btn-primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+    0 18px 35px rgba(213,0,28,.35);
+
+}
+
+
+
+.btn-secondary{
+
+    background:var(--surface);
+
+    color:white;
+
+    border:1px solid var(--border);
+
+}
+
+
+
+.btn-secondary:hover{
+
+    background:var(--surface-hover);
+
+}
+
+
+
+.btn-danger{
+
+    background:#c62828;
+
+    color:white;
+
+}
+
+
+
+.btn-danger:hover{
+
+    background:#b71c1c;
+
+}
+
+
+
+.btn-outline{
+
+    border:1px solid var(--primary);
+
+    color:var(--primary);
+
+    background:transparent;
+
+}
+
+
+
+.btn-outline:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+
+
+/*==========================================================
+                    CARDS
+==========================================================*/
+
+.card{
+
+    background:var(--gradient-card);
+
+    border-radius:22px;
+
+    border:1px solid var(--glass-border);
+
+    padding:30px;
+
+    transition:.35s;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+
+
+.card-title{
+
+    font-size:22px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.card-text{
+
+    color:var(--text-secondary);
+
+}
+
+
+
+/*==========================================================
+                    DASHBOARD CARD
+==========================================================*/
+
+.stats-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:var(--gradient-card);
+
+    border-radius:22px;
+
+    padding:30px;
+
+    border:1px solid var(--glass-border);
+
+    transition:.35s;
+
+}
+
+
+
+.stats-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+
+    height:140px;
+
+    background:
+
+    rgba(213,0,28,.08);
+
+    border-radius:50%;
+
+    right:-35px;
+
+    top:-35px;
+
+}
+
+
+
+.stats-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-red);
+
+}
+
+
+
+.stats-icon{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    background:
+
+    rgba(213,0,28,.12);
+
+    color:var(--primary);
+
+    margin-bottom:22px;
+
+}
+
+
+
+.stats-number{
+
+    font-size:42px;
+
+    font-weight:700;
+
+}
+
+
+
+.stats-label{
+
+    color:var(--text-muted);
+
+    margin-top:8px;
+
+}
+
+
+
+/*==========================================================
+                    GLASS
+==========================================================*/
+
+.glass{
+
+    backdrop-filter:blur(18px);
+
+    background:var(--glass);
+
+    border:1px solid var(--glass-border);
+
+}
+
+
+
+/*==========================================================
+                    BADGES
+==========================================================*/
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+
+.badge-success{
+
+    background:
+
+    rgba(62,207,142,.12);
+
+    color:#3ECF8E;
+
+}
+
+
+
+.badge-warning{
+
+    background:
+
+    rgba(255,184,0,.12);
+
+    color:#FFB800;
+
+}
+
+
+
+.badge-danger{
+
+    background:
+
+    rgba(255,76,76,.12);
+
+    color:#FF4C4C;
+
+}
+
+
+
+/*==========================================================
+                    AVATAR
+==========================================================*/
+
+.avatar{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--gradient-primary);
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:22px;
+
+}
+
+
+
+/*==========================================================
+                    DIVIDER
+==========================================================*/
+
+.divider{
+
+    height:1px;
+
+    background:var(--border);
+
+    margin:30px 0;
+
+}
+
+
+
+/*==========================================================
+                    ALERTAS
+==========================================================*/
+
+.alert{
+
+    padding:18px 22px;
+
+    border-radius:16px;
+
+    margin:20px 0;
+
+}
+
+
+
+.alert-success{
+
+    background:rgba(62,207,142,.08);
+
+    border-left:5px solid #3ECF8E;
+
+}
+
+
+
+.alert-warning{
+
+    background:rgba(255,184,0,.08);
+
+    border-left:5px solid #FFB800;
+
+}
+
+
+
+.alert-danger{
+
+    background:rgba(255,76,76,.08);
+
+    border-left:5px solid #FF4C4C;
+
+}
+
+
+
+/*==========================================================
+                    LOGO RH
+==========================================================*/
+
+.rh-logo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+
+
+.rh-logo h1{
+
+    font-size:36px;
+
+    color:var(--primary);
+
+    letter-spacing:-2px;
+
+}
+
+
+
+.rh-logo span{
+
+    color:var(--text-muted);
+
+    font-size:13px;
+
+}
+
+
+
+/*==========================================================
+                    HOVER SCALE
+==========================================================*/
+
+.hover-scale{
+
+    transition:.30s;
+
+}
+
+
+
+.hover-scale:hover{
+
+    transform:scale(1.03);
+
+}
+
+
+
+/*==========================================================
+                    CLICK
+==========================================================*/
+
+.click{
+
+    cursor:pointer;
+
+}

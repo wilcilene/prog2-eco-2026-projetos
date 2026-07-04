@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Relatórios</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div>
+
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span id="sidebarSubtitle">Reports Center</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <nav class="menu" id="sidebarMenu"></nav>
+
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Relatórios, rankings e indicadores da pista</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1 id="tituloRelatorios">Relatórios</h1>
+                        <p id="subtituloRelatorios">Visão geral dos dados operacionais do RaceHub.</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <i class="bi bi-printer"></i>
+                        Imprimir relatório
+                    </button>
+
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-stopwatch"></i>
+                        </div>
+
+                        <div class="stats-number" id="cardTotalResultados">0</div>
+                        <div class="stats-label" id="labelTotalResultados">Resultados registrados</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+
+                        <div class="stats-number" id="cardMelhorVolta">-</div>
+                        <div class="stats-label">Melhor volta</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-flag"></i>
+                        </div>
+
+                        <div class="stats-number" id="cardCorridas">0</div>
+                        <div class="stats-label">Corridas cadastradas</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+
+                        <div class="stats-number" id="cardLider">-</div>
+                        <div class="stats-label">Líder do ranking</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2">
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Ranking principal</h2>
+                                <p class="widget-subtitle">Melhores voltas registradas no sistema.</p>
+                            </div>
+
+                            <i class="bi bi-trophy" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="rankingRelatorio">
+                            <div class="alert alert-warning">
+                                Carregando ranking...
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title" id="tituloResumoOperacional">Resumo operacional</h2>
+                                <p class="widget-subtitle" id="subtituloResumoOperacional">Indicadores gerais da pista.</p>
+                            </div>
+
+                            <i class="bi bi-bar-chart" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+
+                        <div class="stats-grid">
+
+                            <div class="stat-box">
+                                <h3 id="resumoPilotos">0</h3>
+                                <span id="labelResumoPilotos">Pilotos</span>
+                            </div>
+
+                            <div class="stat-box">
+                                <h3 id="resumoReservas">0</h3>
+                                <span id="labelResumoReservas">Reservas</span>
+                            </div>
+
+                            <div class="stat-box">
+                                <h3 id="resumoMediaTempo">-</h3>
+                                <span>Média de tempo</span>
+                            </div>
+
+                            <div class="stat-box">
+                                <h3 id="resumoCorridasFuturas">0</h3>
+                                <span>Corridas futuras</span>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div class="grid grid-2" style="margin-top:35px;">
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Corridas futuras</h2>
+                                <p class="widget-subtitle">Próximos eventos cadastrados na pista.</p>
+                            </div>
+
+                            <i class="bi bi-calendar-event" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="corridasRelatorio">
+                            <div class="alert alert-warning">
+                                Carregando corridas...
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title" id="tituloReservasRelatorio">Reservas</h2>
+                                <p class="widget-subtitle" id="subtituloReservasRelatorio">Agenda recente da pista.</p>
+                            </div>
+
+                            <i class="bi bi-calendar-check" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body" id="reservasRelatorio">
+                            <div class="alert alert-warning">
+                                Carregando reservas...
+                            </div>
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <!-- Rankings extras da versão 3.0: por veículo e por potência. -->
+                <div class="grid grid-2" style="margin-top:35px;">
+
+                    <section class="widget">
+                        <div class="widget-header ranking-veiculo-header">
+                            <div>
+                                <h2 class="widget-title">Ranking por veículo</h2>
+                                <p class="widget-subtitle">Melhor tempo de cada carro cadastrado.</p>
+                            </div>
+                            <div class="ranking-veiculo-filtro">
+                                <i class="bi bi-funnel"></i>
+                                <select class="input" id="filtroCategoriaVeiculo" onchange="preencherRankingVeiculosRelatorio()">
+                                    <option value="todas">Todas as potências</option>
+                                    <option value="Até 150 cv">Até 150 cv</option>
+                                    <option value="151 a 250 cv">151 a 250 cv</option>
+                                    <option value="251 a 400 cv">251 a 400 cv</option>
+                                    <option value="Acima de 400 cv">Acima de 400 cv</option>
+                                    <option value="Sem potência">Sem potência</option>
+                                </select>
+                            </div>
+                            <i class="bi bi-car-front" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+                        <div class="widget-body" id="rankingVeiculosRelatorio">
+                            <div class="alert alert-warning">Carregando ranking por veículo...</div>
+                        </div>
+                    </section>
+
+                    <section class="widget">
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Ranking por potência</h2>
+                                <p class="widget-subtitle">Agrupamento dos melhores tempos por faixa de cv.</p>
+                            </div>
+                            <i class="bi bi-lightning-charge" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+                        <div class="widget-body" id="rankingPotenciaRelatorio">
+                            <div class="alert alert-warning">Carregando ranking por potência...</div>
+                        </div>
+                    </section>
+
+                </div>
+
+                <section class="panel" style="margin-top:35px;">
+
+                    <div class="panel-header flex-between">
+
+                        <div>
+                            <h2 id="tituloTabelaRelatorio">Tabela de resultados</h2>
+                            <p style="margin-top:8px;">Registros utilizados para análise de desempenho.</p>
+                        </div>
+
+                        <div class="table-actions">
+                            <button class="btn btn-secondary" onclick="window.print()">
+                                <i class="bi bi-printer"></i>
+                                Imprimir
+                            </button>
+                            <button class="btn btn-primary" onclick="exportarTabelaCSV('tabelaRelatorioCompleta', 'racehub_relatorio.csv')">
+                                <i class="bi bi-download"></i>
+                                Exportar CSV
+                            </button>
+                        </div>
+
+                        <div class="search">
+                            <i class="bi bi-search"></i>
+                            <input 
+                                type="text" 
+                                id="buscaRelatorio" 
+                                placeholder="Buscar no relatório..." 
+                                oninput="filtrarTabelaRelatorio()"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-container">
+
+                            <table class="table" id="tabelaRelatorioCompleta">
+
+                                <thead>
+                                    <tr>
+                                        <th>Posição</th>
+                                        <th>Piloto</th>
+                                        <th>Veículo</th>
+                                        <th>Corrida</th>
+                                        <th>Tempo</th>
+                                        <th>ID</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tabelaRelatorio">
+                                    <tr>
+                                        <td colspan="6">Carregando relatório...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+    <script src="js/relatorios.js"></script>
+
+</body>
+</html>

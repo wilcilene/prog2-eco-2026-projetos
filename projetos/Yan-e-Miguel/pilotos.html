@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Pilotos</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div>
+
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Admin Control Center</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <nav class="menu">
+                    <a href="admin.html">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        Dashboard
+                    </a>
+
+                    <a href="pilotos.html" class="active">
+                        <i class="bi bi-person-badge"></i>
+                        Pilotos
+                    </a>
+
+                    <a href="veiculos.html">
+                        <i class="bi bi-car-front"></i>
+                        Veículos
+                    </a>
+
+                    <a href="reservas-admin.html">
+                        <i class="bi bi-calendar-check"></i>
+                        Reservas
+                    </a>
+
+                    <a href="corridas.html">
+                        <i class="bi bi-flag"></i>
+                        Corridas
+                    </a>
+
+                    <a href="tempos.html">
+                        <i class="bi bi-stopwatch"></i>
+                        Tempos
+                    </a>
+
+                    <a href="relatorios.html">
+                        <i class="bi bi-bar-chart"></i>
+                        Relatórios
+                    </a>
+
+                    <a href="usuarios.html">
+                        <i class="bi bi-people"></i>
+                        Usuários
+                    </a>
+
+
+                    <a href="perfil.html">
+                        <i class="bi bi-person-circle"></i>
+                        Perfil
+                    </a>
+                </nav>
+
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Gerenciamento de pilotos autorizados</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Admin</strong>
+                        <p data-user-role>Admin</p>
+                    </div>
+
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+
+            </header>
+
+            <section class="page">
+
+                <div class="page-header">
+
+                    <div class="page-title">
+                        <h1>Pilotos</h1>
+                        <p>Cadastre, visualize e gerencie os pilotos autorizados da pista.</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="focarFormulario()">
+                        <i class="bi bi-person-plus"></i>
+                        Novo piloto
+                    </button>
+
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <div class="stats-number" id="totalPilotosPagina">0</div>
+                        <div class="stats-label">Pilotos cadastrados</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+
+                        <div class="stats-number" id="pilotosAtivosPagina">0</div>
+                        <div class="stats-label">Pilotos ativos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-calendar-plus"></i>
+                        </div>
+
+                        <div class="stats-number" id="ultimoCadastroPiloto">-</div>
+                        <div class="stats-label">Último cadastro</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div class="stats-number">ADM</div>
+                        <div class="stats-label">Cadastro restrito</div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-2">
+
+                    <section class="form-card" id="formPilotoBox">
+
+                        <h2 class="form-title">Cadastrar piloto</h2>
+
+                        <p class="form-subtitle">
+                            Crie uma conta de acesso para o piloto. Ele poderá acessar o painel individual usando e-mail e senha.
+                        </p>
+
+                        <form class="form" onsubmit="cadastrarPiloto(event)">
+
+                            <div class="form-group">
+                                <label for="nomePiloto">Nome completo <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person"></i>
+                                    <input 
+                                        class="input" 
+                                        type="text" 
+                                        id="nomePiloto" 
+                                        placeholder="Ex: João da Silva" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailPiloto">E-mail <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-envelope"></i>
+                                    <input 
+                                        class="input" 
+                                        type="email" 
+                                        id="emailPiloto" 
+                                        placeholder="piloto@email.com" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senhaPiloto">Senha inicial <span class="required">*</span></label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-lock"></i>
+                                    <input 
+                                        class="input" 
+                                        type="password" 
+                                        id="senhaPiloto" 
+                                        placeholder="Senha de acesso do piloto" 
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div id="pilotoMessage" class="auth-message"></div>
+
+                            <div class="form-footer">
+                                <button class="btn btn-secondary" type="reset">
+                                    <i class="bi bi-x-circle"></i>
+                                    Limpar
+                                </button>
+
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-check-circle"></i>
+                                    Cadastrar piloto
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                    <section class="widget">
+
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Controle de acesso</h2>
+                                <p class="widget-subtitle">Regras operacionais desta tela.</p>
+                            </div>
+
+                            <i class="bi bi-shield-lock" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+
+                        <div class="widget-body">
+
+                            <div class="timeline">
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Cadastro restrito</h4>
+                                        <p>Somente administradores podem cadastrar novos pilotos.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Acesso individual</h4>
+                                        <p>Cada piloto entra no sistema com e-mail e senha próprios.</p>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+
+                                    <div class="timeline-content">
+                                        <h4>Resultados vinculados</h4>
+                                        <p>Tempos e classificações podem ser associados ao piloto cadastrado.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <section class="panel" style="margin-top:35px;">
+
+                    <div class="panel-header flex-between">
+
+                        <div>
+                            <h2>Pilotos cadastrados</h2>
+                            <p style="margin-top:8px;">Lista completa de pilotos registrados no RaceHub.</p>
+                        </div>
+
+                        <div class="search">
+                            <i class="bi bi-search"></i>
+                            <input 
+                                type="text" 
+                                id="buscaPiloto" 
+                                placeholder="Buscar piloto..." 
+                                oninput="filtrarPilotos()"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="table-container">
+
+                            <table class="table">
+
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Piloto</th>
+                                        <th>E-mail</th>
+                                        <th>Status</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="listaPilotos">
+                                    <tr>
+                                        <td colspan="6">Carregando pilotos...</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+    <script src="js/pilotos.js"></script>
+
+</body>
+</html>

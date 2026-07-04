@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RaceHub | Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="login-screen">
+
+        <section class="login-visual">
+
+            <div class="auth-brand animate-left">
+                <h2>RaceHub</h2>
+                <span>Motorsport Management System</span>
+            </div>
+
+            <div class="auth-info animate-fade">
+                <h1>Controle total da pista.</h1>
+
+                <p>
+                    Gerencie pilotos, reservas, corridas, tempos e resultados em uma plataforma criada para performance, precisão e organização.
+                </p>
+
+                <div class="auth-features">
+
+                    <div class="auth-feature">
+                        <i class="bi bi-speedometer2"></i>
+                        <strong>Performance</strong>
+                        <span>Tempos, rankings e resultados.</span>
+                    </div>
+
+                    <div class="auth-feature">
+                        <i class="bi bi-calendar-check"></i>
+                        <strong>Reservas</strong>
+                        <span>Agenda e disponibilidade da pista.</span>
+                    </div>
+
+                    <div class="auth-feature">
+                        <i class="bi bi-shield-check"></i>
+                        <strong>Controle</strong>
+                        <span>Acesso por perfil de usuário.</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section class="login-card">
+
+            <div class="auth-box animate-scale">
+
+                <div class="auth-header">
+                    <div class="auth-kicker">Acesso seguro</div>
+
+                    <h1>Entrar no RaceHub</h1>
+
+                    <p>
+                        Acesse sua conta para continuar no painel de controle.
+                    </p>
+                </div>
+
+                <form class="auth-form" onsubmit="login(event)">
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+
+                        <div class="input-icon">
+                            <i class="bi bi-envelope"></i>
+                            <input 
+                                class="input" 
+                                type="email" 
+                                id="email" 
+                                placeholder="seuemail@racehub.com" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+
+                        <div class="input-icon">
+                            <i class="bi bi-lock"></i>
+                            <input 
+                                class="input" 
+                                type="password" 
+                                id="senha" 
+                                placeholder="Digite sua senha" 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div id="loginMessage" class="auth-message"></div>
+
+                    <div class="auth-actions">
+
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Entrar
+                        </button>
+
+                        <a href="cadastro.html" class="auth-link">
+                            Ainda não tem conta? Criar conta de cliente
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

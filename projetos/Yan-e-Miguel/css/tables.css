@@ -1,0 +1,367 @@
+/* ===========================================================
+   RaceHub v2.0
+   TABLES
+===========================================================*/
+
+
+.table-container{
+
+    width:100%;
+
+    overflow:auto;
+
+    border-radius:22px;
+
+    background:var(--gradient-card);
+
+    border:1px solid var(--glass-border);
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+.table thead{
+
+    background:rgba(255,255,255,.03);
+
+}
+
+
+
+.table thead th{
+
+    padding:22px;
+
+    text-align:left;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+
+.table tbody td{
+
+    padding:20px 22px;
+
+    color:var(--text-secondary);
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+
+
+.table tbody tr{
+
+    transition:.25s;
+
+}
+
+
+
+.table tbody tr:nth-child(even){
+
+    background:rgba(255,255,255,.015);
+
+}
+
+
+
+.table tbody tr:hover{
+
+    background:rgba(213,0,28,.05);
+
+}
+
+
+
+.table tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+
+
+/* ===========================================
+        STATUS
+=========================================== */
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+
+.status::before{
+
+    content:"";
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+}
+
+
+
+.status-success{
+
+    color:#3ECF8E;
+
+    background:rgba(62,207,142,.10);
+
+}
+
+
+
+.status-success::before{
+
+    background:#3ECF8E;
+
+}
+
+
+
+.status-warning{
+
+    color:#FFB800;
+
+    background:rgba(255,184,0,.10);
+
+}
+
+
+
+.status-warning::before{
+
+    background:#FFB800;
+
+}
+
+
+
+.status-danger{
+
+    color:#FF4C4C;
+
+    background:rgba(255,76,76,.10);
+
+}
+
+
+
+.status-danger::before{
+
+    background:#FF4C4C;
+
+}
+
+
+
+/* ===========================================
+        AÇÕES
+=========================================== */
+
+.table-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+
+
+.action-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--surface);
+
+    color:white;
+
+    transition:.25s;
+
+}
+
+
+
+.action-btn:hover{
+
+    background:var(--primary);
+
+    transform:translateY(-3px);
+
+}
+
+
+
+/* ===========================================
+        EMPTY STATE
+=========================================== */
+
+.empty{
+
+    width:100%;
+
+    padding:80px;
+
+    text-align:center;
+
+}
+
+
+
+.empty i{
+
+    font-size:60px;
+
+    color:var(--primary);
+
+    margin-bottom:20px;
+
+}
+
+
+
+.empty h2{
+
+    margin-bottom:12px;
+
+}
+
+
+
+.empty p{
+
+    color:var(--text-muted);
+
+}
+
+
+
+/* ===========================================
+        PAGINAÇÃO
+=========================================== */
+
+.pagination{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+
+
+.page-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:var(--surface);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.25s;
+
+}
+
+
+
+.page-btn:hover{
+
+    background:var(--primary);
+
+}
+
+
+
+.page-active{
+
+    background:var(--gradient-primary);
+
+}
+
+
+
+/* ===========================================
+        KPI TABLE
+=========================================== */
+
+.table-number{
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+
+
+.table-highlight{
+
+    color:var(--gold);
+
+    font-weight:600;
+
+}

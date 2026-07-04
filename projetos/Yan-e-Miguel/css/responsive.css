@@ -1,0 +1,33 @@
+/* ===========================================================
+   responsive.css
+   Ajustes gerais para telas menores.
+   Este arquivo existe porque o style.css importa responsive.css.
+===========================================================*/
+
+@media(max-width:900px){
+    .grid,
+    .grid-2,
+    .dashboard-grid{
+        grid-template-columns:1fr !important;
+    }
+
+    .topbar,
+    .page-header,
+    .dashboard-header,
+    .panel-header{
+        flex-direction:column !important;
+        align-items:flex-start !important;
+        gap:18px !important;
+    }
+}
+
+@media(max-width:650px){
+    .main{
+        padding:18px !important;
+    }
+
+    .form-footer,
+    .table-actions{
+        flex-wrap:wrap !important;
+    }
+}

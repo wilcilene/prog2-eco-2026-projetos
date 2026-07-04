@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaceHub | Perfil público</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div>
+                <div class="rh-logo">
+                    <h1>RaceHub</h1>
+                    <span>Public Driver Profile</span>
+                </div>
+                <div class="divider"></div>
+
+                <!-- O menu é montado pelo JS conforme o tipo de usuário logado. -->
+                <nav class="menu" id="sidebarMenu"></nav>
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" onclick="logout()" style="width:100%;">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sair
+                </button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <strong data-user-greeting>Bem-vindo</strong>
+                    <p style="margin-top:4px;">Perfil público de piloto</p>
+                </div>
+
+                <div class="dashboard-user">
+                    <div>
+                        <strong data-user-name>Usuário</strong>
+                        <p data-user-role>Perfil</p>
+                    </div>
+                    <div class="avatar" data-user-avatar>RH</div>
+                </div>
+            </header>
+
+            <section class="page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h1 id="perfilPublicoNome">Perfil do piloto</h1>
+                        <p id="perfilPublicoSubtitulo">Veículos, inscrições, corridas e tempos registrados.</p>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="window.location.href='social.html'">
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar ao Social
+                    </button>
+                </div>
+
+                <section class="profile-public-hero" id="perfilPublicoHero">
+                    <div class="alert alert-warning">Carregando perfil público...</div>
+                </section>
+
+                <div class="dashboard-grid" style="margin-bottom:35px;">
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-car-front"></i></div>
+                        <div class="stats-number" id="publicTotalVeiculos">0</div>
+                        <div class="stats-label">Veículos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-stopwatch"></i></div>
+                        <div class="stats-number" id="publicTotalTempos">0</div>
+                        <div class="stats-label">Tempos</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-flag"></i></div>
+                        <div class="stats-number" id="publicTotalInscricoes">0</div>
+                        <div class="stats-label">Inscrições</div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-icon"><i class="bi bi-trophy"></i></div>
+                        <div class="stats-number" id="publicMelhorTempo">-</div>
+                        <div class="stats-label">Melhor volta</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <section class="widget">
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Garagem pública</h2>
+                                <p class="widget-subtitle">Carros cadastrados pelo piloto.</p>
+                            </div>
+                            <i class="bi bi-car-front" style="color:var(--gold);font-size:26px;"></i>
+                        </div>
+                        <div class="widget-body" id="publicVeiculosLista">
+                            <div class="alert alert-warning">Carregando veículos...</div>
+                        </div>
+                    </section>
+
+                    <section class="widget">
+                        <div class="widget-header">
+                            <div>
+                                <h2 class="widget-title">Corridas e inscrições</h2>
+                                <p class="widget-subtitle">Eventos em que o piloto participou ou se inscreveu.</p>
+                            </div>
+                            <i class="bi bi-flag" style="color:var(--primary);font-size:26px;"></i>
+                        </div>
+                        <div class="widget-body" id="publicInscricoesLista">
+                            <div class="alert alert-warning">Carregando inscrições...</div>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="panel" style="margin-top:35px;">
+                    <div class="panel-header flex-between">
+                        <div>
+                            <h2>Tempos registrados</h2>
+                            <p style="margin-top:8px;">Histórico público de voltas lançadas no sistema.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Posição</th>
+                                        <th>Corrida</th>
+                                        <th>Veículo</th>
+                                        <th>Categoria</th>
+                                        <th>Tempo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="publicTemposTabela">
+                                    <tr><td colspan="5">Carregando tempos...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="js/piloto-publico.js"></script>
+</body>
+</html>

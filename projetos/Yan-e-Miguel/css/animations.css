@@ -1,0 +1,86 @@
+/* ===========================================================
+   RaceHub v2.0
+   ANIMATIONS
+===========================================================*/
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes slideInLeft{
+    from{
+        opacity:0;
+        transform:translateX(-30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes scaleIn{
+    from{
+        opacity:0;
+        transform:scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes pulseRed{
+    0%{
+        box-shadow:0 0 0 0 rgba(213,0,28,.35);
+    }
+
+    70%{
+        box-shadow:0 0 0 18px rgba(213,0,28,0);
+    }
+
+    100%{
+        box-shadow:0 0 0 0 rgba(213,0,28,0);
+    }
+}
+
+.animate-fade{
+    animation:fadeIn .7s ease forwards;
+}
+
+.animate-left{
+    animation:slideInLeft .7s ease forwards;
+}
+
+.animate-scale{
+    animation:scaleIn .5s ease forwards;
+}
+
+.pulse{
+    animation:pulseRed 2s infinite;
+}
+
+.delay-1{
+    animation-delay:.1s;
+}
+
+.delay-2{
+    animation-delay:.2s;
+}
+
+.delay-3{
+    animation-delay:.3s;
+}
+
+.delay-4{
+    animation-delay:.4s;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "ficharpgprog2",
+  "version": "1.0.0",
+  "description": "Projeto fichas rpg",
+  "keywords": [
+    "rpg",
+    "fichasrpg",
+    "bancodedados"
+  ],
+  "license": "ISC",
+  "author": "Carlos Eduardo Tschoeke de Andrade",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.5",
+    "nodemon": "^3.1.14"
+  }
+}
