@@ -1,0 +1,30 @@
+{
+  "name": "flappy-duck",
+  "version": "1.0.0",
+  "description": "Nosso projeto tem como intuito criar um jogo divertido, inspirado no flappy bird, a fim de proporcionar entretenimento para os jogadores além de botar em pratica os conhecimentos adquiridos em aula. O jogo se trata em passar com o personagem (Pato) pelo máximo de obstaculos possiveis. Ele consta também com as opções de criar uma conta onde ficará registrada a pontuação em um banco de dados, mostrar Ranking onde exibira a pontuação de todos os jogadores, e 'jogar' para iniciar o jogo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathk4/Flappy-Duck.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mathk4/Flappy-Duck/issues"
+  },
+  "homepage": "https://github.com/mathk4/Flappy-Duck#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
