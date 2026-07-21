@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zerion</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/ae3ae6f5a4.js" crossorigin="anonymous"></script>
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+    <header>
+    <a href="feed.html" class="logo"><img src="img/LogoParaMobile.png" alt="Zerion"></a>
+    <button class="btn-header-logout" onclick="logout()" title="Sair">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+</header>
+
+    <div class="layout-desktop">
+
+        <aside class="sidebar-esquerda">
+            <div class="sidebar-logo">
+                <a href="feed.html"><img src="img/LogoParaMobile.png" alt="Zerion"></a>
+            </div>
+            <nav class="nav-lateral">
+                <a href="feed.html" class="ativo">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="label-nav">Início</span>
+                </a>
+                <a href="busca.html">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span class="label-nav">Explorar</span>
+                </a>
+                <a href="notificacoes.html">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="label-nav">Notificações</span>
+                </a>
+                <a href="mensagens.html">
+                    <i class="fa-solid fa-message"></i>
+                    <span class="label-nav">Mensagens</span>
+                </a>
+                <a href="perfil.html">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                    <span class="label-nav">Perfil</span>
+                </a>
+            </nav>
+
+            <button class="btn-novo-post" onclick="document.getElementById('itexto').focus()">
+                <i class="fa-solid fa-pen"></i> Transmitir
+            </button>
+
+            <button class="btn-novo-post btn-logout" onclick="logout()" style="margin-top:0.5rem;">
+                <i class="fa-solid fa-right-from-bracket"></i> Sair
+            </button>
+        </aside>
+
+        <main>
+            <section class="Feed">
+                <div class="Criar-Post">
+                    <div class="Avatar"></div>
+                    <textarea name="Post" id="itexto" maxlength="300" placeholder="O que está acontecendo?"></textarea>
+                    <input type="file" id="input-imagem" accept="image/*" hidden>
+                    <div class="preview-imagem" id="preview-imagem"></div>
+                    <div class="acoes-post">
+                        <button type="button" id="btn-anexar">
+                            <i class="fa-solid fa-image"></i> Mídia
+                        </button>
+                        <button id="btn-postar">Postar</button>
+                    </div>
+                </div>
+                <ol class="publicacoes"></ol>
+            </section>
+        </main>
+
+        <aside class="sidebar-direita">
+            <div class="sidebar-busca">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar na Zerion..."
+                       onfocus="window.location.href='busca.html'">
+            </div>
+            <div class="sidebar-card">
+                <h3>Quem seguir</h3>
+                <div id="sugestoes-sidebar"></div>
+            </div>
+            <div class="sidebar-footer">
+                <a href="termos.html">Termos de Uso</a>
+                <a href="priv.html">Privacidade</a>
+                <span style="color:var(--txt-poeira);font-size:0.6rem;margin-top:4px;">© 2026 Zerion</span>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer>
+        <nav id="navegacao">
+            <ul>
+                <li><a href="feed.html"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="notificacoes.html"><i class="fa-solid fa-bell"></i></a></li>
+                <li><a href="mensagens.html"><i class="fa-solid fa-message"></i></a></li>
+                <li><a href="busca.html"><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user-astronaut"></i></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="js/javascript.js"></script>
+    <script src="js/feed_sidebar.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem("usuario");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

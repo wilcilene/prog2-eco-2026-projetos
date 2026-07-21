@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style1.css">
+    <link rel="stylesheet" href="css/MediaQuery.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Zerion</title>
+</head>
+<body>
+
+    <div class="galaxy"></div>
+    <div class="stars"></div>
+
+    <div class="stars stars-far"></div>
+    <div class="stars stars-mid"></div>
+    <div class="stars stars-near"></div>
+
+    <main>
+
+        <div id="logo">
+            <img src="img/LogoParaMobile.png" alt="">
+            <h1>Compartilhe seu universo.</h1>
+        </div>
+
+        <section id="login">
+
+            <h1>Conecte-se</h1>
+            <h2>Explore novas ideias, comunidades e experiências em um universo sem limites.</h2>
+
+            <form id="formLogin" autocomplete="on">
+
+                <p id="mensagem-erro" style="
+                    color: #ff4d6d;
+                    font-size: 0.78rem;
+                    text-align: center;
+                    min-height: 1.2rem;
+                    margin-bottom: 8px;
+                "></p>
+
+                <div class="campo">
+                    <label for="iemail">Email</label>
+                    <input type="email" name="email" id="iemail" placeholder="Seu E-mail" maxlength="100" required>
+                </div>
+
+
+                <div class="campo">
+                    <label for="isenha">Senha</label>
+                    <input type="password" name="senha" id="isenha" placeholder="Sua senha" maxlength="50" required>
+                    <a href="forgot.html" class="forgot">
+                        Esqueceu sua senha?
+                    </a>
+                </div>
+
+                <button type="submit">Entrar</button>
+                <a href="cadastro.html" class ="cadastro">Cadastrar</a>
+
+            </form>
+
+        </section>
+        
+    </main>
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* ================================================
+   Adicione ao final do style.css e perfil.css
+   Cores dos botões de ação unificadas
+================================================ */
+
+/* Cor base dos ícones e contadores — poeira estelar */
+.icone-btn i {
+    color: var(--txt-poeira);
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.icone-btn span {
+    font-size: 0.75rem;
+    color: var(--txt-poeira);
+    transition: color 0.2s;
+    min-width: 14px;
+}
+
+/* Hover — branco suave */
+.icone-btn:hover i,
+.icone-btn:hover span {
+    color: white;
+}
+
+/* Curtido — rosa com brilho */
+.btn-like.curtido i,
+.btn-like.curtido span {
+    color: #fa709a;
+    text-shadow: 0 0 8px rgba(250, 112, 154, 0.6);
+}
+
+/* Repostado — ciano com brilho */
+.btn-repost.repostado i,
+.btn-repost.repostado span {
+    color: var(--neon-ciano);
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+}
+
+/* Comentário aberto — ciano */
+.btn-comentar.comentario-ativo i,
+.btn-comentar.comentario-ativo span {
+    color: var(--neon-ciano);
+}
